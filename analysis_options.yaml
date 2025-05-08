@@ -17,6 +17,7 @@ analyzer:
     always_use_package_imports: ignore
     avoid_catches_without_on_clauses: ignore
     directives_ordering: ignore
+    inference_failure_on_instance_creation: ignore
 
   exclude:
     - test/.test_coverage.dart

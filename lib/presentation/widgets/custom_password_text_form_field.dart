@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/core.dart';
 
@@ -48,7 +47,6 @@ class _CustomPasswordTextformfieldState
         controller: widget.controller,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
-          prefixIconColor: AppColors.defaultIconColor,
           suffixIconColor: AppColors.defaultIconColor,
           label: Text(
             widget.label,
@@ -56,10 +54,7 @@ class _CustomPasswordTextformfieldState
               context,
             ).textTheme.bodyMedium?.copyWith(color: AppColors.labelColor),
           ),
-          prefixIcon: const FaIcon(
-            Icons.lock_outline,
-            size: AppDimensions.iconSize,
-          ),
+
           suffixIcon: GestureDetector(
             onTap: toggleVisibiity,
             child:
@@ -91,6 +86,7 @@ class _CustomPasswordTextformfieldState
               width: 2,
             ),
           ),
+          errorStyle: TextStyle(color: AppColors.errorColor),
         ),
       ),
     );

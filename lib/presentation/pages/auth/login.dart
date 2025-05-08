@@ -1,9 +1,10 @@
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/home.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/widgets.dart';
-import '../../../core/core.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,29 +48,27 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            MaterialButton(
-              onPressed: () {},
-              color: AppColors.buttonBackgroundColor,
-              child: const Text('Login'),
-            ),
+            CustomButtonWidget(text: 'Login', onPressed: _onLoginPresssed),
 
-            const SizedBox(height: 10),
-
-            RichText(
-              text: TextSpan(
-                text: "Don't have an account? ",
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  TextSpan(
-                    text: 'Sign up',
-                    style: TextStyle(color: AppColors.richTextHighlight),
+            CustomRichText(
+              regularText: "Don't have an account yet? ",
+              highlightedText: 'Sign Up',
+              redirect:
+                  () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const SignUpPage()),
                   ),
-                ],
-              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onLoginPresssed() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    }
   }
 }

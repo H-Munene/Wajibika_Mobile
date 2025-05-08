@@ -1,5 +1,6 @@
-import 'package:bloc_clean_arch/core/colors.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/home.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../widgets/widgets.dart';
@@ -44,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     validator:
                         (value) => FormValidation.matchpasswordValidator(
                           value,
-                          _confirmPasswordTextEditingController.text.trim(),
+                          '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
                         ),
                   ),
                   CustomPasswordTextformfield(
@@ -53,36 +54,34 @@ class _SignUpPageState extends State<SignUpPage> {
                     validator:
                         (value) => FormValidation.matchpasswordValidator(
                           value,
-                          _passwordTextEditingController.text.trim(),
+                          '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
                         ),
                   ),
                 ],
               ),
             ),
 
-            MaterialButton(
-              onPressed: () {},
-              color: AppColors.buttonBackgroundColor,
-              child: const Text('Sign Up'),
-            ),
+            CustomButtonWidget(text: 'Sign Up', onPressed: _onSignUpPresssed),
 
-            const SizedBox(height: 10),
-
-            RichText(
-              text: TextSpan(
-                text: 'Already registered? ',
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  TextSpan(
-                    text: 'Login',
-                    style: TextStyle(color: AppColors.richTextHighlight),
+            CustomRichText(
+              regularText: 'Already Registered? ',
+              highlightedText: 'Login',
+              redirect:
+                  () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   ),
-                ],
-              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onSignUpPresssed() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    }
   }
 }

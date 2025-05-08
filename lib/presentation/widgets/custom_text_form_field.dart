@@ -64,8 +64,6 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
         cursorColor: AppColors.primaryColor,
         onChanged: widget.onChanged,
         decoration: InputDecoration(
-          prefixIcon: FaIcon(widget.prefixIcon, size: AppDimensions.iconSize),
-          prefixIconColor: AppColors.defaultIconColor,
           suffixIconColor: AppColors.defaultIconColor,
           labelText: widget.label,
           labelStyle: Theme.of(
@@ -76,7 +74,7 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.errorColor),
+            borderSide: BorderSide(color: AppColors.errorColor, width: 2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
@@ -89,6 +87,7 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
               width: 2,
             ),
           ),
+          errorStyle: TextStyle(color: AppColors.errorColor),
         ),
       ),
     );

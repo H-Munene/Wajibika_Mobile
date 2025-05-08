@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primaryColor = Colors.teal;
-  static Color errorColor = Colors.redAccent;
+  static Color errorColor = const Color.fromARGB(255, 220, 33, 42);
   static Color borderColor = Colors.grey;
   static Color selectedItemColor = Colors.black;
   static Color unselectedItemColor = Colors.grey;
@@ -10,5 +10,5 @@ class AppColors {
   static Color defaultIconColor = Colors.black;
   static Color richTextHighlight = Colors.blue;
   static Color buttonBackgroundColor = Colors.teal;
-
+  static Color hightlightColor = const Color(0xFF97E5D7);
 }
