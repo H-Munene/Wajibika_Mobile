@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../core/core.dart';
 
 class CustomPasswordTextformfield extends StatefulWidget {
   final String label;
@@ -33,7 +37,7 @@ class _CustomPasswordTextformfieldState
     return Container(
       //TODO : change with different screen sizes not const for all
       width: 0.70 * MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: AppDimensions.textfieldVerticalSpacing,
       child: TextFormField(
         enableInteractiveSelection: false,
         keyboardType: TextInputType.text,
@@ -46,31 +50,27 @@ class _CustomPasswordTextformfieldState
         decoration: InputDecoration(
           label: Text(
             widget.label,
-            style: ,
+            style: TextStyle(color: AppColors.labelColor),
           ),
-          prefixIcon: const Padding(
-            padding: EdgeInsets.only(left: 12, right: 16, top: 10, bottom: 12),
-            child: FaIcon(Icons.lock_outline, size: 22),
+          prefixIcon: const FaIcon(
+            Icons.lock_outline,
+            size: AppDimensions.iconSize,
           ),
           border: OutlineInputBorder(
-            borderRadius: ,
+            borderRadius: AppDimensions.unfocussedCircleBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: ,
-            borderSide: BorderSide(
-              color: ,
-            ),
+            borderRadius: AppDimensions.unfocussedCircleBorderRadius,
+            borderSide: BorderSide(color: AppColors.unselectedItemColor),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: ,
-            borderSide: BorderSide(
-              color: ,
-            ),
+            borderRadius: AppDimensions.focussedCircleBorderRadius,
+            borderSide: BorderSide(color: AppColors.errorColor, width: 2),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: ,
-            borderSide: BorderSide(
-              color: ,
+            borderRadius: AppDimensions.focussedCircleBorderRadius,
+            borderSide: const BorderSide(
+              color: AppColors.primaryColor,
               width: 2,
             ),
           ),
