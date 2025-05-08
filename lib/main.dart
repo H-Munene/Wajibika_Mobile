@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       ),
 
-      //TODO: create theme class and other constants class
       home: const SignUpPage(),
     );
   }

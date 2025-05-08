@@ -26,7 +26,8 @@ class GuardianAppTheme {
     tabBarTheme: _tabBarThemeData(),
   );
 
-  //TODO: needs to be properly configured
+  // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/2
+
   // dark theme
   // static ThemeData darkTheme() => ThemeData(
   //   splashFactory: NoSplash.splashFactory,
