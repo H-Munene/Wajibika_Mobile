@@ -35,7 +35,7 @@ class _CustomPasswordTextformfieldState
   @override
   Widget build(BuildContext context) {
     return Container(
-      // TODO(H-Munene): make width adaptive, https://github.com/H-Munene/bloc_CleanArch/issues/3  
+      // TODO(H-Munene): make width adaptive, https://github.com/H-Munene/bloc_CleanArch/issues/3
       width: 0.70 * MediaQuery.of(context).size.width,
       padding: AppDimensions.textfieldVerticalSpacing,
       child: TextFormField(
