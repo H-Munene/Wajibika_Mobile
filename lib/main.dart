@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       ),
-      home: Container(),
+
+      //TODO: create theme class and other constants class
+      home: const SignUpPage(),
     );
   }
 }
