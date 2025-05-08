@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/core.dart';
 
@@ -35,7 +34,7 @@ class _CustomPasswordTextformfieldState
   @override
   Widget build(BuildContext context) {
     return Container(
-      // TODO(H-Munene): make width adaptive, https://github.com/H-Munene/bloc_CleanArch/issues/3  
+      // TODO(H-Munene): make width adaptive, https://github.com/H-Munene/bloc_CleanArch/issues/3
       width: 0.70 * MediaQuery.of(context).size.width,
       padding: AppDimensions.textfieldVerticalSpacing,
       child: TextFormField(
@@ -48,15 +47,26 @@ class _CustomPasswordTextformfieldState
         controller: widget.controller,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
+          suffixIconColor: AppColors.defaultIconColor,
           label: Text(
             widget.label,
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(color: AppColors.labelColor),
           ),
-          prefixIcon: const FaIcon(
-            Icons.lock_outline,
-            size: AppDimensions.iconSize,
+
+          suffixIcon: GestureDetector(
+            onTap: toggleVisibiity,
+            child:
+                visibility
+                    ? const Icon(
+                      FluentIcons.eye_12_regular,
+                      size: AppDimensions.iconSize,
+                    )
+                    : const Icon(
+                      FluentIcons.eye_off_16_regular,
+                      size: AppDimensions.iconSize,
+                    ),
           ),
           border: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
@@ -76,13 +86,7 @@ class _CustomPasswordTextformfieldState
               width: 2,
             ),
           ),
-          suffixIcon: GestureDetector(
-            onTap: toggleVisibiity,
-            child:
-                visibility
-                    ? const Icon(FluentIcons.eye_12_regular)
-                    : const Icon(FluentIcons.eye_off_16_regular),
-          ),
+          errorStyle: TextStyle(color: AppColors.errorColor),
         ),
       ),
     );

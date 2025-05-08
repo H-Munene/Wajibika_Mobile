@@ -1,86 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/core.dart';
 
-class CustomPasswordTextformfield extends StatefulWidget {
+class CustomTextFieldFormWidget extends StatefulWidget {
   final String label;
+  final IconData prefixIcon;
+  final Icon? suffixIcon;
   final TextEditingController controller;
   final String? Function(String?) validator;
+  final bool? enabled;
+  final void Function(String)? onChanged;
+  final bool? fillColor;
+  final TextInputType? keyboardType;
 
-  const CustomPasswordTextformfield({
+  const CustomTextFieldFormWidget({
     super.key,
-    required this.controller,
     required this.label,
+    required this.prefixIcon,
+    this.suffixIcon,
+    this.fillColor = false,
+    this.enabled = true,
+    required this.controller,
     required this.validator,
+    this.onChanged,
+    this.keyboardType,
   });
 
   @override
-  State<CustomPasswordTextformfield> createState() =>
-      _CustomPasswordTextformfieldState();
+  State<CustomTextFieldFormWidget> createState() =>
+      _CustomTextFieldFormWidgetState();
 }
 
-class _CustomPasswordTextformfieldState
-    extends State<CustomPasswordTextformfield> {
-  bool visibility = false;
-
-  //toggle password visibility
-  void toggleVisibiity() {
-    setState(() {
-      visibility = !visibility;
-    });
-  }
-
+class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //TODO : change with different screen sizes not const for all
-      width: 0.70 * MediaQuery.of(context).size.width,
       padding: AppDimensions.textfieldVerticalSpacing,
+      width: 0.7 * MediaQuery.of(context).size.width,
       child: TextFormField(
         enableInteractiveSelection: false,
-        keyboardType: TextInputType.text,
-        obscureText: !visibility,
-        obscuringCharacter: '*',
-        onTapOutside: (event) => FocusScope.of(context).unfocus(),
-        validator: widget.validator,
+        inputFormatters:
+            widget.label == 'Phone Number' ||
+                    widget.label == 'Recovery Phone Number'
+                ? [
+                  LengthLimitingTextInputFormatter(10),
+                  FilteringTextInputFormatter.digitsOnly,
+                ]
+                : null,
+        keyboardType:
+            widget.keyboardType ??
+            (widget.label == 'Phone Number'
+                ? TextInputType.number
+                : widget.label == 'Email'
+                ? TextInputType.emailAddress
+                : TextInputType.text),
         controller: widget.controller,
-        cursorColor: Theme.of(context).primaryColor,
+        validator: widget.validator,
+        textInputAction: TextInputAction.next,
+        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+        enabled: widget.enabled,
+        cursorColor: AppColors.primaryColor,
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
-          label: Text(
-            widget.label,
-            style: TextStyle(color: AppColors.labelColor),
-          ),
-          prefixIcon: const FaIcon(
-            Icons.lock_outline,
-            size: AppDimensions.iconSize,
-          ),
+          suffixIconColor: AppColors.defaultIconColor,
+          labelText: widget.label,
+          labelStyle: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: AppColors.labelColor),
           border: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: AppDimensions.unfocussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.unselectedItemColor),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
             borderSide: BorderSide(color: AppColors.errorColor, width: 2),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: AppDimensions.unfocussedCircleBorderRadius,
+            borderSide: BorderSide(color: AppColors.unselectedItemColor),
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: const BorderSide(
-              color: AppColors.primaryColor,
+            borderSide: BorderSide(
+              color: AppColors.selectedItemColor,
               width: 2,
             ),
           ),
-          suffixIcon: GestureDetector(
-            onTap: toggleVisibiity,
-            child:
-                visibility
-                    ? const Icon(FluentIcons.eye_12_regular)
-                    : const Icon(FluentIcons.eye_off_16_regular),
-          ),
+          errorStyle: TextStyle(color: AppColors.errorColor),
         ),
       ),
     );
