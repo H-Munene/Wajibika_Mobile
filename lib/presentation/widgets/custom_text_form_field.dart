@@ -64,7 +64,7 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
         cursorColor: AppColors.primaryColor,
         onChanged: widget.onChanged,
         decoration: InputDecoration(
-          prefixIcon: FaIcon(widget.prefixIcon, size: 22),
+          prefixIcon: FaIcon(widget.prefixIcon, size: AppDimensions.iconSize),
           prefixIconColor: AppColors.defaultIconColor,
           suffixIconColor: AppColors.defaultIconColor,
           labelText: widget.label,

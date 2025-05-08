@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'core.dart';
 
-class GuardianAppTheme {
+class AppTheme {
   //light theme
   static ThemeData lightTheme() => ThemeData(
     // splashFactory: NoSplash.splashFactory,
     // splashColor: GuardianAppColors.primaryColor,
+    primaryTextTheme: AppTheme.lightTextTheme(),
     scaffoldBackgroundColor: Colors.white,
     bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     // badgeTheme: BadgeThemeData(
@@ -15,7 +16,7 @@ class GuardianAppTheme {
     //   backgroundColor: Colors.red,
     // ),
     fontFamily: 'Lexend',
-    textTheme: GuardianAppTheme.lightTextTheme,
+    // textTheme: AppTheme.lightTextTheme(),
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
     appBarTheme: const AppBarTheme(
@@ -39,7 +40,7 @@ class GuardianAppTheme {
   //     backgroundColor: Colors.red,
   //   ),
   //   brightness: Brightness.dark,
-  //   textTheme: GuardianAppTheme.lightTextTheme,
+  //   textTheme: AppTheme.lightTextTheme,
   //   primaryColor: GuardianAppColors.primaryColor,
   //   appBarTheme: AppBarTheme(
   //     backgroundColor: GuardianAppColors.primaryColor,
@@ -81,7 +82,7 @@ class GuardianAppTheme {
       );
 
   // light theme textTheme
-  static TextTheme lightTextTheme = const TextTheme(
+  static TextTheme lightTextTheme() => const TextTheme(
     titleLarge: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.bold,

@@ -60,6 +60,19 @@ class _CustomPasswordTextformfieldState
             Icons.lock_outline,
             size: AppDimensions.iconSize,
           ),
+          suffixIcon: GestureDetector(
+            onTap: toggleVisibiity,
+            child:
+                visibility
+                    ? const Icon(
+                      FluentIcons.eye_12_regular,
+                      size: AppDimensions.iconSize,
+                    )
+                    : const Icon(
+                      FluentIcons.eye_off_16_regular,
+                      size: AppDimensions.iconSize,
+                    ),
+          ),
           border: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
           ),
@@ -77,13 +90,6 @@ class _CustomPasswordTextformfieldState
               color: AppColors.selectedItemColor,
               width: 2,
             ),
-          ),
-          suffixIcon: GestureDetector(
-            onTap: toggleVisibiity,
-            child:
-                visibility
-                    ? const Icon(FluentIcons.eye_12_regular)
-                    : const Icon(FluentIcons.eye_off_16_regular),
           ),
         ),
       ),

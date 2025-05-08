@@ -59,11 +59,11 @@ class FormValidation {
         : null;
   }
 
-  static otpValidator(String? otpCode) {
-    return otpCode!.isEmpty || otpCode.length < 6
-        ? 'OTP Code is required'
-        : null;
-  }
+  // static otpValidator(String? otpCode) {
+  //   return otpCode!.isEmpty || otpCode.length < 6
+  //       ? 'OTP Code is required'
+  //       : null;
+  // }
 }
 
 final passwordExp = RegExp(r'^.{8,}$'); //password not less than 6

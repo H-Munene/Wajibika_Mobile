@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialButton(
               onPressed: () {},
               color: AppColors.buttonBackgroundColor,
+              child: const Text('Login'),
             ),
 
             const SizedBox(height: 10),
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             RichText(
               text: TextSpan(
                 text: "Don't have an account? ",
-                style: DefaultTextStyle.of(context).style,
+                style: Theme.of(context).textTheme.bodyMedium,
                 children: [
                   TextSpan(
                     text: 'Sign up',

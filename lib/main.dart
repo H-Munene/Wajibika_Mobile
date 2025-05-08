@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bloc Clean Arch',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-      ),
+      theme: AppTheme.lightTheme(),
 
       home: const SignUpPage(),
     );

@@ -60,17 +60,18 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
 
-MaterialButton(
+            MaterialButton(
               onPressed: () {},
               color: AppColors.buttonBackgroundColor,
+              child: const Text('Sign Up'),
             ),
 
-            const SizedBox(height: 10,),
-            
+            const SizedBox(height: 10),
+
             RichText(
               text: TextSpan(
                 text: 'Already registered? ',
-                style: DefaultTextStyle.of(context).style,
+                style: Theme.of(context).textTheme.bodyMedium,
                 children: [
                   TextSpan(
                     text: 'Login',
