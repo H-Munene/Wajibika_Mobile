@@ -7,7 +7,7 @@ class FormValidation {
   ) {
     if (username == null || username.isEmpty) {
       return 'Name is required';
-    } else if (!(nameRegExp.hasMatch(username))) {
+    } else if (!nameRegExp.hasMatch(username)) {
       controller.clear();
       return 'Name should only have letters and no spaces';
     } else {
@@ -19,7 +19,7 @@ class FormValidation {
   static String? passwordValidator(String? password) {
     return (password == null || password.isEmpty)
         ? 'Password is required'
-        : !(passwordExp.hasMatch(password))
+        : !passwordExp.hasMatch(password)
         ? 'Password should have at least 8 characters'
         : null;
   }
@@ -28,7 +28,7 @@ class FormValidation {
   static String? emailValidator(String? email) {
     return (email == null || email.isEmpty)
         ? 'Email is required'
-        : !(emailRegExp.hasMatch(email))
+        : !emailRegExp.hasMatch(email)
         ? 'Please enter a valid email address'
         : null;
   }
@@ -37,7 +37,7 @@ class FormValidation {
   static String? phoneValidator(String? phone) {
     return (phone == null || phone.isEmpty)
         ? 'Phone is required'
-        : !(phoneRegexExp.hasMatch(phone))
+        : !phoneRegexExp.hasMatch(phone)
         ? 'Please enter a valid phone number'
         : null;
   }
@@ -47,8 +47,8 @@ class FormValidation {
     String? value,
     String passwordConfirmPassword,
   ) {
-    var password = passwordConfirmPassword.split(' ')[0];
-    var confirmPassword = passwordConfirmPassword.split(' ')[1];
+    final password = passwordConfirmPassword.split(' ')[0];
+    final confirmPassword = passwordConfirmPassword.split(' ')[1];
 
     return (value!.isEmpty)
         ? 'Password is required'

@@ -1,7 +1,9 @@
+import 'package:bloc_clean_arch/presentation/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/widgets.dart';
+import '../../../core/core.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,16 +13,62 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        
-        children: [
-        CustomTextFieldFormWidget(label: 'Email', prefixIcon: FontAwesomeIcons.envelope, controller: controller, validator: validator)
-        ,CustomPasswordTextformfield(controller: controller, label: 'Password', validator: validator);
-      ],),
-    ));
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextFieldFormWidget(
+                    label: 'Email',
+                    prefixIcon: FontAwesomeIcons.envelope,
+                    controller: _emailTextEditingController,
+                    validator: FormValidation.emailValidator,
+                  ),
+                  CustomPasswordTextformfield(
+                    controller: _passwordTextEditingController,
+                    label: 'Password',
+                    validator: FormValidation.passwordValidator,
+                  ),
+                ],
+              ),
+            ),
+
+            MaterialButton(
+              onPressed: () {},
+              color: AppColors.buttonBackgroundColor,
+            ),
+
+            const SizedBox(height: 10),
+
+            RichText(
+              text: TextSpan(
+                text: "Don't have an account? ",
+                style: DefaultTextStyle.of(context).style,
+                children: [
+                  TextSpan(
+                    text: 'Sign up',
+                    style: TextStyle(color: AppColors.richTextHighlight),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
