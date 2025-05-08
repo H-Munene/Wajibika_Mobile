@@ -48,6 +48,8 @@ class _CustomPasswordTextformfieldState
         controller: widget.controller,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
+          prefixIconColor: AppColors.defaultIconColor,
+          suffixIconColor: AppColors.defaultIconColor,
           label: Text(
             widget.label,
             style: Theme.of(
