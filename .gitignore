@@ -57,6 +57,7 @@ app.*.map.json
 /linux/
 /build/
 /test/
+/lib/core/secrets
 
 # Android Gradle related
 /android/.gradle/

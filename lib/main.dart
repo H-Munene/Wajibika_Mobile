@@ -2,8 +2,15 @@ import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
 
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final supabase = await Supabase.initialize(
+    url: SupabaseSecrets.url,
+    anonKey: SupabaseSecrets.anonKey,
+  );
   runApp(const MyApp());
 }
 
