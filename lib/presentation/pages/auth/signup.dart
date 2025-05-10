@@ -17,6 +17,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _usernameTextEditingController =
+      TextEditingController();
   final TextEditingController _emailTextEditingController =
       TextEditingController();
   final TextEditingController _passwordTextEditingController =
@@ -35,6 +37,17 @@ class _SignUpPageState extends State<SignUpPage> {
               key: _formKey,
               child: Column(
                 children: [
+                  CustomTextFieldFormWidget(
+                    label: 'Username',
+                    prefixIcon: FontAwesomeIcons.envelope,
+                    controller: _usernameTextEditingController,
+                    validator:
+                        (value) => FormValidation.usernameValidator(
+                          value,
+                          _usernameTextEditingController,
+                        ),
+                  ),
+
                   CustomTextFieldFormWidget(
                     label: 'Email',
                     prefixIcon: FontAwesomeIcons.envelope,
