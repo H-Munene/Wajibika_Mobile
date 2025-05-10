@@ -1,5 +1,6 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
 
-      home: const SignUpPage(),
+      home: const LoginPage(),
     );
   }
 }

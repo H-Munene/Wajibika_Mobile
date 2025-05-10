@@ -1,12 +1,14 @@
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/home.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
+import 'pages.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
+  static Route loginPage() =>
+      MaterialPageRoute(builder: (context) => const LoginPage());
+
   const LoginPage({super.key});
 
   @override
@@ -54,9 +56,9 @@ class _LoginPageState extends State<LoginPage> {
               regularText: "Don't have an account yet? ",
               highlightedText: 'Sign Up',
               redirect:
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  ),
+                  () => Navigator.of(
+                    context,
+                  ).pushReplacement(SignUpPage.signUpPage()),
             ),
           ],
         ),
@@ -66,9 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onLoginPresssed() {
     if (_formKey.currentState!.validate()) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      Navigator.of(context).pushReplacement(HomePage.homePage());
     }
   }
 }
