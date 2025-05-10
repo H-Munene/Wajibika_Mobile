@@ -18,6 +18,7 @@ analyzer:
     avoid_catches_without_on_clauses: ignore
     directives_ordering: ignore
     inference_failure_on_instance_creation: ignore
+    one_member_abstracts: ignore
 
   exclude:
     - test/.test_coverage.dart
