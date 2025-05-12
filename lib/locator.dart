@@ -21,8 +21,8 @@ Future<void> init() async {
 
 void _initAuth() {
   locator
-    ..registerFactory<AuthDatasource>(
-      () => AuthDatasourceImpl(supabaseClient: locator<SupabaseClient>()),
+    ..registerFactory<AuthDataSource>(
+      () => AuthDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
     )
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(authDatasource: locator()),

@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/core/snackbar_definitions.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,64 +32,82 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Form(
-              key: _formKey, 
-              child: Column(
-                children: [
-                  CustomTextFieldFormWidget(
-                    label: 'Username',
-                    prefixIcon: FontAwesomeIcons.envelope,
-                    controller: _usernameTextEditingController,
-                    validator:
-                        (value) => FormValidation.usernameValidator(
-                          value,
-                          _usernameTextEditingController,
-                        ),
-                  ),
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is AuthFailure) {
+              SnackbarDefinition.errorSnackBar(
+                context: context,
+                message: state.message,
+              );
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextFieldFormWidget(
+                        label: 'Username',
+                        prefixIcon: FontAwesomeIcons.envelope,
+                        controller: _usernameTextEditingController,
+                        validator:
+                            (value) => FormValidation.usernameValidator(
+                              value,
+                              _usernameTextEditingController,
+                            ),
+                      ),
 
-                  CustomTextFieldFormWidget(
-                    label: 'Email',
-                    prefixIcon: FontAwesomeIcons.envelope,
-                    controller: _emailTextEditingController,
-                    validator: FormValidation.emailValidator,
+                      CustomTextFieldFormWidget(
+                        label: 'Email',
+                        prefixIcon: FontAwesomeIcons.envelope,
+                        controller: _emailTextEditingController,
+                        validator: FormValidation.emailValidator,
+                      ),
+                      CustomPasswordTextformfield(
+                        controller: _passwordTextEditingController,
+                        label: 'Password',
+                        validator:
+                            (value) => FormValidation.matchpasswordValidator(
+                              value,
+                              '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
+                            ),
+                      ),
+                      CustomPasswordTextformfield(
+                        controller: _confirmPasswordTextEditingController,
+                        label: 'Confirm Password',
+                        validator:
+                            (value) => FormValidation.matchpasswordValidator(
+                              value,
+                              '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
+                            ),
+                      ),
+                    ],
                   ),
-                  CustomPasswordTextformfield(
-                    controller: _passwordTextEditingController,
-                    label: 'Password',
-                    validator:
-                        (value) => FormValidation.matchpasswordValidator(
-                          value,
-                          '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
-                        ),
-                  ),
-                  CustomPasswordTextformfield(
-                    controller: _confirmPasswordTextEditingController,
-                    label: 'Confirm Password',
-                    validator:
-                        (value) => FormValidation.matchpasswordValidator(
-                          value,
-                          '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
-                        ),
-                  ),
-                ],
-              ),
-            ),
+                ),
 
-            CustomButtonWidget(text: 'Sign Up', onPressed: _onSignUpPressed),
-
-            CustomRichText(
-              regularText: 'Already Registered? ',
-              highlightedText: 'Login',
-              redirect:
-                  () => Navigator.of(
-                    context,
-                  ).pushReplacement(LoginPage.loginPage()),
-            ),
-          ],
+                CustomButtonWidget(
+                  onPressed: _onSignUpPressed,
+                  child:
+                      state is AuthLoading
+                          ? const CustomLoadingIndicator()
+                          : const Text('Sign Up'),
+                ),
+                CustomRichText(
+                  regularText: 'Already Registered? ',
+                  highlightedText: 'Login',
+                  redirect:
+                      () => Navigator.of(
+                        context,
+                      ).pushReplacement(LoginPage.loginPage()),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

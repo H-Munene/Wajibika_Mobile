@@ -1,7 +1,6 @@
-
 import 'package:bloc_clean_arch/data/data.dart';
 
-abstract interface class AuthDatasource {
+abstract interface class AuthDataSource {
   Future<UserModel> signUpWithUsernameEmailPassword({
     required String username,
     required String email,

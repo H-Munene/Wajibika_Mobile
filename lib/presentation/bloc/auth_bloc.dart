@@ -18,6 +18,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onUserSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
     final userSignUpEvent = await _userSignUpUseCase.call(
       UserSignUpParams(
         username: event.username,

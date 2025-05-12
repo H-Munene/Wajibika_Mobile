@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            CustomButtonWidget(text: 'Login', onPressed: _onLoginPresssed),
+            CustomButtonWidget(
+              onPressed: _onLoginPresssed,
+              child: const Text('Login'),
+            ),
 
             CustomRichText(
               regularText: "Don't have an account yet? ",

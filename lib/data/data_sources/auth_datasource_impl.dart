@@ -3,8 +3,8 @@ import 'package:bloc_clean_arch/data/data.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthDatasourceImpl implements AuthDatasource {
-  AuthDatasourceImpl({required this.supabaseClient});
+class AuthDataSourceImpl implements AuthDataSource {
+  AuthDataSourceImpl({required this.supabaseClient});
 
   final SupabaseClient supabaseClient;
   @override
@@ -29,13 +29,15 @@ class AuthDatasourceImpl implements AuthDatasource {
         data: {'username': username},
       );
 
-      final userModel =  UserModel.fromJson(signUpResponse.user!.toJson());
+      final userModel = UserModel.fromJson(signUpResponse.user!.toJson());
 
       return userModel;
     } on AuthException catch (e) {
-      throw ServerException(statusCode: e.statusCode, message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(
+        statusCode: e.statusCode,
+        // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/5
+        message: 'Something went wrong. Please try again!!',
+      );
     }
   }
 }
