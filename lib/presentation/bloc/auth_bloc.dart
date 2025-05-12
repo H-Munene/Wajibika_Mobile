@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -27,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     userSignUpEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (userID) => emit(AuthSuccess(userID: userID)),
+      (user) => emit(AuthSuccess(userID: user)),
     );
   }
 }

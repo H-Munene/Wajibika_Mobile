@@ -11,7 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
     : _authDatasource = authDatasource;
 
   @override
-  Future<Either<Failure, String>> loginWithEmailPassword({
+  Future<Either<Failure, UserModel>> loginWithEmailPassword({
     required String email,
     required String password,
   }) {
@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithUsernameEmailPassword({
+  Future<Either<Failure, UserModel>> signUpWithUsernameEmailPassword({
     required String username,
     required String email,
     required String password,

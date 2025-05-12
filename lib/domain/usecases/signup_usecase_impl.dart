@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 
 import 'package:fpdart/fpdart.dart';
@@ -15,13 +16,13 @@ class UserSignUpParams {
   final String password;
 }
 
-class UserSignUpUseCase implements Usecase<String, UserSignUpParams> {
+class UserSignUpUseCase implements Usecase<UserModel, UserSignUpParams> {
   UserSignUpUseCase({required this.authRepository});
 
   final AuthRepository authRepository;
 
   @override
-  Future<Either<Failure, String>> call(
+  Future<Either<Failure, UserModel>> call(
     UserSignUpParams userSignUpParams,
   ) async {
     return await authRepository.signUpWithUsernameEmailPassword(

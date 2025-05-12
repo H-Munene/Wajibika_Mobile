@@ -8,7 +8,7 @@ class AuthDatasourceImpl implements AuthDatasource {
 
   final SupabaseClient supabaseClient;
   @override
-  Future<String> loginWithEmailPassword({
+  Future<UserModel> loginWithEmailPassword({
     required String email,
     required String password,
   }) {
@@ -17,7 +17,7 @@ class AuthDatasourceImpl implements AuthDatasource {
   }
 
   @override
-  Future<String> signUpWithUsernameEmailPassword({
+  Future<UserModel> signUpWithUsernameEmailPassword({
     required String username,
     required String email,
     required String password,
@@ -29,7 +29,9 @@ class AuthDatasourceImpl implements AuthDatasource {
         data: {'username': username},
       );
 
-      return signUpResponse.user!.id;
+      final userModel =  UserModel.fromJson(signUpResponse.user!.toJson());
+
+      return userModel;
     } on AuthException catch (e) {
       throw ServerException(statusCode: e.statusCode, message: e.message);
     } catch (e) {
