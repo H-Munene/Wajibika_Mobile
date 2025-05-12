@@ -1,4 +1,6 @@
+import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'pages.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Form(
-              key: _formKey,
+              key: _formKey, 
               child: Column(
                 children: [
                   CustomTextFieldFormWidget(
@@ -76,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
 
-            CustomButtonWidget(text: 'Sign Up', onPressed: _onSignUpPresssed),
+            CustomButtonWidget(text: 'Sign Up', onPressed: _onSignUpPressed),
 
             CustomRichText(
               regularText: 'Already Registered? ',
@@ -92,9 +94,15 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  void _onSignUpPresssed() {
+  void _onSignUpPressed() {
     if (_formKey.currentState!.validate()) {
-      Navigator.of(context).pushReplacement(HomePage.homePage());
+      context.read<AuthBloc>().add(
+        AuthSignUp(
+          username: _usernameTextEditingController.text.trim(),
+          email: _emailTextEditingController.text.trim(),
+          password: _passwordTextEditingController.text.trim(),
+        ),
+      );
     }
   }
 }

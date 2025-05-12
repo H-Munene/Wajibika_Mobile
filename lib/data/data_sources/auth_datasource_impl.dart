@@ -1,5 +1,6 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/data/data_sources/auth_datasource.dart';
+import 'package:bloc_clean_arch/data/data.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthDatasourceImpl implements AuthDatasource {

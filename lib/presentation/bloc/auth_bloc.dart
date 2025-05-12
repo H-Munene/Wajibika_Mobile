@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:bloc_clean_arch/domain/usecases/signup_usecase_impl.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

@@ -1,6 +1,6 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
-import 'package:bloc_clean_arch/domain/repositories/auth_repository.dart';
-import 'package:bloc_clean_arch/domain/usecases/usecase.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
+
 import 'package:fpdart/fpdart.dart';
 
 class UserSignUpParams {
