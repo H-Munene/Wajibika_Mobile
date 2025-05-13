@@ -28,5 +28,8 @@ void _initAuth() {
       () => AuthRepositoryImpl(authDatasource: locator()),
     )
     ..registerFactory(() => UserSignUpUseCase(authRepository: locator()))
-    ..registerLazySingleton(() => AuthBloc(userSignUpUseCase: locator()));
+    ..registerFactory(() => UserLoginUseCase(authRepository: locator()))
+    ..registerLazySingleton(
+      () => AuthBloc(userSignUpUseCase: locator(), userLoginUseCase: locator()),
+    );
 }

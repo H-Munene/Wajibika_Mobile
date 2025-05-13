@@ -8,9 +8,9 @@ final class AuthInitial extends AuthState {}
 final class AuthLoading extends AuthState {}
 
 final class AuthSuccess extends AuthState {
-  AuthSuccess({required this.userID});
+  AuthSuccess({required this.user});
 
-  final UserModel userID;
+  final UserModel user;
 }
 
 final class AuthFailure extends AuthState {

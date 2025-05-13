@@ -41,6 +41,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 context: context,
                 message: state.message,
               );
+            } else if (state is AuthSuccess) {
+              SnackbarDefinition.successSnackBar(
+                context: context,
+                message: 'Signup Success',
+              );
             }
           },
           builder: (context, state) {

@@ -10,11 +10,16 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignUpUseCase _userSignUpUseCase;
+  final UserLoginUseCase _userLoginUseCase;
 
-  AuthBloc({required UserSignUpUseCase userSignUpUseCase})
-    : _userSignUpUseCase = userSignUpUseCase,
-      super(AuthInitial()) {
+  AuthBloc({
+    required UserSignUpUseCase userSignUpUseCase,
+    required UserLoginUseCase userLoginUseCase,
+  }) : _userSignUpUseCase = userSignUpUseCase,
+       _userLoginUseCase = userLoginUseCase,
+       super(AuthInitial()) {
     on<AuthSignUp>(_onUserSignUp);
+    on<AuthLogin>(_onUserLogin);
   }
 
   Future<void> _onUserSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
@@ -30,7 +35,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     userSignUpEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess(userID: user)),
+      (user) => emit(AuthSuccess(user: user)),
+    );
+  }
+
+  Future<void> _onUserLogin(AuthLogin event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    final userLoginEvent = await _userLoginUseCase.call(
+      UserLoginParams(email: event.email, password: event.password),
+    );
+
+    userLoginEvent.fold(
+      (failure) => emit(AuthFailure(message: failure.message)),
+      (user) => emit(AuthSuccess(user: user)),
     );
   }
 }

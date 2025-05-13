@@ -11,9 +11,24 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<UserModel> loginWithEmailPassword({
     required String email,
     required String password,
-  }) {
-    // TODO: implement loginWithEmailPassword
-    throw UnimplementedError();
+  }) async {
+    try {
+      final signInResponse = await supabaseClient.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      final userJson = signInResponse.user!.toJson();
+
+      final userModel = UserModel.fromJson(userJson);
+
+      return userModel;
+    } on AuthApiException catch (e) {
+      throw ServerException(message: e.message);
+    } catch (e) {
+      // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/5
+      throw ServerException(message: 'Login failed. Please try again!!');
+    }
   }
 
   @override
@@ -32,11 +47,12 @@ class AuthDataSourceImpl implements AuthDataSource {
       final userModel = UserModel.fromJson(signUpResponse.user!.toJson());
 
       return userModel;
-    } on AuthException catch (e) {
+    } on AuthApiException catch (e) {
+      throw ServerException(message: e.message);
+    } catch (e) {
       throw ServerException(
-        statusCode: e.statusCode,
         // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/5
-        message: 'Something went wrong. Please try again!!',
+        message: 'Sign in failed. Please try again!!',
       );
     }
   }
