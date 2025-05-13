@@ -22,9 +22,8 @@ class AuthRepositoryImpl implements AuthRepository {
       );
 
       return right(response);
-    } catch (e) {
-      final exception = e as ServerException;
-      return left(Failure(exception.message));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
     }
   }
 
@@ -42,9 +41,8 @@ class AuthRepositoryImpl implements AuthRepository {
       );
 
       return right(response);
-    } catch (e) {
-      final exception = e as ServerException;
-      return left(Failure(exception.message));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
     }
   }
 
@@ -52,9 +50,19 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> signOut() async {
     try {
       return right(await _authDatasource.signOut());
-    } catch (e) {
-      final exception = e as ServerException;
-      return left(Failure(exception.message));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserSession() async {
+    try {
+      final userSession = await _authDatasource.getUserSession();
+
+      return right(userSession!);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
     }
   }
 }

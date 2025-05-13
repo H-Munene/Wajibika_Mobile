@@ -13,4 +13,6 @@ abstract interface class AuthDataSource {
   });
 
   Future<void> signOut();
+
+  Future<UserModel?> getUserSession();
 }

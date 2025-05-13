@@ -23,3 +23,9 @@ final class AuthLogin extends AuthEvent {
 }
 
 final class AuthSignOut extends AuthEvent {}
+
+final class AuthUserSignedIn extends AuthEvent {
+  AuthUserSignedIn({required this.user});
+
+  final UserModel user;
+}
