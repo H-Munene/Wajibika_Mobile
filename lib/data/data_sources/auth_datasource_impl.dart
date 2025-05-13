@@ -17,8 +17,9 @@ class AuthDataSourceImpl implements AuthDataSource {
         email: email,
         password: password,
       );
-
-      final userJson = signInResponse.user!.toJson();
+      final userJson =
+          signInResponse.user!.toJson()['user_metadata']
+              as Map<String, dynamic>;
 
       final userModel = UserModel.fromJson(userJson);
 
@@ -43,8 +44,11 @@ class AuthDataSourceImpl implements AuthDataSource {
         password: password,
         data: {'username': username},
       );
+      final userModelJson =
+          signUpResponse.user!.toJson()['user_metadata']
+              as Map<String, dynamic>;
 
-      final userModel = UserModel.fromJson(signUpResponse.user!.toJson());
+      final userModel = UserModel.fromJson(userModelJson);
 
       return userModel;
     } on AuthApiException catch (e) {
