@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../core/core.dart';
 
 class CustomButtonWidget extends StatelessWidget {
-  final String text;
+  final Widget child;
   final void Function() onPressed;
 
   const CustomButtonWidget({
     super.key,
-    required this.text,
+    required this.child,
     required this.onPressed,
   });
 
@@ -20,7 +20,7 @@ class CustomButtonWidget extends StatelessWidget {
         elevation: 0,
         onPressed: onPressed,
         color: AppColors.buttonBackgroundColor,
-        child: Text(text),
+        child: child,
       ),
     );
   }

@@ -1,12 +1,17 @@
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/home.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/signup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'pages.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
+  static Route loginPage() =>
+      MaterialPageRoute(builder: (context) => const LoginPage());
+
   const LoginPage({super.key});
 
   @override
@@ -24,41 +29,65 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is AuthFailure) {
+              SnackbarDefinition.errorSnackBar(
+                context: context,
+                message: state.message,
+              );
+            } else if (state is AuthSuccess) {
+              SnackbarDefinition.successSnackBar(
+                context: context,
+                message: 'Login Success',
+              );
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomTextFieldFormWidget(
-                    label: 'Email',
-                    prefixIcon: FontAwesomeIcons.envelope,
-                    controller: _emailTextEditingController,
-                    validator: FormValidation.emailValidator,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextFieldFormWidget(
+                        label: 'Email',
+                        prefixIcon: FontAwesomeIcons.envelope,
+                        controller: _emailTextEditingController,
+                        validator: FormValidation.emailValidator,
+                      ),
+                      CustomPasswordTextformfield(
+                        controller: _passwordTextEditingController,
+                        label: 'Password',
+                        validator: FormValidation.passwordValidator,
+                      ),
+                    ],
                   ),
-                  CustomPasswordTextformfield(
-                    controller: _passwordTextEditingController,
-                    label: 'Password',
-                    validator: FormValidation.passwordValidator,
-                  ),
-                ],
-              ),
-            ),
+                ),
 
-            CustomButtonWidget(text: 'Login', onPressed: _onLoginPresssed),
+                CustomButtonWidget(
+                  onPressed: _onLoginPresssed,
+                  child:
+                      state is AuthLoading
+                          ? const CustomLoadingIndicator()
+                          : const Text('Login'),
+                ),
 
-            CustomRichText(
-              regularText: "Don't have an account yet? ",
-              highlightedText: 'Sign Up',
-              redirect:
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  ),
-            ),
-          ],
+                CustomRichText(
+                  regularText: "Don't have an account yet? ",
+                  highlightedText: 'Sign Up',
+                  redirect:
+                      () => Navigator.of(
+                        context,
+                      ).pushReplacement(SignUpPage.signUpPage()),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -66,8 +95,11 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onLoginPresssed() {
     if (_formKey.currentState!.validate()) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()),
+      context.read<AuthBloc>().add(
+        AuthLogin(
+          email: _emailTextEditingController.text.trim(),
+          password: _passwordTextEditingController.text.trim(),
+        ),
       );
     }
   }
