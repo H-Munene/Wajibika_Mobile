@@ -21,3 +21,5 @@ final class AuthLogin extends AuthEvent {
   final String email;
   final String password;
 }
+
+final class AuthSignOut extends AuthEvent {}

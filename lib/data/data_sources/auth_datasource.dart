@@ -11,4 +11,6 @@ abstract interface class AuthDataSource {
     required String email,
     required String password,
   });
+
+  Future<void> signOut();
 }

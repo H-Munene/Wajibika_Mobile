@@ -56,4 +56,15 @@ class AuthDataSourceImpl implements AuthDataSource {
       );
     }
   }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await supabaseClient.auth.signOut();
+    } on AuthException catch (e) {
+      throw ServerException(message: e.message);
+    } catch (e) {
+      throw ServerException(message: 'Failed to Logout. Please try again!!');
+    }
+  }
 }
