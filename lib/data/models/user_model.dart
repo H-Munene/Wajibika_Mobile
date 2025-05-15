@@ -11,4 +11,12 @@ class UserModel extends UserEntity {
       _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  UserModel copyWith({String? id, String? username, String? email}) {
+    return UserModel(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      email: email ?? this.email,
+    );
+  }
 }

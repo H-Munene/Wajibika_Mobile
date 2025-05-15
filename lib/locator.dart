@@ -11,16 +11,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final locator = GetIt.instance;
 
 Future<void> init() async {
-  _initAuth();
-
   final supabase = await Supabase.initialize(
     url: SupabaseSecrets.url,
     anonKey: SupabaseSecrets.anonKey,
   );
 
-  locator
-    ..registerLazySingleton(() => supabase.client)
-    ..registerLazySingleton(() => AlreadySignedIn(authRepository: locator()));
+  locator.registerLazySingleton(() => supabase.client);
+  _initAuth();
 }
 
 void _initAuth() {
@@ -34,6 +31,7 @@ void _initAuth() {
     ..registerFactory(() => UserSignUpUseCase(authRepository: locator()))
     ..registerFactory(() => UserLoginUseCase(authRepository: locator()))
     ..registerFactory(() => SignOutUseCase(authRepository: locator()))
+    ..registerFactory(() => AlreadySignedIn(authRepository: locator()))
     ..registerLazySingleton(
       () => AuthBloc(
         userSignUpUseCase: locator(),

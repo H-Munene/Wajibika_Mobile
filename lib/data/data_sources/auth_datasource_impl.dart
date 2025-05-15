@@ -27,7 +27,6 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthApiException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
-      print(e.toString());
       // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/5
       throw ServerException(message: 'Login failed. Please try again!!');
     }
@@ -76,13 +75,14 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<UserModel?> getUserSession() async {
     try {
-      final response = supabaseClient.auth.currentSession;
+      final response = await supabaseClient.auth.currentSession;
+
       if (response == null) {
         throw ServerException(message: 'Please log in');
       } else {
-        return UserModel.fromJson(
-          response.user.toJson()['user_metadata'] as Map<String, dynamic>,
-        );
+        final userSessionData = await response.user.toJson()['user_metadata'];
+
+        return UserModel.fromJson(userSessionData as Map<String, dynamic>);
       }
     } catch (e) {
       throw ServerException(message: 'Please log in');

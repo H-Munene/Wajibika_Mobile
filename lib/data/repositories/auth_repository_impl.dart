@@ -58,9 +58,9 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, UserModel>> getUserSession() async {
     try {
-      final userSession = await _authDatasource.getUserSession();
+      final user = await _authDatasource.getUserSession();
 
-      return right(userSession!);
+      return right(user!);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

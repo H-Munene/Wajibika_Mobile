@@ -81,10 +81,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final response = await _alreadySignedIn.call(NoParams());
-
     response.fold(
-      (failure) => emit(AuthInitial()),
-      (user) => AuthSuccess(user: user),
+      (failure) {
+        return emit(AuthInitial());
+      },
+      (user) {
+        return emit(AuthSuccess(user: user));
+      },
     );
   }
 }
