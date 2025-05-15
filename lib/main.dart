@@ -19,8 +19,19 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(AuthUserAlreadySignedIn());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +39,18 @@ class MyApp extends StatelessWidget {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
 
-      home: const LoginPage(),
+      home: BlocSelector<AuthBloc, AuthState, bool>(
+        selector: (state) {
+          return state is AuthSuccess;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return const HomePage();
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
     );
   }
 }

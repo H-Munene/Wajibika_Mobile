@@ -8,3 +8,5 @@ import 'package:fpdart/fpdart.dart';
 abstract interface class Usecase<S, P> {
   Future<Either<Failure, S>> call(P p);
 }
+
+class NoParams {}
