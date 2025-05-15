@@ -19,6 +19,8 @@ analyzer:
     directives_ordering: ignore
     inference_failure_on_instance_creation: ignore
     one_member_abstracts: ignore
+    await_only_futures: ignore
+    unnecessary_await_in_return: ignore
 
   exclude:
     - test/.test_coverage.dart

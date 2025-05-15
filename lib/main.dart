@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/locator.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
 
   await init();
@@ -19,8 +21,19 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(AuthUserAlreadySignedIn());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +41,18 @@ class MyApp extends StatelessWidget {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
 
-      home: const LoginPage(),
+      home: BlocSelector<AuthBloc, AuthState, bool>(
+        selector: (state) {
+          return state is AuthSuccess;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return const HomePage();
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
     );
   }
 }

@@ -17,11 +17,11 @@ class AuthDataSourceImpl implements AuthDataSource {
         email: email,
         password: password,
       );
-      final userJson =
-          signInResponse.user!.toJson()['user_metadata']
+      final user =
+          signInResponse.session!.user.toJson()['user_metadata']
               as Map<String, dynamic>;
 
-      final userModel = UserModel.fromJson(userJson);
+      final userModel = UserModel.fromJson(user);
 
       return userModel;
     } on AuthApiException catch (e) {
@@ -44,11 +44,11 @@ class AuthDataSourceImpl implements AuthDataSource {
         password: password,
         data: {'username': username},
       );
-      final userModelJson =
-          signUpResponse.user!.toJson()['user_metadata']
-              as Map<String, dynamic>;
 
-      final userModel = UserModel.fromJson(userModelJson);
+      final user =
+          signUpResponse.session!.user.toJson()['user_metadata']
+              as Map<String, dynamic>;
+      final userModel = UserModel.fromJson(user);
 
       return userModel;
     } on AuthApiException catch (e) {
@@ -69,6 +69,23 @@ class AuthDataSourceImpl implements AuthDataSource {
       throw ServerException(message: e.message);
     } catch (e) {
       throw ServerException(message: 'Failed to Logout. Please try again!!');
+    }
+  }
+
+  @override
+  Future<UserModel?> getUserSession() async {
+    try {
+      final response = await supabaseClient.auth.currentSession;
+
+      if (response == null) {
+        throw ServerException(message: 'Please log in');
+      } else {
+        final userSessionData = await response.user.toJson()['user_metadata'];
+
+        return UserModel.fromJson(userSessionData as Map<String, dynamic>);
+      }
+    } catch (e) {
+      throw ServerException(message: 'Please log in');
     }
   }
 }

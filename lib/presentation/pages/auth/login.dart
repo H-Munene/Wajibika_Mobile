@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'pages.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,9 @@ class _LoginPageState extends State<LoginPage> {
               SnackbarDefinition.successSnackBar(
                 context: context,
                 message: 'Login Success',
+              );
+              Navigator.of(context).pushReplacement(
+                CupertinoPageRoute(builder: (context) => const HomePage()),
               );
             }
           },
