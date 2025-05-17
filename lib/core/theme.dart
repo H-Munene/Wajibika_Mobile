@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'core.dart';
 
 class AppTheme {
   //light theme
   static ThemeData lightTheme() => ThemeData(
+    iconTheme: IconThemeData(size: AppDimensions.iconSize),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
     // splashFactory: NoSplash.splashFactory,
     // splashColor: GuardianAppColors.primaryColor,
     primaryTextTheme: AppTheme.lightTextTheme(),
     scaffoldBackgroundColor: Colors.white,
     bottomNavigationBarTheme: _bottomNavigationBarTheme(),
+
     // badgeTheme: BadgeThemeData(
     //   textStyle: lightTextTheme.bodySmall?.copyWith(
     //     fontWeight: FontWeight.bold,
     //   ),
     //   backgroundColor: Colors.red,
     // ),
-    fontFamily: 'Lexend',
     // textTheme: AppTheme.lightTextTheme(),
+    navigationBarTheme: _navigationBarThemeData(),
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
     appBarTheme: const AppBarTheme(
@@ -25,9 +29,10 @@ class AppTheme {
     ),
     floatingActionButtonTheme: _floatingActionButtonThemeData(),
     tabBarTheme: _tabBarThemeData(),
+    textTheme: lightTextTheme(),
   );
 
-  // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/2
+  // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2
 
   // dark theme
   // static ThemeData darkTheme() => ThemeData(
@@ -49,6 +54,11 @@ class AppTheme {
   //   floatingActionButtonTheme: _floatingActionButtonThemeData(),
   //   tabBarTheme: _tabBarThemeData(),
   // );
+  static NavigationBarThemeData _navigationBarThemeData() {
+    return NavigationBarThemeData(
+      backgroundColor: Colors.white
+    );
+  }
 
   static TabBarThemeData _tabBarThemeData() {
     return TabBarThemeData(
@@ -82,30 +92,45 @@ class AppTheme {
       );
 
   // light theme textTheme
-  static TextTheme lightTextTheme() => const TextTheme(
-    titleLarge: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
+  static TextTheme lightTextTheme() => TextTheme(
+    titleLarge: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
     ),
-    titleMedium: TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
+    titleMedium: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
     ),
-    bodyLarge: TextStyle(
-      fontSize: 17,
-      fontWeight: FontWeight.w400,
-      color: Colors.black,
+    bodyLarge: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
     ),
-    bodyMedium: TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.w400,
-      color: Colors.black,
+    bodyMedium: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
     ),
-    bodySmall: TextStyle(
+    bodySmall: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w200,
+        color: Colors.black,
+      ),
+    ),
+    labelMedium: GoogleFonts.lexendExa(
       fontSize: 12,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
   );
