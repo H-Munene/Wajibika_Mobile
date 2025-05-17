@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {
-  const CustomLoadingIndicator({super.key});
+  final Color? color;
+  final double? size;
+
+  const CustomLoadingIndicator({super.key, this.color, this.size});
 
   @override
   Widget build(BuildContext context) {
     return LoadingAnimationWidget.progressiveDots(
-      color: Colors.white,
-      size: AppDimensions.loadingIndicatorSize,
+      color: color ?? Colors.white,
+      size: size ?? AppDimensions.loadingIndicatorSize,
     );
   }
 }

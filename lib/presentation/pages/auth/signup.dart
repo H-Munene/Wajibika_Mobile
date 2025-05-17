@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -105,7 +105,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   child:
                       state is AuthLoading
                           ? const CustomLoadingIndicator()
-                          : const Text('Sign Up'),
+                          : Text(
+                            'Sign Up',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
                 ),
                 CustomRichText(
                   regularText: 'Already Registered? ',

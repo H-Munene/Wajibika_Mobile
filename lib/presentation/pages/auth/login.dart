@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -40,10 +40,6 @@ class _LoginPageState extends State<LoginPage> {
                 message: state.message,
               );
             } else if (state is AuthSuccess) {
-              SnackbarDefinition.successSnackBar(
-                context: context,
-                message: 'Login Success',
-              );
               Navigator.of(context).pushReplacement(
                 CupertinoPageRoute(builder: (context) => const HomePage()),
               );
@@ -78,7 +74,11 @@ class _LoginPageState extends State<LoginPage> {
                   child:
                       state is AuthLoading
                           ? const CustomLoadingIndicator()
-                          : const Text('Login'),
+                          : Text(
+                            'Login',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
                 ),
 
                 CustomRichText(

@@ -5,31 +5,37 @@ import 'core.dart';
 class AppTheme {
   //light theme
   static ThemeData lightTheme() => ThemeData(
-    iconTheme: IconThemeData(size: AppDimensions.iconSize),
+    iconTheme: const IconThemeData(size: AppDimensions.iconSize),
     colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
     // splashFactory: NoSplash.splashFactory,
     // splashColor: GuardianAppColors.primaryColor,
-    primaryTextTheme: AppTheme.lightTextTheme(),
-    scaffoldBackgroundColor: Colors.white,
-    bottomNavigationBarTheme: _bottomNavigationBarTheme(),
+    scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
 
+    // bottomNavigationBarTheme: _bottomNavigationBarTheme(),
+    textTheme: lightTextTheme(),
     // badgeTheme: BadgeThemeData(
     //   textStyle: lightTextTheme.bodySmall?.copyWith(
     //     fontWeight: FontWeight.bold,
     //   ),
     //   backgroundColor: Colors.red,
     // ),
-    // textTheme: AppTheme.lightTextTheme(),
+    bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     navigationBarTheme: _navigationBarThemeData(),
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
+    useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor,
       foregroundColor: Colors.white,
     ),
+    bottomAppBarTheme: const BottomAppBarTheme(
+      shadowColor: Colors.black,
+      elevation: 1,
+      color: Colors.white,
+      shape: CircularNotchedRectangle(),
+    ),
     floatingActionButtonTheme: _floatingActionButtonThemeData(),
     tabBarTheme: _tabBarThemeData(),
-    textTheme: lightTextTheme(),
   );
 
   // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2
@@ -55,8 +61,9 @@ class AppTheme {
   //   tabBarTheme: _tabBarThemeData(),
   // );
   static NavigationBarThemeData _navigationBarThemeData() {
-    return NavigationBarThemeData(
-      backgroundColor: Colors.white
+    return const NavigationBarThemeData(
+      elevation: 5,
+      backgroundColor: Colors.white,
     );
   }
 
@@ -72,7 +79,7 @@ class AppTheme {
   // bottomNavigation bar theme
   static BottomNavigationBarThemeData _bottomNavigationBarTheme() =>
       BottomNavigationBarThemeData(
-        elevation: 0,
+        elevation: 5,
         showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
@@ -116,7 +123,7 @@ class AppTheme {
     ),
     bodyMedium: GoogleFonts.lexendExa(
       textStyle: const TextStyle(
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         color: Colors.black,
       ),

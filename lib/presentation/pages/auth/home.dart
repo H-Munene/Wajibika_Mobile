@@ -1,5 +1,10 @@
+import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   static Route homePage() =>
@@ -13,9 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+
+  List<Widget> screens = [const HomeFeed(), const ProfilePage()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Wajibika')),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -23,10 +32,30 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(CupertinoIcons.photo_camera),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
         notchMargin: 5,
         clipBehavior: Clip.antiAlias,
-        child: NavigationBar(
+        child:
+        // BottomNavigationBar(
+        //   currentIndex: _currentIndex,
+        //   onTap: (value) {
+        //     setState(() {
+        //       _currentIndex = value;
+        //     });
+        //   },
+        //   items: const [
+        //     BottomNavigationBarItem(
+        //       label: 'Home',
+        //       icon: Icon(CupertinoIcons.house_alt),
+        //       activeIcon: Icon(CupertinoIcons.house_alt_fill),
+        //     ),
+        //     BottomNavigationBarItem(
+        //       label: 'Profile',
+        //       icon: Icon(CupertinoIcons.person_circle),
+        //       activeIcon: Icon(CupertinoIcons.person_circle_fill),
+        //     ),
+        //   ],
+        // ),
+        NavigationBar(
           selectedIndex: _currentIndex,
           onDestinationSelected: (value) {
             setState(() {
@@ -48,11 +77,17 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Center(
-        child: Text(
-          'Quis veniam nisi sit eu et ullamco voluptate incididunt nostrud eu minim aute. Aute in in sit do pariatur excepteur. Adipisicing consequat adipisicing duis adipisicing incididunt Lorem. Ullamco laboris Lorem anim ea dolor cillum ut deserunt mollit commodo non cillum minim sit. Sint veniam amet do aute sunt ullamco deserunt. Aute non commodo voluptate anim ex cupidatat eiusmod sunt cillum id pariatur dolore elit enim.: $_currentIndex',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthInitial) {
+            Navigator.of(context).pushReplacement(
+              CupertinoPageRoute(builder: (context) => const LoginPage()),
+            );
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(child: screens[_currentIndex]);
+        },
       ),
     );
   }
