@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_button.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +21,10 @@ class _ProfilePageState extends State<ProfilePage> {
           if (state is AuthFailure) {
             SnackbarDefinition.errorSnackBar(
               context: context,
-              message: state.message,
+              message: 'Failed to logout. Please try again!!',
             );
           }
-
-          if (state is AuthSuccess) {
+          if (state is AuthLoggedOut) {
             SnackbarDefinition.successSnackBar(
               context: context,
               message: 'Successfully Logged out',

@@ -1,10 +1,11 @@
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/locator.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
+import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -16,7 +17,12 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [BlocProvider(create: (_) => locator<AuthBloc>())],
-      child: const MyApp(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -31,7 +37,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    context.read<AuthBloc>().add(AuthUserAlreadySignedIn());
+    context.read<AuthBloc>().add(AuthCheckUserAlreadySignedIn());
     super.initState();
   }
 
@@ -43,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 
       home: BlocSelector<AuthBloc, AuthState, bool>(
         selector: (state) {
-          return state is AuthSuccess;
+          return state is AuthLoggedIn;
         },
         builder: (context, isLoggedIn) {
           if (isLoggedIn) {

@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile.dart';
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthInitial) {
+          if (state is AuthLoggedOut) {
             Navigator.of(context).pushReplacement(
               CupertinoPageRoute(builder: (context) => const LoginPage()),
             );
