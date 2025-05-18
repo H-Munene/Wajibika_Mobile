@@ -34,28 +34,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5,
         clipBehavior: Clip.antiAlias,
-        child:
-        // BottomNavigationBar(
-        //   currentIndex: _currentIndex,
-        //   onTap: (value) {
-        //     setState(() {
-        //       _currentIndex = value;
-        //     });
-        //   },
-        //   items: const [
-        //     BottomNavigationBarItem(
-        //       label: 'Home',
-        //       icon: Icon(CupertinoIcons.house_alt),
-        //       activeIcon: Icon(CupertinoIcons.house_alt_fill),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       label: 'Profile',
-        //       icon: Icon(CupertinoIcons.person_circle),
-        //       activeIcon: Icon(CupertinoIcons.person_circle_fill),
-        //     ),
-        //   ],
-        // ),
-        NavigationBar(
+        child: NavigationBar(
           selectedIndex: _currentIndex,
           onDestinationSelected: (value) {
             setState(() {
