@@ -2,6 +2,7 @@ import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/locator.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,10 @@ void main() async {
 
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => locator<AuthBloc>())],
+      providers: [
+        BlocProvider(create: (_) => locator<AuthBloc>()),
+        BlocProvider(create: (_) => MediaBloc()),
+      ],
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),

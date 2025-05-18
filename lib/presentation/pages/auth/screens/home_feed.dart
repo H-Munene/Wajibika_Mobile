@@ -1,6 +1,7 @@
-import 'dart:math';
+import 'dart:io';
 
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,20 +18,40 @@ class _HomeFeedState extends State<HomeFeed> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(
-            color: Colors.black,
-
-            height: 200,
-            // width: 150,
-            child: ListView.builder(
-              itemCount: 4,
-              scrollDirection: Axis.horizontal,
-              itemBuilder:
-                  (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Container(width: 100, color: Colors.red),
+          child: BlocConsumer<MediaBloc, MediaState>(
+            listener: (context, state) {
+              if (state is MediaPictureSelectionFailed) {
+                SnackbarDefinition.errorSnackBar(
+                  context: context,
+                  message: 'Failed to select images',
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is MediaPicturesSelectedFromGallery) {
+                return SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.images.length,
+                    itemBuilder:
+                        (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Image.file(
+                            width: 300,
+                            fit: BoxFit.cover,
+                            File(state.images[index].path),
+                          ),
+                        ),
                   ),
-            ),
+                );
+              } else {
+                return const Text(
+                  'No pictures selected',
+                  textAlign: TextAlign.center,
+                );
+              }
+            },
           ),
         ),
 
