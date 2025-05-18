@@ -28,21 +28,16 @@ class _HomeFeedState extends State<HomeFeed> {
               }
             },
             builder: (context, state) {
-              if (state is MediaPicturesSelectedFromGallery) {
+              if (state is MediaPictureSelectedFromGallery) {
                 return SizedBox(
                   height: 300,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.images.length,
-                    itemBuilder:
-                        (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Image.file(
-                            width: 300,
-                            fit: BoxFit.cover,
-                            File(state.images[index].path),
-                          ),
-                        ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Image.file(
+                      width: 300,
+                      fit: BoxFit.cover,
+                      File(state.image.path),
+                    ),
                   ),
                 );
               } else {

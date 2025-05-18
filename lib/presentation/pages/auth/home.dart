@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> screens = [const HomeFeed(), const ProfilePage()];
 
   Future<void> _selectImages() async {
-    context.read<MediaBloc>().add(MediaSelectImagesFromGallery());
+    context.read<MediaBloc>().add(MediaSelectImageFromGallery());
   }
 
   @override

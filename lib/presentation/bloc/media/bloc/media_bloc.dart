@@ -9,20 +9,32 @@ part 'media_state.dart';
 
 class MediaBloc extends Bloc<MediaEvent, MediaState> {
   MediaBloc() : super(MediaNoPicturesSelected()) {
-    on<MediaSelectImagesFromGallery>(_onImagesSelectedFromGallery);
+    on<MediaSelectImageFromGallery>(_onImagesSelectedFromGallery);
   }
 
   Future<void> _onImagesSelectedFromGallery(
-    MediaSelectImagesFromGallery event,
+    MediaSelectImageFromGallery event,
     Emitter<MediaState> emit,
   ) async {
     try {
-      final selectedImages = await ImagePicker().pickMultiImage(limit: 2);
+      final selectedImage = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+      );
 
-      if (selectedImages.isEmpty) {
-        emit(MediaNoPicturesSelected());
+      if (state is MediaPictureSelectedFromGallery) {
+        final currentState = state as MediaPictureSelectedFromGallery;
+
+        if (selectedImage == null) {
+          emit(MediaPictureSelectedFromGallery(image: currentState.image));
+        } else {
+          emit(MediaPictureSelectedFromGallery(image: selectedImage));
+        }
       } else {
-        emit(MediaPicturesSelectedFromGallery(images: selectedImages));
+        if (selectedImage == null) {
+          emit(MediaNoPicturesSelected());
+        } else {
+          emit(MediaPictureSelectedFromGallery(image: selectedImage));
+        }
       }
     } catch (e) {
       emit(MediaPictureSelectionFailed());

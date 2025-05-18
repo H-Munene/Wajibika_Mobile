@@ -7,8 +7,8 @@ final class MediaNoPicturesSelected extends MediaState {}
 
 final class MediaPictureSelectionFailed extends MediaState {}
 
-final class MediaPicturesSelectedFromGallery extends MediaState {
-  MediaPicturesSelectedFromGallery({required this.images});
+final class MediaPictureSelectedFromGallery extends MediaState {
+  MediaPictureSelectedFromGallery({required this.image});
 
-  final List<XFile> images;
+  final XFile image;
 }
