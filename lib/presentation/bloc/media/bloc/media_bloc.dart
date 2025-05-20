@@ -8,12 +8,12 @@ part 'media_event.dart';
 part 'media_state.dart';
 
 class MediaBloc extends Bloc<MediaEvent, MediaState> {
-  MediaBloc() : super(MediaNoPicturesSelected()) {
-    on<MediaSelectImageFromGallery>(_onImagesSelectedFromGallery);
+  MediaBloc() : super(MediaNoPicturesSelectedState()) {
+    on<MediaSelectImageFromGalleryEvent>(_onImagesSelectedFromGallery);
   }
 
   Future<void> _onImagesSelectedFromGallery(
-    MediaSelectImageFromGallery event,
+    MediaSelectImageFromGalleryEvent event,
     Emitter<MediaState> emit,
   ) async {
     try {
@@ -21,24 +21,24 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
         source: ImageSource.gallery,
       );
 
-      if (state is MediaPictureSelectedFromGallery) {
-        final currentState = state as MediaPictureSelectedFromGallery;
+      if (state is MediaPictureSelectedFromGalleryState) {
+        final currentState = state as MediaPictureSelectedFromGalleryState;
 
         if (selectedImage == null) {
-          emit(MediaPictureSelectedFromGallery(image: currentState.image));
+          emit(MediaPictureSelectedFromGalleryState(image: currentState.image));
         } else {
-          emit(MediaPictureSelectedFromGallery(image: selectedImage));
+          emit(MediaPictureSelectedFromGalleryState(image: selectedImage));
         }
       } else {
         if (selectedImage == null) {
-          emit(MediaNoPicturesSelected());
+          emit(MediaNoPicturesSelectedState());
         } else {
-          emit(MediaPictureSelectedFromGallery(image: selectedImage));
+          emit(MediaPictureSelectedFromGalleryState(image: selectedImage));
         }
       }
     } catch (e) {
-      emit(MediaPictureSelectionFailed());
-      emit(MediaNoPicturesSelected());
+      emit(MediaPictureSelectionFailedState());
+      emit(MediaNoPicturesSelectedState());
     }
   }
 }

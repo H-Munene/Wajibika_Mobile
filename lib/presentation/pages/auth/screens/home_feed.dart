@@ -20,7 +20,7 @@ class _HomeFeedState extends State<HomeFeed> {
         SliverToBoxAdapter(
           child: BlocConsumer<MediaBloc, MediaState>(
             listener: (context, state) {
-              if (state is MediaPictureSelectionFailed) {
+              if (state is MediaPictureSelectionFailedState) {
                 SnackbarDefinition.errorSnackBar(
                   context: context,
                   message: 'Failed to select images',
@@ -28,7 +28,7 @@ class _HomeFeedState extends State<HomeFeed> {
               }
             },
             builder: (context, state) {
-              if (state is MediaPictureSelectedFromGallery) {
+              if (state is MediaPictureSelectedFromGalleryState) {
                 return SizedBox(
                   height: 300,
                   child: Padding(

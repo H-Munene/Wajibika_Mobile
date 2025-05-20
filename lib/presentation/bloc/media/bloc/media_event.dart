@@ -3,6 +3,6 @@ part of 'media_bloc.dart';
 @immutable
 sealed class MediaEvent {}
 
-final class MediaSelectImageFromGallery extends MediaEvent {}
+final class MediaSelectImageFromGalleryEvent extends MediaEvent {}
 
-final class MediaTakePictureWithCamera extends MediaEvent {}
+final class MediaTakePictureWithCameraEvent extends MediaEvent {}

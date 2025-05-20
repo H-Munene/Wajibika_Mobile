@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/report.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +23,12 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> screens = [const HomeFeed(), const ProfilePage()];
 
-  Future<void> _selectImages() async {
-    context.read<MediaBloc>().add(MediaSelectImageFromGallery());
+  Future<void> _selectImage() async {
+
+    context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
+    await Navigator.of(
+      context,
+    ).push(CupertinoPageRoute(builder: (context) => const ReportPage()));
   }
 
   @override
@@ -32,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: const Text('Wajibika')),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: _selectImages,
+        onPressed: _selectImage,
         shape: const CircleBorder(),
         child: const Icon(CupertinoIcons.photo_camera),
       ),
