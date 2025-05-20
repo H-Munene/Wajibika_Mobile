@@ -1,9 +1,9 @@
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/report.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile.dart';
+import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +24,18 @@ class _HomePageState extends State<HomePage> {
   List<Widget> screens = [const HomeFeed(), const ProfilePage()];
 
   Future<void> _selectImage() async {
+    CustomBottomAppSheet.mediaSelectionBottomSheet(
+      context: context,
+      onCameraSelected: () {
+        Navigator.pop(context);
 
-    context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
-    await Navigator.of(
-      context,
-    ).push(CupertinoPageRoute(builder: (context) => const ReportPage()));
+        context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
+      },
+      onGallerySelected: () {
+        Navigator.pop(context);
+        context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
+      },
+    );
   }
 
   @override
