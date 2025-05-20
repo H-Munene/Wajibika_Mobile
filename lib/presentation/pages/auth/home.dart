@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       onCameraSelected: () {
         Navigator.pop(context);
 
-        context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
+        context.read<MediaBloc>().add(MediaTakePictureWithCameraEvent());
       },
       onGallerySelected: () {
         Navigator.pop(context);
