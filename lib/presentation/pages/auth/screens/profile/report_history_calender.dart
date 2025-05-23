@@ -30,6 +30,7 @@ class ReportHistoryCalender extends StatelessWidget {
             DateTime(DateTime.now().year, DateTime.now().month, 30): 5,
           },
           colorTipHelper: const [Text('less reports'), Text(' more reports')],
+          showColorTip: false,
           colorsets: {
             1: AppColors.primaryColor.withAlpha(1),
             2: AppColors.primaryColor.withAlpha(2),
