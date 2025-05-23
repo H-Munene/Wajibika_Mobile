@@ -75,7 +75,6 @@ class AuthDataSourceImpl implements AuthDataSource {
       final response = await supabaseClient.auth.currentSession;
 
       if (response == null) {
-        print('NO SESSION');
         throw ServerException(message: 'Please log in');
       } else {
         final userSessionData = await response.user.toJson()['user_metadata'];

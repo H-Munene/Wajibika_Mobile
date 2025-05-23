@@ -10,13 +10,11 @@ class UserProvider extends ChangeNotifier {
 
   set userModel(UserModel userModel) {
     _userModel = userModel;
-    print('🔒🔒${_userModel.toString()}');
     notifyListeners();
   }
 
   void clear() {
     _userModel = null;
-    print('🔒🔒${_userModel.toString()}');
     notifyListeners();
   }
 }

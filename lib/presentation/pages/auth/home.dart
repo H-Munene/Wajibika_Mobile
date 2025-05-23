@@ -2,7 +2,7 @@ import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
       context: context,
       onCameraSelected: () {
         Navigator.pop(context);
-
         context.read<MediaBloc>().add(MediaTakePictureWithCameraEvent());
       },
       onGallerySelected: () {
@@ -41,7 +40,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Wajibika')),
+      appBar: AppBar(
+        title: const Text('Wajibika'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Badge(
+              label: Text('2'),
+              child: Icon(CupertinoIcons.bell),
+            ),
+          ),
+        ],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: _selectImage,

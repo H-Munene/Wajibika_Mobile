@@ -53,7 +53,7 @@ class FormValidation {
     return (value!.isEmpty)
         ? 'Password is required'
         : (!passwordExp.hasMatch(value))
-        ? 'Your password should have at least 8 characters'
+        ? 'Password should have at least 6 characters'
         : (confirmPassword != password)
         ? 'Passwords do not match'
         : null;
@@ -66,7 +66,7 @@ class FormValidation {
   // }
 }
 
-final passwordExp = RegExp(r'^.{8,}$'); //password not less than 6
+final passwordExp = RegExp(r'^.{6,}$'); //password not less than 6
 final nameRegExp = RegExp(r'^[a-zA-Z]+$'); //name regex
 final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
 final phoneRegexExp = RegExp(r'^\d{10}$');

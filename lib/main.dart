@@ -1,6 +1,6 @@
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/locator.dart';
+import 'package:bloc_clean_arch/get_it_di.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
+      debugShowCheckedModeBanner: false,
 
       home: BlocSelector<AuthBloc, AuthState, bool>(
         selector: (state) {

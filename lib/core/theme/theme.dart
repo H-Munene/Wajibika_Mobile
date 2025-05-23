@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'core.dart';
+import '../core.dart';
 
 class AppTheme {
   //light theme
@@ -13,12 +13,12 @@ class AppTheme {
 
     // bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     textTheme: lightTextTheme(),
-    // badgeTheme: BadgeThemeData(
-    //   textStyle: lightTextTheme.bodySmall?.copyWith(
-    //     fontWeight: FontWeight.bold,
-    //   ),
-    //   backgroundColor: Colors.red,
-    // ),
+    badgeTheme: BadgeThemeData(
+      textStyle: lightTextTheme().bodySmall?.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
+      backgroundColor: Colors.red,
+    ),
     bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     navigationBarTheme: _navigationBarThemeData(),
     brightness: Brightness.light,
@@ -68,7 +68,7 @@ class AppTheme {
   }
 
   static TabBarThemeData _tabBarThemeData() {
-    return TabBarThemeData(
+    return const TabBarThemeData(
       dividerHeight: 0,
       labelColor: AppColors.primaryColor,
       unselectedLabelColor: AppColors.selectedItemColor,
@@ -78,7 +78,7 @@ class AppTheme {
 
   // bottomNavigation bar theme
   static BottomNavigationBarThemeData _bottomNavigationBarTheme() =>
-      BottomNavigationBarThemeData(
+      const BottomNavigationBarThemeData(
         elevation: 5,
         showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,

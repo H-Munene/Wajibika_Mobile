@@ -73,20 +73,20 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.errorColor, width: 2),
+            borderSide: const BorderSide(color: AppColors.errorColor, width: 2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.unselectedItemColor),
+            borderSide: const BorderSide(color: AppColors.unselectedItemColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppColors.selectedItemColor,
               width: 2,
             ),
           ),
-          errorStyle: TextStyle(color: AppColors.errorColor),
+          errorStyle: const TextStyle(color: AppColors.errorColor),
         ),
       ),
     );

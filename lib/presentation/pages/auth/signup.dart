@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/core/snackbar_definitions.dart';
+import 'package:bloc_clean_arch/core/utils/snackbar_definitions.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
 import 'package:flutter/cupertino.dart';

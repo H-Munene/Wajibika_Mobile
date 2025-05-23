@@ -4,7 +4,6 @@ import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
