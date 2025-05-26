@@ -15,49 +15,37 @@ class HomeFeed extends StatefulWidget {
 class _HomeFeedState extends State<HomeFeed> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: BlocConsumer<MediaBloc, MediaState>(
-            listener: (context, state) {
-              if (state is MediaPictureSelectionFailedState) {
-                SnackbarDefinition.errorSnackBar(
-                  context: context,
-                  message: 'Failed to select images',
-                );
-              }
-            },
-            builder: (context, state) {
-              if (state is MediaPictureSelectedFromGalleryState) {
-                return SizedBox(
-                  height: 300,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Image.file(
-                      width: 300,
-                      fit: BoxFit.cover,
-                      File(state.image.path),
-                    ),
-                  ),
-                );
-              } else {
-                return const Text(
-                  'No pictures selected',
-                  textAlign: TextAlign.center,
-                );
-              }
-            },
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return ListView(
+      children: [
+        // TODO: insert images for carousel
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: screenHeight / 4),
+          child: CarouselView(
+            itemExtent: 0.8 * screenWidth,
+            children: List.generate(
+              4,
+              (index) => Padding(
+                padding: const EdgeInsetsDirectional.all(8),
+                child: Container(color: const Color(0xFF760000)),
+              ),
+            ),
           ),
         ),
+        const Divider(),
+        // user feed
+        //tabs : pending, volunteer, completed,
+        //pending, ->
+        // have
+        // volunteer -> has , *
+        //
+        // completed
 
-        SliverList.builder(
-          itemCount: 10,
-          itemBuilder:
-              (context, index) => SizedBox(
-                height: 100,
-                child: Card(color: Colors.deepPurpleAccent[index * 50]),
-              ),
-        ),
+        //tab
+        // image with di
+        //
       ],
     );
   }

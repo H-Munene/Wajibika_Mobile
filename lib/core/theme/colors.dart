@@ -14,4 +14,5 @@ class AppColors {
   static const Color otherButtonBackgroundColor = Color(0xFFF5F5F5);
   static const Color hightlightColor = Color(0xFF97E5D7);
   static const Color scaffoldBackgroundColor = Color(0xFFF5F5F5);
+  static const Color noProfilePictureBackgroundColor = Colors.black;
 }

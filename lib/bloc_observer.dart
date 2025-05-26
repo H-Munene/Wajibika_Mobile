@@ -9,8 +9,8 @@ class AppBlocObserver extends BlocObserver {
     Bloc<dynamic, dynamic> bloc,
     Transition<dynamic, dynamic> transition,
   ) {
-    super.onTransition(bloc, transition);
     debugPrint(transition.toString());
+    super.onTransition(bloc, transition);
   }
 
   @override
