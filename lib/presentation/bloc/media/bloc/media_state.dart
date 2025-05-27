@@ -3,12 +3,12 @@ part of 'media_bloc.dart';
 @immutable
 sealed class MediaState {}
 
-final class MediaNoPicturesSelectedState extends MediaState {}
+final class MediaNoReportPicturesSelectedState extends MediaState {}
 
-final class MediaPictureSelectionFailedState extends MediaState {}
+final class MediaReportPictureSelectionFailedState extends MediaState {}
 
-final class MediaPictureSelectedFromGalleryState extends MediaState {
-  MediaPictureSelectedFromGalleryState({required this.image});
+final class MediaReportPictureSelectedFromGalleryState extends MediaState {
+  MediaReportPictureSelectedFromGalleryState({required this.image});
 
   final XFile image;
 }

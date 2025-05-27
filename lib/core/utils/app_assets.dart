@@ -9,7 +9,7 @@ class AppImages {
 
   // TODO: create logo for app icon and splash screen, https://github.com/H-Munene/bloc_CleanArch/issues/13
   static const fullLogo = '$_imagesPath';
-  static const blankProfilePicture = '$_imagesPath/no_profile_image.png';
+  static const blankProfilePicture = '$_imagesPath/no_profile_picture.jpg';
 }
 
 //**VECTOR ASSETS CLASS BELOW *//

@@ -8,7 +8,7 @@ part 'media_event.dart';
 part 'media_state.dart';
 
 class MediaBloc extends Bloc<MediaEvent, MediaState> {
-  MediaBloc() : super(MediaNoPicturesSelectedState()) {
+  MediaBloc() : super(MediaNoReportPicturesSelectedState()) {
     on<MediaSelectImageFromGalleryEvent>(_onMediaObtainedFromGallery);
     on<MediaTakePictureWithCameraEvent>(_onMediaObtainedFromCamera);
   }
@@ -27,11 +27,10 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
     await _processImageSelection(emit, ImageSource.camera);
   }
 
-  /// Primarily checks if there is already a selected image in the current state
-  ///
-  ///If no image is selected by the user when there is an already selected image
-  ///the already present image is retained
-  //couldn't think of a better name😭😭
+  // Primarily checks if there is already a selected image in the current state
+  // If no image is selected by the user when there is an already selected image
+  // the already present image is retained
+  // couldn't think of a better name😭😭
   Future<void> _processImageSelection(
     Emitter<MediaState> emit,
     ImageSource source,
@@ -39,24 +38,29 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
     try {
       final pictureTaken = await ImagePicker().pickImage(source: source);
 
-      if (state is MediaPictureSelectedFromGalleryState) {
-        final currentState = state as MediaPictureSelectedFromGalleryState;
+      if (state is MediaReportPictureSelectedFromGalleryState) {
+        final currentState =
+            state as MediaReportPictureSelectedFromGalleryState;
 
         if (pictureTaken == null) {
-          emit(MediaPictureSelectedFromGalleryState(image: currentState.image));
+          emit(
+            MediaReportPictureSelectedFromGalleryState(
+              image: currentState.image,
+            ),
+          );
         } else {
-          emit(MediaPictureSelectedFromGalleryState(image: pictureTaken));
+          emit(MediaReportPictureSelectedFromGalleryState(image: pictureTaken));
         }
       } else {
         if (pictureTaken == null) {
-          emit(MediaNoPicturesSelectedState());
+          emit(MediaNoReportPicturesSelectedState());
         } else {
-          emit(MediaPictureSelectedFromGalleryState(image: pictureTaken));
+          emit(MediaReportPictureSelectedFromGalleryState(image: pictureTaken));
         }
       }
     } catch (e) {
-      emit(MediaPictureSelectionFailedState());
-      emit(MediaNoPicturesSelectedState());
+      emit(MediaReportPictureSelectionFailedState());
+      emit(MediaNoReportPicturesSelectedState());
     }
   }
 }

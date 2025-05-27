@@ -27,7 +27,7 @@ class _ReportPageState extends State<ReportPage> {
                     ),
                 child: BlocBuilder<MediaBloc, MediaState>(
                   builder: (context, state) {
-                    if (state is MediaNoPicturesSelectedState) {
+                    if (state is MediaNoReportPicturesSelectedState) {
                       return GestureDetector(
                         onTap:
                             () => context.read<MediaBloc>().add(
@@ -51,7 +51,7 @@ class _ReportPageState extends State<ReportPage> {
                       );
                     } else {
                       final currentState =
-                          state as MediaPictureSelectedFromGalleryState;
+                          state as MediaReportPictureSelectedFromGalleryState;
                       final selectedImage = currentState.image.path;
                       return GestureDetector(
                         onTap:

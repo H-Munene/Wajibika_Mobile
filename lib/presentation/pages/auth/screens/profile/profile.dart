@@ -1,8 +1,8 @@
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/report_history_calender.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_button.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +14,31 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Future<void> _selectProfilePicture(bool showRemoveMediaActionbutton) async {
+    CustomBottomAppSheet.mediaSelectionBottomSheet(
+      context: context,
+      onCameraSelected: () {
+        Navigator.pop(context);
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaChangeProfilePictureFromCameraEvent(),
+        );
+      },
+      onGallerySelected: () {
+        Navigator.pop(context);
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaChangeProfilePictureFromGalleryEvent(),
+        );
+      },
+      showRemoveMediaActionbutton: showRemoveMediaActionbutton,
+      onRemoveMediaSelected: () {
+        Navigator.pop(context);
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaRemoveCurrentProfilePictureEvent(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -47,9 +72,32 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(left: 20, bottom: 20),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 55,
+                        BlocConsumer<ProfileMediaBloc, ProfileMediaState>(
+                          listener: (context, state) {
+                            if (state
+                                is ProfileMediaFailedProfileImageSelectionState) {
+                              SnackbarDefinition.errorSnackBar(
+                                context: context,
+                                message: 'Failed to select profile image',
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                            final isThereimageSelected =
+                                state is ProfileMediaProfileImageSelectedState;
+                            return CustomUserAvatar(
+                              //display the user image when tapped
+                              onCameraIconTapped:
+                                  () => _selectProfilePicture(
+                                    isThereimageSelected,
+                                  ),
+
+                              userProfilePicture:
+                                  isThereimageSelected
+                                      ? state.profilePicture.path
+                                      : null,
+                            );
+                          },
                         ),
                         const SizedBox(width: 20),
                         Column(

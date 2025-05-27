@@ -9,6 +9,8 @@ class CustomBottomAppSheet {
     required BuildContext context,
     required VoidCallback onCameraSelected,
     required VoidCallback onGallerySelected,
+    void Function()? onRemoveMediaSelected,
+    bool showRemoveMediaActionbutton = false,
   }) async {
     await showModalBottomSheet<void>(
       shape: const RoundedRectangleBorder(
@@ -21,7 +23,7 @@ class CustomBottomAppSheet {
       builder: (context) {
         return Container(
           padding: AppDimensions.bottomSheetPadding,
-          height: 150,
+          height: showRemoveMediaActionbutton ? 200 : 150,
           child: Column(
             children: [
               Container(
@@ -59,6 +61,28 @@ class CustomBottomAppSheet {
                       SizedBox(width: 10),
                       Text('Gallery'),
                     ],
+                  ),
+                ),
+              ),
+              Offstage(
+                offstage: !showRemoveMediaActionbutton,
+                child: InkWell(
+                  onTap: onRemoveMediaSelected,
+                  overlayColor: const WidgetStatePropertyAll(
+                    Colors.transparent,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: SizedBox(
+                      height: 35,
+                      child: Row(
+                        children: [
+                          Icon(Icons.close),
+                          SizedBox(width: 10),
+                          Text('Remove Photo'),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

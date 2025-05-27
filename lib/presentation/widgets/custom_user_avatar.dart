@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/core/utils/app_images.dart';
+import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 
 class CustomUserAvatar extends StatelessWidget {
-  final String username;
+  final void Function() onCameraIconTapped;
+  final String? userProfilePicture;
 
-  const CustomUserAvatar({required this.username, super.key});
+  const CustomUserAvatar({
+    super.key,
+    required this.onCameraIconTapped,
+    this.userProfilePicture,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +26,24 @@ class CustomUserAvatar extends StatelessWidget {
               CircleAvatar(
                 radius: 50,
                 backgroundImage:
-                    Image.asset(AppImages.blankProfilePicture).image,
+                    userProfilePicture != null
+                        ? Image.file(File(userProfilePicture!)).image
+                        : Image.asset(AppImages.blankProfilePicture).image,
                 backgroundColor: AppColors.noProfilePictureBackgroundColor,
               ),
-              const Positioned(
+              Positioned(
                 bottom: 4,
                 right: 5,
-                child: CircleAvatar(
-                  radius: 16,
-                  // should change to black on dark mode
-                  backgroundColor: Colors.black,
-                  child: CircleAvatar(
-                    radius: 12,
+                child: GestureDetector(
+                  onTap: onCameraIconTapped,
+                  child: const CircleAvatar(
+                    radius: 16,
                     backgroundColor: AppColors.primaryColor,
-                    child: Icon(Icons.add, color: Colors.white),
+                    child: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: AppColors.hightlightColor,
+                      child: Icon(Icons.add, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
