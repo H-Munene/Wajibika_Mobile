@@ -35,32 +35,33 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
     Emitter<MediaState> emit,
     ImageSource source,
   ) async {
+    final isThereReportedMedia = state is MediaReportPictureSelected;
     try {
       final pictureTaken = await ImagePicker().pickImage(source: source);
 
-      if (state is MediaReportPictureSelectedFromGalleryState) {
-        final currentState =
-            state as MediaReportPictureSelectedFromGalleryState;
+      if (isThereReportedMedia) {
+        final currentState = state as MediaReportPictureSelected;
 
         if (pictureTaken == null) {
-          emit(
-            MediaReportPictureSelectedFromGalleryState(
-              image: currentState.image,
-            ),
-          );
+          emit(MediaReportPictureSelected(image: currentState.image));
         } else {
-          emit(MediaReportPictureSelectedFromGalleryState(image: pictureTaken));
+          emit(MediaReportPictureSelected(image: pictureTaken));
         }
       } else {
         if (pictureTaken == null) {
           emit(MediaNoReportPicturesSelectedState());
         } else {
-          emit(MediaReportPictureSelectedFromGalleryState(image: pictureTaken));
+          emit(MediaReportPictureSelected(image: pictureTaken));
         }
       }
     } catch (e) {
-      emit(MediaReportPictureSelectionFailedState());
-      emit(MediaNoReportPicturesSelectedState());
+      if (isThereReportedMedia) {
+        final currentState = state as MediaReportPictureSelected;
+        emit(MediaReportPictureSelected(image: currentState.image));
+      } else {
+        emit(MediaReportPictureSelectionFailedState());
+        emit(MediaNoReportPicturesSelectedState());
+      }
     }
   }
 }

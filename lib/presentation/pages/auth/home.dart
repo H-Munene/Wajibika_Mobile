@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/media/bloc/media_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
