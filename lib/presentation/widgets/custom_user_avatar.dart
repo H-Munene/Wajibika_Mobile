@@ -5,50 +5,56 @@ import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 
 class CustomUserAvatar extends StatelessWidget {
-  final void Function() onCameraIconTapped;
+  final void Function()? onCameraIconTapped;
   final String? userProfilePicture;
+  final bool showAddIcon;
 
   const CustomUserAvatar({
     super.key,
-    required this.onCameraIconTapped,
+    this.onCameraIconTapped,
     this.userProfilePicture,
+    this.showAddIcon = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    final baseUserAvatar = CircleAvatar(
+      radius: 50,
+      backgroundImage:
+          userProfilePicture != null
+              ? Image.file(File(userProfilePicture!)).image
+              : Image.asset(AppImages.blankProfilePicture).image,
+      backgroundColor: AppColors.noProfilePictureBackgroundColor,
+    );
     return Column(
       children: [
         SizedBox(
-          height: 105,
-          width: 105,
-          child: Stack(
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundImage:
-                    userProfilePicture != null
-                        ? Image.file(File(userProfilePicture!)).image
-                        : Image.asset(AppImages.blankProfilePicture).image,
-                backgroundColor: AppColors.noProfilePictureBackgroundColor,
-              ),
-              Positioned(
-                bottom: 4,
-                right: 5,
-                child: GestureDetector(
-                  onTap: onCameraIconTapped,
-                  child: const CircleAvatar(
-                    radius: 16,
-                    backgroundColor: AppColors.primaryColor,
-                    child: CircleAvatar(
-                      radius: 12,
-                      backgroundColor: AppColors.hightlightColor,
-                      child: Icon(Icons.add, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          height: showAddIcon ? 105 : 70,
+          width: showAddIcon ? 105 : 70,
+          child:
+              showAddIcon
+                  ? Stack(
+                    children: [
+                      baseUserAvatar,
+                      Positioned(
+                        bottom: showAddIcon ? 4 : -4,
+                        right: showAddIcon ? 5 : -4,
+                        child: GestureDetector(
+                          onTap: onCameraIconTapped,
+                          child: const CircleAvatar(
+                            radius: 16,
+                            backgroundColor: AppColors.primaryColor,
+                            child: CircleAvatar(
+                              radius: 12,
+                              backgroundColor: AppColors.hightlightColor,
+                              child: Icon(Icons.add, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                  : baseUserAvatar,
         ),
       ],
     );

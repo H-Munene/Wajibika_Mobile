@@ -50,8 +50,7 @@ class _ReportPageState extends State<ReportPage> {
                         ),
                       );
                     } else {
-                      final currentState =
-                          state as MediaReportPictureSelected;
+                      final currentState = state as MediaReportPictureSelected;
                       final selectedImage = currentState.image.path;
                       return GestureDetector(
                         onTap:

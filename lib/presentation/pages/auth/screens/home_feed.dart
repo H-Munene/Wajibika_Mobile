@@ -1,7 +1,5 @@
-import 'dart:io';
-
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +18,18 @@ class _HomeFeedState extends State<HomeFeed> {
 
     return ListView(
       children: [
+        BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+          builder: (context, state) {
+            if (state is ProfileMediaProfileImageSelectedState) {
+              return CustomUserAvatar(
+                showAddIcon: false,
+                userProfilePicture: state.profilePicture.path,
+              );
+            } else {
+              return const CustomUserAvatar(showAddIcon: false);
+            }
+          },
+        ),
         // TODO: insert images for carousel
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: screenHeight / 4),

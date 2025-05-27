@@ -78,24 +78,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                 is ProfileMediaFailedProfileImageSelectionState) {
                               SnackbarDefinition.errorSnackBar(
                                 context: context,
-                                message: 'Failed to select profile image',
+                                message: 'Failed to select profile picture',
                               );
                             }
                           },
                           builder: (context, state) {
+                            // if the user has set a profile picture
                             final isThereimageSelected =
                                 state is ProfileMediaProfileImageSelectedState;
-                            return CustomUserAvatar(
-                              //display the user image when tapped
-                              onCameraIconTapped:
-                                  () => _selectProfilePicture(
-                                    isThereimageSelected,
-                                  ),
-
-                              userProfilePicture:
-                                  isThereimageSelected
-                                      ? state.profilePicture.path
-                                      : null,
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 7),
+                              child: CustomUserAvatar(
+                                //display the user image when tapped
+                                onCameraIconTapped:
+                                    () => _selectProfilePicture(
+                                      isThereimageSelected,
+                                    ),
+                                userProfilePicture:
+                                    isThereimageSelected
+                                        ? state.profilePicture.path
+                                        : null,
+                              ),
                             );
                           },
                         ),
