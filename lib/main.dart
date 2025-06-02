@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
 
   await init();
 

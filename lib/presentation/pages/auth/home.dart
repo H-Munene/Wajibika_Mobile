@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(CupertinoIcons.photo_camera),
       ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 5,
+        notchMargin: 10,
         clipBehavior: Clip.antiAlias,
         child: NavigationBar(
           selectedIndex: _currentIndex,
@@ -92,7 +92,9 @@ class _HomePageState extends State<HomePage> {
           }
         },
         builder: (context, state) {
-          return SafeArea(child: screens[_currentIndex]);
+          return SafeArea(
+            child: SingleChildScrollView(child: screens[_currentIndex]),
+          );
         },
       ),
     );

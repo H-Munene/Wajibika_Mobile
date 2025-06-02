@@ -9,8 +9,8 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
     // splashFactory: NoSplash.splashFactory,
     // splashColor: GuardianAppColors.primaryColor,
-    scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
-
+    // scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
+    scaffoldBackgroundColor: Colors.white,
     // bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     textTheme: lightTextTheme(),
     badgeTheme: BadgeThemeData(
@@ -36,6 +36,7 @@ class AppTheme {
     ),
     floatingActionButtonTheme: _floatingActionButtonThemeData(),
     tabBarTheme: _tabBarThemeData(),
+    
   );
 
   // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2

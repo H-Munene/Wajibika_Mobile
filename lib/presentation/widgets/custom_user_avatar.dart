@@ -29,8 +29,8 @@ class CustomUserAvatar extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: showAddIcon ? 105 : 70,
-          width: showAddIcon ? 105 : 70,
+          height: showAddIcon ? 105 : 50,
+          width: showAddIcon ? 105 : 50,
           child:
               showAddIcon
                   ? Stack(
