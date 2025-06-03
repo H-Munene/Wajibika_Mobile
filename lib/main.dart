@@ -7,13 +7,19 @@ import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bl
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory(
+      (await getTemporaryDirectory()).path,
+    ),
+  );
   await init();
 
   runApp(

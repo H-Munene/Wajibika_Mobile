@@ -2,7 +2,6 @@
 
 // provides unified access to images
 class AppImages {
-
   // *NOTE*
   //images are 1500 * 1000
   //if image is unable to load, especially in web, try: ↓↓↓↓↓↓
@@ -15,7 +14,6 @@ class AppImages {
   static const cleanup = '$_imagesPath/cleanup.jpg';
   static const cleanup2 = '$_imagesPath/cleanup2.jpg';
   static const team = '$_imagesPath/team.jpg';
-
 }
 
 //**VECTOR ASSETS CLASS BELOW *//

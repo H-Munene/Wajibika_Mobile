@@ -27,33 +27,12 @@ class _HomeFeedState extends State<HomeFeed> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
-              builder: (context, state) {
-                if (state is ProfileMediaProfileImageSelectedState) {
-                  return CustomUserAvatar(
-                    showAddIcon: false,
-                    userProfilePicture: state.profilePicture.path,
-                  );
-                } else {
-                  return const CustomUserAvatar(showAddIcon: false);
-                }
-              },
-            ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Good Morning, ☀️'),
-                Text('John Doe', style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ],
-        ),
         Padding(
           padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
-          child: Text('Weekly highlights', style: textTheme.titleMedium?.copyWith(fontSize: )),
+          child: Text(
+            'Weekly highlights',
+            style: textTheme.titleMedium?.copyWith(fontSize: 20),
+          ),
         ),
 
         // weekly highlights
@@ -75,10 +54,7 @@ class _HomeFeedState extends State<HomeFeed> {
         //volunteer oportunities
         Padding(
           padding: const EdgeInsetsDirectional.symmetric(vertical: 10),
-          child: Text(
-            'Volunteer Opportunities',
-            style: textTheme.titleMedium,
-          ),
+          child: Text('Volunteer Opportunities', style: textTheme.titleMedium),
         ),
         // user feed
         //tabs : pending, volunteer, completed,

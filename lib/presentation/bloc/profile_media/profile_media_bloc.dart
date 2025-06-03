@@ -1,16 +1,20 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'profile_media_event.dart';
 part 'profile_media_state.dart';
 
 /// This bloc defines the operations to add a new or remove the user profile
 /// picture.
-class ProfileMediaBloc extends Bloc<ProfileMediaEvent, ProfileMediaState> {
-  ProfileMediaBloc() : super(ProfileMediaNoProfileImageSelectedState()) {
+class ProfileMediaBloc
+    extends HydratedBloc<ProfileMediaEvent, ProfileMediaState> {
+  ProfileMediaBloc() : super(ProfileMediaState()) {
     on<ProfileMediaChangeProfilePictureFromCameraEvent>(
       _onProfilePictureChangeFromCamera,
     );
@@ -41,7 +45,12 @@ class ProfileMediaBloc extends Bloc<ProfileMediaEvent, ProfileMediaState> {
     ProfileMediaRemoveCurrentProfilePictureEvent event,
     Emitter<ProfileMediaState> emit,
   ) async {
-    emit(ProfileMediaNoProfileImageSelectedState());
+    emit(
+      state.copyWith(
+        newProfilePicture: '',
+        newProfileMediaStatus: ProfileMediaStatus.noProfilePicture,
+      ),
+    );
   }
 
   // base method to streamline image selection process
@@ -50,53 +59,44 @@ class ProfileMediaBloc extends Bloc<ProfileMediaEvent, ProfileMediaState> {
     ImageSource source,
   ) async {
     final bool isThereAProfileIMageSelected =
-        state is ProfileMediaProfileImageSelectedState;
+        state.profileMediaStatus == ProfileMediaStatus.profilePicturePresent;
 
     try {
-      final profilePictureSelected = await ImagePicker().pickImage(
+      final xfileProfilePictureSelected = await ImagePicker().pickImage(
         source: source,
       );
 
       if (isThereAProfileIMageSelected) {
-        final currentState = state as ProfileMediaProfileImageSelectedState;
-
-        if (profilePictureSelected == null) {
-          emit(
-            ProfileMediaProfileImageSelectedState(
-              profilePicture: currentState.profilePicture,
-            ),
-          );
+        if (xfileProfilePictureSelected == null) {
+          emit(state);
         } else {
-          emit(
-            ProfileMediaProfileImageSelectedState(
-              profilePicture: profilePictureSelected,
-            ),
-          );
+          final profilePictureSelected = xfileProfilePictureSelected.path;
+          emit(state.copyWith(newProfilePicture: profilePictureSelected));
         }
       } else {
-        if (profilePictureSelected == null) {
-          emit(ProfileMediaNoProfileImageSelectedState());
+        if (xfileProfilePictureSelected == null) {
+          emit(state);
         } else {
+          final profilePictureSelected = xfileProfilePictureSelected.path;
+
           emit(
-            ProfileMediaProfileImageSelectedState(
-              profilePicture: profilePictureSelected,
+            state.copyWith(
+              newProfileMediaStatus: ProfileMediaStatus.profilePicturePresent,
+              newProfilePicture: profilePictureSelected,
             ),
           );
         }
       }
     } catch (_) {
-      emit(ProfileMediaFailedProfileImageSelectionState());
-      if (isThereAProfileIMageSelected) {
-        final currentState = state as ProfileMediaProfileImageSelectedState;
-
-        emit(
-          ProfileMediaProfileImageSelectedState(
-            profilePicture: currentState.profilePicture,
-          ),
-        );
-      } else {
-        emit(ProfileMediaNoProfileImageSelectedState());
-      }
+      emit(state);
     }
   }
+
+  @override
+  ProfileMediaState? fromJson(Map<String, dynamic> json) =>
+      ProfileMediaState.fromJson(json);
+
+  @override
+  Map<String, dynamic>? toJson(ProfileMediaState state) =>
+      _$ProfileMediaStateToJson(state);
 }

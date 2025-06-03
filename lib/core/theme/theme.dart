@@ -36,7 +36,6 @@ class AppTheme {
     ),
     floatingActionButtonTheme: _floatingActionButtonThemeData(),
     tabBarTheme: _tabBarThemeData(),
-    
   );
 
   // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2

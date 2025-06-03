@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 class CustomUserAvatar extends StatelessWidget {
   final void Function()? onCameraIconTapped;
-  final String? userProfilePicture;
+  final String userProfilePicture;
   final bool showAddIcon;
 
   const CustomUserAvatar({
     super.key,
     this.onCameraIconTapped,
-    this.userProfilePicture,
+    this.userProfilePicture = '',
     this.showAddIcon = true,
   });
 
@@ -21,9 +21,10 @@ class CustomUserAvatar extends StatelessWidget {
     final baseUserAvatar = CircleAvatar(
       radius: 50,
       backgroundImage:
-          userProfilePicture != null
-              ? Image.file(File(userProfilePicture!)).image
-              : Image.asset(AppImages.blankProfilePicture).image,
+          userProfilePicture == ''
+              ? Image.asset(AppImages.blankProfilePicture).image
+              : Image.file(File(userProfilePicture)).image,
+
       backgroundColor: AppColors.noProfilePictureBackgroundColor,
     );
     return Column(

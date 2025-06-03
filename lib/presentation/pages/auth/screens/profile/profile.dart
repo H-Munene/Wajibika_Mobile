@@ -73,19 +73,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                       children: [
                         BlocConsumer<ProfileMediaBloc, ProfileMediaState>(
-                          listener: (context, state) {
-                            if (state
-                                is ProfileMediaFailedProfileImageSelectionState) {
-                              SnackbarDefinition.errorSnackBar(
-                                context: context,
-                                message: 'Failed to select profile picture',
-                              );
-                            }
-                          },
+                          listener: (context, state) {},
                           builder: (context, state) {
                             // if the user has set a profile picture
                             final isThereimageSelected =
-                                state is ProfileMediaProfileImageSelectedState;
+                                state.profileMediaStatus ==
+                                ProfileMediaStatus.profilePicturePresent;
                             return Padding(
                               padding: const EdgeInsets.only(top: 7),
                               child: CustomUserAvatar(
@@ -96,8 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                 userProfilePicture:
                                     isThereimageSelected
-                                        ? state.profilePicture.path
-                                        : null,
+                                        ? state.profilePicture
+                                        : '',
                               ),
                             );
                           },
