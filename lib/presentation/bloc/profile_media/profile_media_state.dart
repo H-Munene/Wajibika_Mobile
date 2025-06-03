@@ -1,19 +1,5 @@
 part of 'profile_media_bloc.dart';
 
-// @immutable
-// sealed class ProfileMediaState {}
-
-// final class ProfileMediaNoProfileImageSelectedState extends ProfileMediaState {}
-
-// final class ProfileMediaProfileImageSelectedState extends ProfileMediaState {
-//   final XFile profilePicture;
-
-//   ProfileMediaProfileImageSelectedState({required this.profilePicture});
-// }
-
-// final class ProfileMediaFailedProfileImageSelectionState
-//     extends ProfileMediaState {}
-
 enum ProfileMediaStatus { noProfilePicture, profilePicturePresent }
 
 @JsonSerializable(explicitToJson: true)
@@ -55,7 +41,7 @@ ProfileMediaState _$ProfileMediaStateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ProfileMediaStateToJson(ProfileMediaState instance) =>
     <String, dynamic>{
       'profileMediaStatus':
-          _$ProfileMediaStatusEnumMap[instance.profileMediaStatus]!,
+          _$ProfileMediaStatusEnumMap[instance.profileMediaStatus],
       'profilePicture': instance.profilePicture,
     };
 

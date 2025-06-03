@@ -72,8 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(left: 20, bottom: 20),
                     child: Row(
                       children: [
-                        BlocConsumer<ProfileMediaBloc, ProfileMediaState>(
-                          listener: (context, state) {},
+                        BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
                           builder: (context, state) {
                             // if the user has set a profile picture
                             final isThereimageSelected =
@@ -145,7 +144,18 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(color: Colors.white),
                           ),
-                  onPressed: () => context.read<AuthBloc>().add(AuthSignOut()),
+                  onPressed: () {
+                    context.read<AuthBloc>().add(AuthSignOut());
+
+                    // remove the profile picture when user logs out since when
+                    // a different user logs in the other user's profile
+                    // picture is retained by hydrated bloc
+
+                    // TODO: save the profile picture in db to restore it on login
+                    context.read<ProfileMediaBloc>().add(
+                      ProfileMediaRemoveCurrentProfilePictureEvent(),
+                    );
+                  },
                 ),
               ),
             ],

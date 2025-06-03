@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:bloc/bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -58,7 +55,8 @@ class ProfileMediaBloc
     Emitter<ProfileMediaState> emit,
     ImageSource source,
   ) async {
-    final bool isThereAProfileIMageSelected =
+    // check if current state has a profile picture
+    final isThereAProfileIMageSelected =
         state.profileMediaStatus == ProfileMediaStatus.profilePicturePresent;
 
     try {
@@ -66,19 +64,17 @@ class ProfileMediaBloc
         source: source,
       );
 
-      if (isThereAProfileIMageSelected) {
+      // no profile picture in current state
+      if (!isThereAProfileIMageSelected) {
         if (xfileProfilePictureSelected == null) {
-          emit(state);
-        } else {
-          final profilePictureSelected = xfileProfilePictureSelected.path;
-          emit(state.copyWith(newProfilePicture: profilePictureSelected));
-        }
-      } else {
-        if (xfileProfilePictureSelected == null) {
+          //retain current state
           emit(state);
         } else {
           final profilePictureSelected = xfileProfilePictureSelected.path;
 
+          // update profile media state media status to profilePicturePresent,
+          //since the previous state is noProfilePicture, and the profile
+          //picture
           emit(
             state.copyWith(
               newProfileMediaStatus: ProfileMediaStatus.profilePicturePresent,
@@ -86,8 +82,24 @@ class ProfileMediaBloc
             ),
           );
         }
+        return;
+      }
+
+      // there is a profile picture in current state
+
+      // failed to pick a profile picture
+      if (xfileProfilePictureSelected == null) {
+        // retain current state
+        emit(state);
+      } else {
+        // since profile picture was previously set, profile media state is
+        // profilePicturePresent thus this is not updated, just the profile
+        // picture
+        final profilePictureSelected = xfileProfilePictureSelected.path;
+        emit(state.copyWith(newProfilePicture: profilePictureSelected));
       }
     } catch (_) {
+      // on error retain the current state
       emit(state);
     }
   }
