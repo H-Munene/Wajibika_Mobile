@@ -45,10 +45,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Badge(
-              label: Text('2'),
-              child: Icon(CupertinoIcons.bell),
-            ),
+            icon: Icon(CupertinoIcons.power),
           ),
         ],
       ),
