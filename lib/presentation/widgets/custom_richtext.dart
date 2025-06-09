@@ -28,7 +28,7 @@ class CustomRichText extends StatelessWidget {
         children: [
           TextSpan(
             text: highlightedText,
-            style: TextStyle(color: AppColors.richTextHighlight),
+            style: const TextStyle(color: AppColors.richTextHighlight),
           ),
         ],
       ),

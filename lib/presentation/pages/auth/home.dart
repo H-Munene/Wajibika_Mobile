@@ -76,6 +76,16 @@ class _HomePageState extends State<HomePage> {
             ),
 
             NavigationDestination(
+              icon: Icon(CupertinoIcons.hand_raised),
+              label: 'Volunteer',
+              selectedIcon: Icon(CupertinoIcons.hand_raised_fill),
+            ),
+            NavigationDestination(
+              icon: Icon(CupertinoIcons.bookmark),
+              label: 'Bookmarks',
+              selectedIcon: Icon(CupertinoIcons.bookmark_fill),
+            ),
+            NavigationDestination(
               icon: Icon(CupertinoIcons.person_circle),
               label: 'Profile',
               selectedIcon: Icon(CupertinoIcons.person_circle_fill),

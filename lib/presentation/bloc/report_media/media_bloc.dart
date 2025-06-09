@@ -30,7 +30,6 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
   // Primarily checks if there is already a selected image in the current state
   // If no image is selected by the user when there is an already selected image
   // the already present image is retained
-  // couldn't think of a better name😭😭
   Future<void> _processImageSelection(
     Emitter<MediaState> emit,
     ImageSource source,

@@ -1,6 +1,5 @@
 import 'package:bloc_clean_arch/domain/usecases/already_signed_in.dart';
 import 'package:bloc_clean_arch/domain/usecases/signout_usecase_impl.dart';
-import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';

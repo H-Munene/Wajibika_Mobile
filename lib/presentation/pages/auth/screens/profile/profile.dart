@@ -150,7 +150,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     // remove the profile picture when user logs out since when
                     // a different user logs in the other user's profile
                     // picture is retained by hydrated bloc
-
                     // TODO: save the profile picture in db to restore it on login
                     context.read<ProfileMediaBloc>().add(
                       ProfileMediaRemoveCurrentProfilePictureEvent(),
