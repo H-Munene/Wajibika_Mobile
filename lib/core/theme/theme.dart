@@ -69,7 +69,7 @@ class AppTheme {
 
   static TabBarThemeData _tabBarThemeData() {
     return const TabBarThemeData(
-      dividerHeight: 0,
+      dividerHeight: 1,
       labelColor: AppColors.primaryColor,
       unselectedLabelColor: AppColors.selectedItemColor,
       indicatorColor: AppColors.primaryColor,

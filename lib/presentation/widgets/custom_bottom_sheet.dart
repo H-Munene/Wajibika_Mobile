@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomAppSheet {
+  // material bottom sheet purposefully for selecting media selection type
   static FutureOr<void> mediaSelectionBottomSheet({
     required BuildContext context,
     required VoidCallback onCameraSelected,
@@ -96,6 +97,7 @@ class CustomBottomAppSheet {
     );
   }
 
+  // cupertino action sheet purposefully for logout
   static FutureOr<void> cupertinoLogoutBottomSheet({
     required BuildContext context,
     required VoidCallback onLogoutPressed,

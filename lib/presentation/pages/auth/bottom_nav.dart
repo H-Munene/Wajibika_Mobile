@@ -2,8 +2,10 @@ import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/bookmarks.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/volunteer/volunteer.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
 import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
@@ -24,7 +26,12 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _currentIndex = 0;
 
-  List<Widget> screens = [const HomeFeed(), const ProfilePage()];
+  List<Widget> screens = [
+    const HomeFeed(),
+    const VolunteerPage(),
+    const BookMarksPage(),
+    const ProfilePage(),
+  ];
 
   Future<void> _selectImage() async {
     CustomBottomAppSheet.mediaSelectionBottomSheet(

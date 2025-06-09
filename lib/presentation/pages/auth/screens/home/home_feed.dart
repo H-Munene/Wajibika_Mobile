@@ -18,6 +18,14 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   int wajibikaPoints = 47;
   List<String> images = [AppImages.cleanup, AppImages.cleanup2, AppImages.team];
 
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -28,6 +36,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
       child: Padding(
         padding: AppDimensions.pagePadding,
         child: Column(
+          spacing: 5,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // TODO: welcome user  -> use rich text
@@ -53,6 +62,24 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
             ),
 
             const WeekHighlights(),
+
+            TabBar(
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Clogged Drains',
+                    style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Negligent Dumping',
+                    style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

@@ -25,7 +25,7 @@ class CustomUserAvatar extends StatelessWidget {
               ? Image.asset(AppImages.blankProfilePicture).image
               : Image.file(File(userProfilePicture)).image,
 
-      backgroundColor: AppColors.noProfilePictureBackgroundColor,
+      backgroundColor: AppColors.noImageBackgroundColor,
     );
     return Column(
       children: [
