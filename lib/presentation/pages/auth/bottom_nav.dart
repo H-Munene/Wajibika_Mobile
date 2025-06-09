@@ -1,10 +1,12 @@
+import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_media_selection_bottom_sheet.dart';
+import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +48,15 @@ class _BottomNavState extends State<BottomNav> {
         actions: [
           // TODO: get from user model
           const WajibikaPointsIcon(wajibikaPoints: '47'),
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.power)),
+          IconButton(
+            onPressed:
+                () => CustomBottomAppSheet.cupertinoLogoutBottomSheet(
+                  onLogoutPressed:
+                      () => context.read<AuthBloc>().add(AuthSignOut()),
+                  context: context,
+                ),
+            icon: const Icon(CupertinoIcons.power),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
