@@ -15,4 +15,6 @@ class AppColors {
   static const Color hightlightColor = Color(0xFF97E5D7);
   static const Color scaffoldBackgroundColor = Color(0xFFF5F5F5);
   static const Color noProfilePictureBackgroundColor = Colors.black;
+  static const Color initialLinearProgressIndicatorColor = Color(0xFF760000);
+  static const Color middleLinearProgressIndicatorColor = Color(0xFF5F8B4C);
 }

@@ -1,6 +1,8 @@
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
+import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
+import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:bloc_clean_arch/presentation/widgets/weekly_highlight_card.dart';
@@ -13,7 +15,8 @@ class HomeFeed extends StatefulWidget {
   State<HomeFeed> createState() => _HomeFeedState();
 }
 
-class _HomeFeedState extends State<HomeFeed> {
+class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
+  int wajibikaPoints = 1010;
   List<String> images = [AppImages.cleanup, AppImages.cleanup2, AppImages.team];
   List<String> hightlightTitle = [
     'Clean Slate Saturday',
@@ -44,24 +47,17 @@ class _HomeFeedState extends State<HomeFeed> {
                 ),
 
                 // Wajibika points
-                const Row(
-                  children: [Text('Wajibika Points'), Spacer(), Text('17 wp')],
-                ),
+                // TODO: get wajibika points from the user model
+
                 // TODO: gauge range
-                LinearProgressIndicator(
-                  borderRadius: AppDimensions.circleBorderRadius,
-                  value: 57 / 100,
-                  minHeight: 10,
-                  color: AppColors.primaryColor,
-                  trackGap: 2,
-                ),
+                WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
               ],
             ),
             // tackled projects highlights
             Padding(
               padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
               child: Text(
-                'Weekly highlights',
+                'Week highlights',
                 style: textTheme.titleMedium?.copyWith(fontSize: 20),
               ),
             ),

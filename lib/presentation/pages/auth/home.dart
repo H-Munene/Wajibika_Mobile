@@ -4,6 +4,7 @@ import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
+import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,10 +44,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Wajibika'),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(CupertinoIcons.power),
-          ),
+          const WajibikaPointsIcon(wajibikaPoints: '1010'),
+          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.power)),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
