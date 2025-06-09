@@ -19,4 +19,9 @@ class UserModel extends UserEntity {
       email: email ?? this.email,
     );
   }
+
+  @override
+  String toString() {
+    return 'UserModel {id = $id, email = $email, usernmae = $username}';
+  }
 }

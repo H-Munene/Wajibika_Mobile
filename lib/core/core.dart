@@ -1,7 +1,7 @@
-export 'colors.dart';
-export 'dimensions.dart';
-export 'theme.dart';
+export 'theme/colors.dart';
+export 'utils/dimensions.dart';
+export 'theme/theme.dart';
 export 'error/failure.dart';
 export 'secrets/supabase_secrets.dart';
 export 'error/exception.dart';
-export 'snackbar_definitions.dart';
+export 'utils/snackbar_definitions.dart';

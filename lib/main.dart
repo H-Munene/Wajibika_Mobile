@@ -1,22 +1,42 @@
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/locator.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/dependencies.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
+import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-
+  Bloc.observer = AppBlocObserver();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
   await init();
 
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => locator<AuthBloc>())],
-      child: const MyApp(),
+      providers: [
+        BlocProvider(create: (_) => locator<AuthBloc>()),
+        BlocProvider(create: (_) => MediaBloc()),
+        BlocProvider(create: (_) => ProfileMediaBloc()),
+      ],
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -31,7 +51,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    context.read<AuthBloc>().add(AuthUserAlreadySignedIn());
+    context.read<AuthBloc>().add(AuthCheckUserAlreadySignedIn());
     super.initState();
   }
 
@@ -40,10 +60,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
+      debugShowCheckedModeBanner: false,
 
       home: BlocSelector<AuthBloc, AuthState, bool>(
         selector: (state) {
-          return state is AuthSuccess;
+          return state is AuthLoggedIn;
         },
         builder: (context, isLoggedIn) {
           if (isLoggedIn) {

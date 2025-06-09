@@ -73,20 +73,20 @@ class _CustomPasswordTextformfieldState
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: AppDimensions.unfocussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.unselectedItemColor),
+            borderSide: const BorderSide(color: AppColors.unselectedItemColor),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: BorderSide(color: AppColors.errorColor, width: 2),
+            borderSide: const BorderSide(color: AppColors.errorColor, width: 2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: AppDimensions.focussedCircleBorderRadius,
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppColors.selectedItemColor,
               width: 2,
             ),
           ),
-          errorStyle: TextStyle(color: AppColors.errorColor),
+          errorStyle: const TextStyle(color: AppColors.errorColor),
         ),
       ),
     );

@@ -4,7 +4,8 @@ import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:bloc_clean_arch/domain/usecases/already_signed_in.dart';
 import 'package:bloc_clean_arch/domain/usecases/signout_usecase_impl.dart';
 
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,6 +18,7 @@ Future<void> init() async {
   );
 
   locator.registerLazySingleton(() => supabase.client);
+
   _initAuth();
 }
 
@@ -28,12 +30,14 @@ void _initAuth() {
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(authDatasource: locator()),
     )
+    ..registerLazySingleton(UserProvider.new)
     ..registerFactory(() => UserSignUpUseCase(authRepository: locator()))
     ..registerFactory(() => UserLoginUseCase(authRepository: locator()))
     ..registerFactory(() => SignOutUseCase(authRepository: locator()))
     ..registerFactory(() => AlreadySignedIn(authRepository: locator()))
     ..registerLazySingleton(
       () => AuthBloc(
+        userProvider: locator(),
         userSignUpUseCase: locator(),
         userLoginUseCase: locator(),
         signOutUseCase: locator(),

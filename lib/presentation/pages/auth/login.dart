@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -39,11 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 context: context,
                 message: state.message,
               );
-            } else if (state is AuthSuccess) {
-              SnackbarDefinition.successSnackBar(
-                context: context,
-                message: 'Login Success',
-              );
+            } else if (state is AuthLoggedIn) {
               Navigator.of(context).pushReplacement(
                 CupertinoPageRoute(builder: (context) => const HomePage()),
               );
@@ -78,7 +74,11 @@ class _LoginPageState extends State<LoginPage> {
                   child:
                       state is AuthLoading
                           ? const CustomLoadingIndicator()
-                          : const Text('Login'),
+                          : Text(
+                            'Login',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
                 ),
 
                 CustomRichText(

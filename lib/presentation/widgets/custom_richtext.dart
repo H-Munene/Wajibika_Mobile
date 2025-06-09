@@ -22,11 +22,13 @@ class CustomRichText extends StatelessWidget {
     final baseRichText = RichText(
       text: TextSpan(
         text: regularText,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
         children: [
           TextSpan(
             text: highlightedText,
-            style: TextStyle(color: AppColors.richTextHighlight),
+            style: const TextStyle(color: AppColors.richTextHighlight),
           ),
         ],
       ),

@@ -1,6 +1,6 @@
-import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/usecases/already_signed_in.dart';
 import 'package:bloc_clean_arch/domain/usecases/signout_usecase_impl.dart';
+import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -15,21 +15,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLoginUseCase _userLoginUseCase;
   final SignOutUseCase _signOutUseCase;
   final AlreadySignedIn _alreadySignedIn;
+  final UserProvider _userProvider;
 
   AuthBloc({
     required AlreadySignedIn alreadySignedIn,
     required SignOutUseCase signOutUseCase,
     required UserSignUpUseCase userSignUpUseCase,
     required UserLoginUseCase userLoginUseCase,
+    required UserProvider userProvider,
   }) : _userSignUpUseCase = userSignUpUseCase,
        _userLoginUseCase = userLoginUseCase,
        _signOutUseCase = signOutUseCase,
        _alreadySignedIn = alreadySignedIn,
-       super(AuthInitial()) {
+       _userProvider = userProvider,
+       super(AuthLoggedOut()) {
     on<AuthSignUp>(_onUserSignUp);
     on<AuthLogin>(_onUserLogin);
     on<AuthSignOut>(_onUserSignOut);
-    on<AuthUserAlreadySignedIn>(_onUserAlreadySignedIn);
+    on<AuthCheckUserAlreadySignedIn>(_onUserAlreadySignedIn);
   }
 
   Future<void> _onUserSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
@@ -45,7 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     userSignUpEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess(user: user)),
+      (user) => emit(AuthSuccess()),
     );
   }
 
@@ -58,7 +61,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     userLoginEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess(user: user)),
+      (user) {
+        _userProvider.userModel = user;
+        emit(AuthLoggedIn());
+      },
     );
   }
 
@@ -71,22 +77,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _signOutUseCase.call(NoParams());
 
     response.fold(
-      (failure) => emit(AuthFailure(message: failure.message)),
-      (_) => emit(AuthInitial()),
+      (failure) {
+        emit(AuthFailure(message: failure.message));
+      },
+      (_) {
+        _userProvider.clear();
+
+        emit(AuthLoggedOut());
+      },
     );
   }
 
   Future<void> _onUserAlreadySignedIn(
-    AuthUserAlreadySignedIn event,
+    AuthCheckUserAlreadySignedIn event,
     Emitter<AuthState> emit,
   ) async {
     final response = await _alreadySignedIn.call(NoParams());
     response.fold(
       (failure) {
-        return emit(AuthInitial());
+        return emit(AuthLoggedOut());
       },
       (user) {
-        return emit(AuthSuccess(user: user));
+        return emit(AuthLoggedIn());
       },
     );
   }

@@ -1,5 +1,5 @@
-import 'package:bloc_clean_arch/core/snackbar_definitions.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth_bloc.dart';
+import 'package:bloc_clean_arch/core/utils/snackbar_definitions.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/form_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
             } else if (state is AuthSuccess) {
               SnackbarDefinition.successSnackBar(
                 context: context,
-                message: 'Signup Success',
+                message: 'Sign Up Successful',
               );
 
               Navigator.of(context).pushReplacement(
@@ -105,7 +105,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   child:
                       state is AuthLoading
                           ? const CustomLoadingIndicator()
-                          : const Text('Sign Up'),
+                          : Text(
+                            'Sign Up',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
                 ),
                 CustomRichText(
                   regularText: 'Already Registered? ',
