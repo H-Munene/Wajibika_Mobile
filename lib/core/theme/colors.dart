@@ -17,4 +17,5 @@ class AppColors {
   static const Color noProfilePictureBackgroundColor = Colors.black;
   static const Color initialLinearProgressIndicatorColor = Color(0xFF760000);
   static const Color middleLinearProgressIndicatorColor = Color(0xFF5F8B4C);
+  static const Color wajibikaIconBackgroundColor = Color(0xFFFF9A9A);
 }

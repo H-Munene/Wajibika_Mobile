@@ -66,7 +66,7 @@ class _WajibikaPointsProgressState extends State<WajibikaPointsProgress>
           value:
               _wajibikaPointsLinearProgressIndicatorAnimation.value *
               widget.wajibikaPoints /
-              1000,
+              100,
           minHeight: 10,
           color: AppColors.primaryColor,
           trackGap: 2,

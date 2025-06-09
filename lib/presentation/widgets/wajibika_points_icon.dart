@@ -12,7 +12,7 @@ class WajibikaPointsIcon extends StatelessWidget {
       height: 26,
       width: wajibikaPoints.length <= 2 ? 52 : 67,
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: AppColors.wajibikaIconBackgroundColor,
         border: Border.all(),
         borderRadius: AppDimensions.circleBorderRadius,
       ),

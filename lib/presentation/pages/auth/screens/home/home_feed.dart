@@ -1,11 +1,10 @@
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highlights.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
-import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/utils/app_assets.dart';
-import 'package:bloc_clean_arch/presentation/widgets/weekly_highlight_card.dart';
 import 'package:provider/provider.dart';
 
 class HomeFeed extends StatefulWidget {
@@ -16,13 +15,8 @@ class HomeFeed extends StatefulWidget {
 }
 
 class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
-  int wajibikaPoints = 1010;
+  int wajibikaPoints = 47;
   List<String> images = [AppImages.cleanup, AppImages.cleanup2, AppImages.team];
-  List<String> hightlightTitle = [
-    'Clean Slate Saturday',
-    'Green Machine Cleanup Crew',
-    'Community Care Collective',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +40,6 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   highlightedText: '$username☀️',
                 ),
 
-                // Wajibika points
-                // TODO: get wajibika points from the user model
-
-                // TODO: gauge range
                 WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
               ],
             ),
@@ -62,34 +52,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
               ),
             ),
 
-            SizedBox(
-              height: 227,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder:
-                    (context, index) => WeeklyHighlightCard(
-                      image: images[index],
-                      date: '12/10/2025',
-                      highlightDescription: hightlightTitle[index],
-                    ),
-                separatorBuilder: (context, index) => const SizedBox(width: 10),
-                itemCount: images.length,
-              ),
-            ),
-
-            //volunteer oportunities
-
-            // user feed
-            //tabs : pending, volunteer, completed,
-            //pending, ->
-            // have
-            // volunteer -> has , *
-            //
-            // completed
-
-            //tab
-            // image with di
-            //
+            const WeekHighlights(),
           ],
         ),
       ),
