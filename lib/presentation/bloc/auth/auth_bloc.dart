@@ -1,6 +1,6 @@
+import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/domain/usecases/already_signed_in.dart';
 import 'package:bloc_clean_arch/domain/usecases/signout_usecase_impl.dart';
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -15,19 +15,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLoginUseCase _userLoginUseCase;
   final SignOutUseCase _signOutUseCase;
   final AlreadySignedIn _alreadySignedIn;
-  final UserProvider _userProvider;
+  final UserRepository _userRepository;
 
   AuthBloc({
     required AlreadySignedIn alreadySignedIn,
     required SignOutUseCase signOutUseCase,
     required UserSignUpUseCase userSignUpUseCase,
     required UserLoginUseCase userLoginUseCase,
-    required UserProvider userProvider,
+    required UserRepository userRepository,
   }) : _userSignUpUseCase = userSignUpUseCase,
        _userLoginUseCase = userLoginUseCase,
        _signOutUseCase = signOutUseCase,
        _alreadySignedIn = alreadySignedIn,
-       _userProvider = userProvider,
+       _userRepository = userRepository,
        super(AuthLoggedOut()) {
     on<AuthSignUp>(_onUserSignUp);
     on<AuthLogin>(_onUserLogin);
@@ -62,7 +62,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     userLoginEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
       (user) {
-        _userProvider.userModel = user;
+        // _userProvider.userModel = user;
+
+        _userRepository
+          ..saveUserEmail(email: user.email)
+          ..saveUserID(id: user.id)
+          ..saveUserName(username: user.username);
         emit(AuthLoggedIn());
       },
     );
@@ -81,8 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(message: failure.message));
       },
       (_) {
-        _userProvider.clear();
-
+        // _userProvider.clear();
+        _userRepository.deleteSavedUserDetails();
         emit(AuthLoggedOut());
       },
     );
@@ -98,6 +103,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return emit(AuthLoggedOut());
       },
       (user) {
+        _userRepository
+          ..saveUserEmail(email: user.email)
+          ..saveUserID(id: user.id)
+          ..saveUserName(username: user.username);
         return emit(AuthLoggedIn());
       },
     );

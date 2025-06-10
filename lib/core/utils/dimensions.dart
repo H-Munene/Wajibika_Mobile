@@ -6,10 +6,7 @@ class AppDimensions {
   static BorderRadius focussedCircleBorderRadius = BorderRadius.circular(12);
   static BorderRadius bottomSheetCircleBorderRadius = BorderRadius.circular(15);
 
-static EdgeInsets pagePadding = const EdgeInsets.symmetric(
-    vertical: 3,
-    horizontal: 17,
-  );
+  static EdgeInsets pagePadding = const EdgeInsets.symmetric(horizontal: 8);
 
   static EdgeInsets bottomSheetPadding = const EdgeInsets.symmetric(
     vertical: 5,
@@ -17,7 +14,7 @@ static EdgeInsets pagePadding = const EdgeInsets.symmetric(
   );
 
   static const EdgeInsets textfieldVerticalSpacing = EdgeInsets.symmetric(
-    vertical: 10,
+    vertical: 5,
   );
 
   static const double iconSize = 22;

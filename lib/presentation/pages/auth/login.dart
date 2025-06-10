@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               );
             } else if (state is AuthLoggedIn) {
               Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(builder: (context) => const HomePage()),
+                CupertinoPageRoute(builder: (context) => const BottomNav()),
               );
             }
           },

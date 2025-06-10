@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomAppSheet {
+  // material bottom sheet purposefully for selecting media selection type
   static FutureOr<void> mediaSelectionBottomSheet({
     required BuildContext context,
     required VoidCallback onCameraSelected,
@@ -90,6 +94,54 @@ class CustomBottomAppSheet {
           ),
         );
       },
+    );
+  }
+
+  // cupertino action sheet purposefully for logout
+  static FutureOr<void> cupertinoLogoutBottomSheet({
+    required BuildContext context,
+    required VoidCallback onLogoutPressed,
+  }) async {
+    final textTheme = Theme.of(context).textTheme.bodyMedium;
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder:
+          (context) => BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return CupertinoActionSheet(
+                title: Text(
+                  'Are you sure you want to log out?',
+                  style: textTheme?.copyWith(color: AppColors.greyText),
+                ),
+                actions: [
+                  CupertinoActionSheetAction(
+                    isDefaultAction: true,
+                    onPressed: onLogoutPressed,
+                    child:
+                        state is AuthLoading
+                            ? const CustomLoadingIndicator(
+                              color: AppColors.errorColor,
+                            )
+                            : Text(
+                              'Log out',
+                              style: textTheme?.copyWith(
+                                color: AppColors.errorColor,
+                              ),
+                            ),
+                  ),
+                ],
+
+                cancelButton: CupertinoActionSheetAction(
+                  onPressed: () => Navigator.of(context).pop(context),
+                  child: Text(
+                    'Cancel',
+                    style: textTheme?.copyWith(color: AppColors.greyText),
+                  ),
+                ),
+              );
+            },
+          ),
     );
   }
 }

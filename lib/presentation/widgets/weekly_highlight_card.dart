@@ -19,7 +19,7 @@ class WeeklyHighlightCard extends StatelessWidget {
     return Container(
       width: 340,
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: AppColors.noImageBackgroundColor,
         borderRadius: AppDimensions.circleBorderRadius,
         image: DecorationImage(
           image: Image.asset(image, fit: BoxFit.cover).image,
