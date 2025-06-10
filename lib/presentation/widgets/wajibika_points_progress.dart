@@ -69,7 +69,6 @@ class _WajibikaPointsProgressState extends State<WajibikaPointsProgress>
               100,
           minHeight: 10,
           color: AppColors.primaryColor,
-          trackGap: 2,
         ),
       ],
     );

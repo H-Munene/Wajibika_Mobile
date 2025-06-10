@@ -31,54 +31,74 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
     final textTheme = Theme.of(context).textTheme;
     final username = context.read<UserProvider>().userModel.username;
 
-    return SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      child: Padding(
-        padding: AppDimensions.pagePadding,
-        child: Column(
-          spacing: 5,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // TODO: welcome user  -> use rich text
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomRichText(
-                  highlightColor: Colors.black,
-                  regularText: 'Good Morning, ',
-                  highlightedText: '$username☀️',
-                ),
+    return Padding(
+      padding: AppDimensions.pagePadding,
+      child: NestedScrollView(
+        headerSliverBuilder:
+            (context, isInnerBoxScrolled) => [
+              SliverToBoxAdapter(
+                child: Column(
+                  // spacing: 5,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomRichText(
+                      highlightColor: Colors.black,
+                      regularText: 'Good Morning, ',
+                      highlightedText: '$username☀️',
+                    ),
 
-                WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
-              ],
-            ),
-            // tackled projects highlights
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
-              child: Text(
-                'Week highlights',
-                style: textTheme.titleMedium?.copyWith(fontSize: 20),
+                    WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
+                    Text(
+                      'Week highlights',
+                      style: textTheme.titleMedium?.copyWith(fontSize: 20),
+                    ),
+                    const WeekHighlights(),
+                  ],
+                ),
               ),
+              SliverAppBar(
+                pinned: true,
+                surfaceTintColor: Colors.white,
+                primary: false,
+                toolbarHeight: 0,
+                backgroundColor: Colors.white,
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        'Clogged Drains',
+                        style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Negligent Dumping',
+                        style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            ListView.separated(
+              itemBuilder:
+                  (context, index) =>
+                      Container(height: 100, width: 200, color: Colors.teal),
+              separatorBuilder:
+                  (context, index) => const Divider(indent: 10, endIndent: 10),
+              itemCount: 10,
             ),
-
-            const WeekHighlights(),
-
-            TabBar(
-              controller: _tabController,
-              tabs: [
-                Tab(
-                  child: Text(
-                    'Clogged Drains',
-                    style: textTheme.bodyMedium?.copyWith(fontSize: 13),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Negligent Dumping',
-                    style: textTheme.bodyMedium?.copyWith(fontSize: 13),
-                  ),
-                ),
-              ],
+            ListView.separated(
+              itemBuilder:
+                  (context, index) =>
+                      Container(height: 100, width: 200, color: Colors.green),
+              separatorBuilder:
+                  (context, index) => const Divider(indent: 10, endIndent: 10),
+              itemCount: 10,
             ),
           ],
         ),
@@ -88,3 +108,51 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 }
 
 // add page scroll indicator for weekly highlights
+
+// Column(
+//         spacing: 5,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           // TODO: welcome user  -> use rich text
+//           Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               CustomRichText(
+//                 highlightColor: Colors.black,
+//                 regularText: 'Good Morning, ',
+//                 highlightedText: '$username☀️',
+//               ),
+
+//               WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
+//             ],
+//           ),
+//           // tackled projects highlights
+//           Padding(
+//             padding: const EdgeInsetsDirectional.symmetric(vertical: 5),
+//             child: Text(
+//               'Week highlights',
+//               style: textTheme.titleMedium?.copyWith(fontSize: 20),
+//             ),
+//           ),
+
+//           const WeekHighlights(),
+
+//           TabBar(
+//             controller: _tabController,
+//             tabs: [
+//               Tab(
+//                 child: Text(
+//                   'Clogged Drains',
+//                   style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+//                 ),
+//               ),
+//               Tab(
+//                 child: Text(
+//                   'Negligent Dumping',
+//                   style: textTheme.bodyMedium?.copyWith(fontSize: 13),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       )

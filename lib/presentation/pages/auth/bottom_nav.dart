@@ -116,9 +116,7 @@ class _BottomNavState extends State<BottomNav> {
           }
         },
         builder: (context, state) {
-          return SafeArea(
-            child: SingleChildScrollView(child: screens[_currentIndex]),
-          );
+          return SafeArea(child: screens[_currentIndex]);
         },
       ),
     );
