@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/dependencies.dart';
+import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
@@ -25,17 +26,25 @@ void main() async {
   await init();
 
   runApp(
-    MultiBlocProvider(
+    MultiRepositoryProvider(
       providers: [
-        BlocProvider(create: (_) => locator<AuthBloc>()),
-        BlocProvider(create: (_) => MediaBloc()),
-        BlocProvider(create: (_) => ProfileMediaBloc()),
+        RepositoryProvider(
+          create: (_) => locator<UserRepository>(),
+          dispose: (repo) => repo.deleteSavedUserDetails(),
+        ),
       ],
-      child: MultiProvider(
+      child: MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
+          BlocProvider(create: (_) => locator<AuthBloc>()),
+          BlocProvider(create: (_) => MediaBloc()),
+          BlocProvider(create: (_) => ProfileMediaBloc()),
         ],
-        child: const MyApp(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
+          ],
+          child: const MyApp(),
+        ),
       ),
     ),
   );

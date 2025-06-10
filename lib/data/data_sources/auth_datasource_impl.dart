@@ -3,6 +3,7 @@ import 'package:bloc_clean_arch/data/data.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// ** Supabase DataSource Implementation ** //
 class AuthDataSourceImpl implements AuthDataSource {
   AuthDataSourceImpl({required this.supabaseClient});
 

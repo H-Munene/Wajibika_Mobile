@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/report_history_calender.dart';
@@ -42,6 +43,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final username = context.read<UserRepository>().getUserName().fold(
+      (_) => 'user',
+      (username) => username,
+    );
+
+    final email = context.read<UserRepository>().getUserEmail().fold(
+      (_) => 'email unavailable',
+      (email) => email,
+    );
 
     return Center(
       child: BlocConsumer<AuthBloc, AuthState>(
@@ -100,13 +110,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'John Doe',
+                              username,
                               style: textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
                               ),
                             ),
                             Text(
-                              'johndoe@gmail.com',
+                              email,
                               style: textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
                               ),

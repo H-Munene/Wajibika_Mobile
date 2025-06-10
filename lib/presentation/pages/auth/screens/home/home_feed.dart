@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highlights.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
@@ -29,7 +30,10 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final username = context.read<UserProvider>().userModel.username;
+    final username = context.read<UserRepository>().getUserName().fold(
+      (_) => 'user',
+      (username) => username,
+    );
 
     return Padding(
       padding: AppDimensions.pagePadding,
