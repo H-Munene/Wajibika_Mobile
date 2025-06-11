@@ -62,8 +62,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     userLoginEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
       (user) {
-        // _userProvider.userModel = user;
-
         _userRepository
           ..saveUserEmail(email: user.email)
           ..saveUserID(id: user.id)
@@ -81,14 +79,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final response = await _signOutUseCase.call(NoParams());
 
-    response.fold(
+    await response.fold(
       (failure) {
         emit(AuthFailure(message: failure.message));
       },
-      (_) {
-        // _userProvider.clear();
-        _userRepository.deleteSavedUserDetails();
+      (_) async {
         emit(AuthLoggedOut());
+
+        await Future.delayed(
+          const Duration(seconds: 2),
+          _userRepository.deleteSavedUserDetails,
+        );
       },
     );
   }

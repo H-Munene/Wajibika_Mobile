@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core.dart';
@@ -36,6 +37,11 @@ class AppTheme {
     ),
     floatingActionButtonTheme: _floatingActionButtonThemeData(),
     tabBarTheme: _tabBarThemeData(),
+    cupertinoOverrideTheme: NoDefaultCupertinoThemeData(
+      textTheme: CupertinoTextThemeData(
+        textStyle: GoogleFonts.lexendExa(), // Add parentheses
+      ),
+    ),
   );
 
   // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2
@@ -114,6 +120,13 @@ class AppTheme {
         color: Colors.black,
       ),
     ),
+    titleSmall: GoogleFonts.lexendExa(
+      textStyle: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+    ),
     bodyLarge: GoogleFonts.lexendExa(
       textStyle: const TextStyle(
         fontSize: 17,
@@ -131,7 +144,7 @@ class AppTheme {
     bodySmall: GoogleFonts.lexendExa(
       textStyle: const TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w200,
+        fontWeight: FontWeight.normal,
         color: Colors.black,
       ),
     ),

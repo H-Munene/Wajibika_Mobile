@@ -6,16 +6,22 @@ import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
+import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
   Bloc.observer = AppBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory:
@@ -23,6 +29,7 @@ void main() async {
             ? HydratedStorageDirectory.web
             : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
+
   await init();
 
   runApp(
@@ -39,12 +46,8 @@ void main() async {
           BlocProvider(create: (_) => MediaBloc()),
           BlocProvider(create: (_) => ProfileMediaBloc()),
         ],
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
-          ],
-          child: const MyApp(),
-        ),
+
+        child: const MyApp(),
       ),
     ),
   );
@@ -70,19 +73,35 @@ class _MyAppState extends State<MyApp> {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
+      home: const AuthWrapper(),
+    );
+  }
+}
 
-      home: BlocSelector<AuthBloc, AuthState, bool>(
-        selector: (state) {
-          return state is AuthLoggedIn;
-        },
-        builder: (context, isLoggedIn) {
-          if (isLoggedIn) {
-            return const BottomNav();
-          } else {
-            return const LoginPage();
-          }
-        },
-      ),
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoggedIn) {
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const BottomNav(),
+              transitionDuration: Duration.zero,
+            ),
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const LoginPage(),
+              transitionDuration: Duration.zero,
+            ),
+          );
+        }
+      },
+      child: const Scaffold(body: Center(child: CustomLoadingIndicator())),
     );
   }
 }

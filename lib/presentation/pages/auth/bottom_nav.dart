@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
@@ -6,7 +5,7 @@ import 'package:bloc_clean_arch/presentation/pages/auth/screens/bookmarks.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/home_feed.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/volunteer/volunteer.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet.dart';
+import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet_dialogs.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
 import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,14 +33,14 @@ class _BottomNavState extends State<BottomNav> {
   ];
 
   Future<void> _selectImage() async {
-    CustomBottomAppSheet.mediaSelectionBottomSheet(
+    CustomDialogBottomAppSheet.mediaSelectionBottomSheet(
       context: context,
       onCameraSelected: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         context.read<MediaBloc>().add(MediaTakePictureWithCameraEvent());
       },
       onGallerySelected: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
       },
     );
@@ -51,13 +50,14 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Wajibika'),
         actions: [
           // TODO: get from user model
           const WajibikaPointsIcon(wajibikaPoints: '47'),
           IconButton(
             onPressed:
-                () => CustomBottomAppSheet.cupertinoLogoutBottomSheet(
+                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
                   onLogoutPressed:
                       () => context.read<AuthBloc>().add(AuthSignOut()),
                   context: context,
@@ -110,8 +110,9 @@ class _BottomNavState extends State<BottomNav> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoggedOut) {
-            Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(builder: (context) => const LoginPage()),
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const LoginPage()),
+              (route) => false, // Remove all routes
             );
           }
         },

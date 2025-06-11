@@ -1,9 +1,9 @@
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highlights.dart';
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
+import 'package:bloc_clean_arch/presentation/widgets/wajibika_report_feed_card.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +27,17 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
     super.initState();
   }
 
+  void _confirmVolunteerForThisEvent() {
+    CustomDialogBottomAppSheet.cupertinoAlertDialog(
+      context: context,
+      title: 'Volunteer for this reported event?',
+      content:
+          'You are about to register as a volunteer for this event. Proceed?',
+      // TODO: mark as volunteer for event -> will need report id
+      onDestructiveActionPressed: () => Navigator.of(context).pop(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -42,7 +53,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
             (context, isInnerBoxScrolled) => [
               SliverToBoxAdapter(
                 child: Column(
-                  // spacing: 5,
+                  spacing: 5,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomRichText(
@@ -57,14 +68,22 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                       style: textTheme.titleMedium?.copyWith(fontSize: 20),
                     ),
                     const WeekHighlights(),
+
+                    const Divider(thickness: 2, color: Colors.black),
                   ],
                 ),
               ),
+
               SliverAppBar(
+                centerTitle: false,
                 pinned: true,
                 surfaceTintColor: Colors.white,
                 primary: false,
-                toolbarHeight: 0,
+                toolbarHeight: 20,
+                title: Text(
+                  'Reports',
+                  style: textTheme.titleMedium?.copyWith(fontSize: 20),
+                ),
                 backgroundColor: Colors.white,
                 bottom: TabBar(
                   controller: _tabController,
@@ -90,16 +109,32 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           children: [
             ListView.separated(
               itemBuilder:
-                  (context, index) =>
-                      Container(height: 100, width: 200, color: Colors.teal),
+                  (context, index) => WajibikaReportFeedCard(
+                    showMyAvatar: true,
+                    scheduleDate: 'Sat, July 12',
+                    volunteerCount: 2,
+                    username: 'User101',
+                    time: '7hrs ago',
+                    description:
+                        'Clogged drain around Madaraka shopping centre',
+                    onPressed: _confirmVolunteerForThisEvent,
+                  ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
               itemCount: 10,
             ),
             ListView.separated(
               itemBuilder:
-                  (context, index) =>
-                      Container(height: 100, width: 200, color: Colors.green),
+                  (context, index) => WajibikaReportFeedCard(
+                    showMyAvatar: true,
+                    scheduleDate: 'Sat, July 12',
+                    volunteerCount: 2,
+                    username: 'User101',
+                    time: 'Mon, July 10',
+                    description:
+                        'Clogged drain around Madaraka shopping centre',
+                    onPressed: _confirmVolunteerForThisEvent,
+                  ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
               itemCount: 10,
