@@ -51,6 +51,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Wajibika'),
         actions: [
           // TODO: get from user model
@@ -110,8 +111,9 @@ class _BottomNavState extends State<BottomNav> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoggedOut) {
-            Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(builder: (context) => const LoginPage()),
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const LoginPage()),
+              (route) => false, // Remove all routes
             );
           }
         },

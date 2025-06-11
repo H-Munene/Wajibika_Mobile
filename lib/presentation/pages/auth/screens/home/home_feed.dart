@@ -4,6 +4,7 @@ import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highli
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
+import 'package:bloc_clean_arch/presentation/widgets/wajibika_report_feed_card.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
             (context, isInnerBoxScrolled) => [
               SliverToBoxAdapter(
                 child: Column(
-                  // spacing: 5,
+                  spacing: 5,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomRichText(
@@ -57,15 +58,36 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                       style: textTheme.titleMedium?.copyWith(fontSize: 20),
                     ),
                     const WeekHighlights(),
+
+                    const Divider(thickness: 2, color: Colors.black),
                   ],
                 ),
               ),
+
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(top: 10),
+              //     child: Text(
+              //       'Reports',
+              //       style: textTheme.titleMedium?.copyWith(fontSize: 20),
+              //     ),
+              //   ),
+              // ),
               SliverAppBar(
+                centerTitle: false,
                 pinned: true,
                 surfaceTintColor: Colors.white,
                 primary: false,
-                toolbarHeight: 0,
+                toolbarHeight: 20,
+                title: Text(
+                  'Reports',
+                  style: textTheme.titleMedium?.copyWith(fontSize: 20),
+                ),
                 backgroundColor: Colors.white,
+                // flexibleSpace: Text(
+                //   'Reports',
+                //   style: textTheme.titleMedium?.copyWith(fontSize: 20),
+                // ),
                 bottom: TabBar(
                   controller: _tabController,
                   tabs: [
@@ -90,16 +112,30 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           children: [
             ListView.separated(
               itemBuilder:
-                  (context, index) =>
-                      Container(height: 100, width: 200, color: Colors.teal),
+                  (context, index) => const WajibikaReportFeedCard(
+                    showMyAvatar: true,
+                    scheduleDate: 'Sat, July 12',
+                    volunteerCount: 2,
+                    username: 'User101',
+                    time: '7hrs ago',
+                    description:
+                        'Clogged drain around Madaraka shopping centre',
+                  ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
               itemCount: 10,
             ),
             ListView.separated(
               itemBuilder:
-                  (context, index) =>
-                      Container(height: 100, width: 200, color: Colors.green),
+                  (context, index) => const WajibikaReportFeedCard(
+                    showMyAvatar: true,
+                    scheduleDate: 'Sat, July 12',
+                    volunteerCount: 2,
+                    username: 'User101',
+                    time: '7hrs ago',
+                    description:
+                        'Clogged drain around Madaraka shopping centre',
+                  ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
               itemCount: 10,

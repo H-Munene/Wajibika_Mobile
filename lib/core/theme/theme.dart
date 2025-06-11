@@ -131,7 +131,7 @@ class AppTheme {
     bodySmall: GoogleFonts.lexendExa(
       textStyle: const TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w200,
+        fontWeight: FontWeight.normal,
         color: Colors.black,
       ),
     ),

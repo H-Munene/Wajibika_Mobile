@@ -7,6 +7,7 @@ import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
 import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
+import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,11 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
   Bloc.observer = AppBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory:
@@ -26,10 +32,6 @@ void main() async {
             : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
-  LicenseRegistry.addLicense(() async* {
-    final license = await rootBundle.loadString('google_fonts/OFL.txt');
-    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
-  });
   await init();
 
   runApp(
@@ -77,19 +79,6 @@ class _MyAppState extends State<MyApp> {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
-
-      // home: BlocSelector<AuthBloc, AuthState, bool>(
-      //   selector: (state) {
-      //     return state is AuthLoggedIn;
-      //   },
-      //   builder: (context, isLoggedIn) {
-      //     if (isLoggedIn) {
-      //       return const BottomNav();
-      //     } else {
-      //       return const LoginPage();
-      //     }
-      //   },
-      // ),
       home: const AuthWrapper(),
     );
   }
@@ -118,7 +107,7 @@ class AuthWrapper extends StatelessWidget {
           );
         }
       },
-      child: const Scaffold(body: Center(child: CircularProgressIndicator())),
+      child: const Scaffold(body: Center(child: CustomLoadingIndicator())),
     );
   }
 }

@@ -1,0 +1,208 @@
+import 'dart:io';
+
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/core/utils/app_assets.dart';
+import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class WajibikaReportFeedCard extends StatelessWidget {
+  final int volunteerCount;
+  final String username;
+  final String time;
+  final String description;
+  final String scheduleDate;
+
+  final bool showMyAvatar;
+  const WajibikaReportFeedCard({
+    super.key,
+    required this.username,
+    required this.time,
+    required this.description,
+    required this.volunteerCount,
+    required this.scheduleDate, // i.e "EEE, MMM d, ''yyyy"-> Wed, Jul 10, '2025
+    this.showMyAvatar = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    // final scheduleDateMonthDay = '${scheduleDate.substring(5, 11)}';
+    // final scheduleDateDay = '${scheduleDate.substring(0, 3)}';
+
+    return Card.outlined(
+      elevation: 2,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppDimensions.circleBorderRadius,
+      ),
+      child: Column(
+        children: [
+          // report image
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+            child: Image.asset(AppImages.cleanup2),
+          ),
+          const SizedBox(height: 5),
+
+          // user avatar with time report was made
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Row(
+              spacing: 5,
+              children: [
+                const CustomUserAvatar(showAddIcon: false),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(username, style: textTheme.bodySmall),
+                    Text(time, style: textTheme.bodySmall),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+
+          // brief description of the context of image
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Text(description),
+          ),
+
+          // volunteer date + button
+          Padding(
+            padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: AppDimensions.circleBorderRadius,
+                    border: Border.all(),
+                  ),
+
+                  // volunteer date schedule
+                  child: _ScheduleDate(scheduleDate: scheduleDate),
+                ),
+                const Spacer(),
+
+                //volunteer button with conditionally rendered avatars
+                Stack(
+                  children: [
+                    CustomButtonWidget(
+                      makeButtonRonded: true,
+                      color: Colors.black,
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 3,
+                        children: [
+                          Icon(CupertinoIcons.hand_raised, color: Colors.white),
+                          Text(
+                            'Volunteer',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {},
+                    ),
+
+                    // conditionally rendered avatars
+                    Positioned(
+                      bottom: 0.5,
+                      right: 5,
+                      child: _UserAvatarsWithCount(
+                        volunteerCount: volunteerCount,
+                        showMyAvatar: showMyAvatar,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// displays the volunteer date
+class _ScheduleDate extends StatelessWidget {
+  const _ScheduleDate({required this.scheduleDate});
+
+  final String scheduleDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(7),
+      child: Row(
+        spacing: 2,
+        children: [
+          const Icon(CupertinoIcons.calendar_today),
+          Text(scheduleDate, style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+// conditionally diplays the user avatar and another user avatar with the count
+// to signify number of volunteers in a report
+class _UserAvatarsWithCount extends StatelessWidget {
+  final bool showMyAvatar; // current user avatar
+  final int volunteerCount; // number of volunteers for this report
+
+  const _UserAvatarsWithCount({
+    this.showMyAvatar = false,
+    required this.volunteerCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // current user avatar
+        if (showMyAvatar)
+          BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+            builder: (context, state) {
+              return CircleAvatar(
+                radius: 7,
+                backgroundImage:
+                    state.profileMediaStatus ==
+                            ProfileMediaStatus.profilePicturePresent
+                        ? Image.file(File(state.profilePicture)).image
+                        : Image.asset(AppImages.blankProfilePicture).image,
+
+                backgroundColor: AppColors.noImageBackgroundColor,
+              );
+            },
+          ),
+        // avatar to signify other volunteers
+        if (volunteerCount > 1)
+          Row(
+            spacing: 1,
+            children: [
+              CircleAvatar(
+                radius: 7,
+                backgroundImage:
+                    Image.asset(AppImages.blankProfilePicture).image,
+
+                backgroundColor: AppColors.noImageBackgroundColor,
+              ),
+              Text(
+                volunteerCount <= 5 ? '$volunteerCount' : '5+',
+                style: const TextStyle(fontSize: 10),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+}
