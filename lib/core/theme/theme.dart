@@ -42,6 +42,10 @@ class AppTheme {
         textStyle: GoogleFonts.lexendExa(), // Add parentheses
       ),
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      shape: BeveledRectangleBorder(),
+      backgroundColor: Colors.white,
+    ),
   );
 
   // TODO(H-Munene): dark theme configuration, https://github.com/H-Munene/bloc_CleanArch/issues/2

@@ -49,7 +49,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Image.asset(AppImages.cleanup2),
+            child: Image.asset(AppImages.clogged),
           ),
           const SizedBox(height: 5),
 
@@ -98,8 +98,9 @@ class WajibikaReportFeedCard extends StatelessWidget {
                 Stack(
                   children: [
                     CustomButtonWidget(
-                      makeButtonRonded: true,
+                      makeButtonRounded: true,
                       color: Colors.black,
+                      onPressed: onPressed,
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 3,
@@ -111,7 +112,6 @@ class WajibikaReportFeedCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: onPressed,
                     ),
 
                     // conditionally rendered avatars

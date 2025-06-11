@@ -6,6 +6,7 @@ import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/onboarding/onboarding.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -69,11 +70,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final doNotShowOnboardingScreen =
+        context.read<UserRepository>().doNotshowOnboardingScreen();
+
     return MaterialApp(
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
-      home: const AuthWrapper(),
+      home:
+          doNotShowOnboardingScreen
+              ? const AuthWrapper()
+              : const OnboardingScreen(),
     );
   }
 }

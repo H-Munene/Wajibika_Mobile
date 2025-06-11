@@ -6,14 +6,14 @@ class CustomButtonWidget extends StatelessWidget {
   final Widget child;
   final void Function() onPressed;
   final Color color;
-  final bool makeButtonRonded;
+  final bool makeButtonRounded;
 
   const CustomButtonWidget({
     super.key,
     required this.child,
     required this.onPressed,
     this.color = AppColors.buttonBackgroundColor,
-    this.makeButtonRonded = false,
+    this.makeButtonRounded = false,
   });
 
   @override
@@ -25,8 +25,9 @@ class CustomButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         color: color,
         shape:
-            makeButtonRonded
+            makeButtonRounded
                 ? RoundedRectangleBorder(
+                  side: const BorderSide(),
                   borderRadius: AppDimensions.circleBorderRadius,
                 )
                 : null,

@@ -9,4 +9,6 @@ abstract interface class UserRepository {
   Future<Either<Failure, void>> saveUserEmail({required String email});
   Either<Failure, String> getUserEmail();
   Future<void> deleteSavedUserDetails();
+  Future<Either<Failure, void>> setDoNotShowOnboardingScreen();
+  bool doNotshowOnboardingScreen();
 }
