@@ -65,7 +65,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _userRepository
           ..saveUserEmail(email: user.email)
           ..saveUserID(id: user.id)
-          ..saveUserName(username: user.username);
+          ..saveUserName(username: user.username)
+          ..setDoNotShowOnboardingScreen();
         emit(AuthLoggedIn());
       },
     );
@@ -107,7 +108,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _userRepository
           ..saveUserEmail(email: user.email)
           ..saveUserID(id: user.id)
-          ..saveUserName(username: user.username);
+          ..saveUserName(username: user.username)
+          ..setDoNotShowOnboardingScreen();
         return emit(AuthLoggedIn());
       },
     );

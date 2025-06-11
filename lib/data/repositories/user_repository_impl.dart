@@ -73,4 +73,18 @@ class UserRepositoryImpl implements UserRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> setDoNotShowOnboardingScreen() async {
+    try {
+      return right(await _localDbDataSource.setDoNotShowOnboardingScreen());
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  bool doNotshowOnboardingScreen() {
+    return _localDbDataSource.doNotShowOnboardingScreen();
+  }
 }

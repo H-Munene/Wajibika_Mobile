@@ -14,6 +14,11 @@ class AppImages {
   static const cleanup = '$_imagesPath/cleanup.jpg';
   static const cleanup2 = '$_imagesPath/cleanup2.jpg';
   static const team = '$_imagesPath/team.jpg';
+  static const clogged = '$_imagesPath/clogged.jpg';
+  static const volunteer = '$_imagesPath/volunteer.jpg';
+  static const bin = '$_imagesPath/bin.jpg';
+  static const report = '$_imagesPath/report.jpg';
+  static const neighbourhood = '$_imagesPath/neighbourhood.jpg';
 }
 
 //**VECTOR ASSETS CLASS BELOW *//

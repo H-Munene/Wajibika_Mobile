@@ -61,10 +61,29 @@ class LocalDbDatasourceImpl implements LocalDbDataSource {
     debugPrint('🔐Username Saved');
     await _sharedPreferences.setString(_LocalDbKeys.usernameKey, username);
   }
+
+  @override
+  Future<void> setDoNotShowOnboardingScreen() async {
+    await _sharedPreferences.setBool(_LocalDbKeys.onBoardingScreenKey, true);
+  }
+
+  @override
+  bool doNotShowOnboardingScreen() {
+    final doNotShowOnboardingScreen = _sharedPreferences.getBool(
+      _LocalDbKeys.onBoardingScreenKey,
+    );
+
+    if (doNotShowOnboardingScreen == null) {
+      return false;
+    }
+
+    return doNotShowOnboardingScreen;
+  }
 }
 
 class _LocalDbKeys {
   static String idKey = 'id';
   static String usernameKey = 'username';
   static String emailKey = 'email';
+  static String onBoardingScreenKey = 'doNotShowOnboardingScreen';
 }
