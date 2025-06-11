@@ -6,14 +6,12 @@ import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
 import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -48,12 +46,8 @@ void main() async {
           BlocProvider(create: (_) => MediaBloc()),
           BlocProvider(create: (_) => ProfileMediaBloc()),
         ],
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
-          ],
-          child: const MyApp(),
-        ),
+
+        child: const MyApp(),
       ),
     ),
   );

@@ -1,10 +1,9 @@
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highlights.dart';
-import 'package:bloc_clean_arch/presentation/providers/user_provider.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_richtext.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
 import 'package:bloc_clean_arch/presentation/widgets/wajibika_report_feed_card.dart';
+import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +25,17 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  void _confirmVolunteerForThisEvent() {
+    CustomDialogBottomAppSheet.cupertinoAlertDialog(
+      context: context,
+      title: 'Volunteer for this reported event?',
+      content:
+          'You are about to register as a volunteer for this event. Proceed?',
+      // TODO: mark as volunteer for event -> will need report id
+      onDestructiveActionPressed: () => Navigator.of(context).pop(),
+    );
   }
 
   @override
@@ -64,15 +74,6 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                 ),
               ),
 
-              // SliverToBoxAdapter(
-              //   child: Padding(
-              //     padding: const EdgeInsets.only(top: 10),
-              //     child: Text(
-              //       'Reports',
-              //       style: textTheme.titleMedium?.copyWith(fontSize: 20),
-              //     ),
-              //   ),
-              // ),
               SliverAppBar(
                 centerTitle: false,
                 pinned: true,
@@ -84,10 +85,6 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   style: textTheme.titleMedium?.copyWith(fontSize: 20),
                 ),
                 backgroundColor: Colors.white,
-                // flexibleSpace: Text(
-                //   'Reports',
-                //   style: textTheme.titleMedium?.copyWith(fontSize: 20),
-                // ),
                 bottom: TabBar(
                   controller: _tabController,
                   tabs: [
@@ -112,7 +109,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           children: [
             ListView.separated(
               itemBuilder:
-                  (context, index) => const WajibikaReportFeedCard(
+                  (context, index) => WajibikaReportFeedCard(
                     showMyAvatar: true,
                     scheduleDate: 'Sat, July 12',
                     volunteerCount: 2,
@@ -120,6 +117,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                     time: '7hrs ago',
                     description:
                         'Clogged drain around Madaraka shopping centre',
+                    onPressed: _confirmVolunteerForThisEvent,
                   ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
@@ -127,14 +125,15 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
             ),
             ListView.separated(
               itemBuilder:
-                  (context, index) => const WajibikaReportFeedCard(
+                  (context, index) => WajibikaReportFeedCard(
                     showMyAvatar: true,
                     scheduleDate: 'Sat, July 12',
                     volunteerCount: 2,
                     username: 'User101',
-                    time: '7hrs ago',
+                    time: 'Mon, July 10',
                     description:
                         'Clogged drain around Madaraka shopping centre',
+                    onPressed: _confirmVolunteerForThisEvent,
                   ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),

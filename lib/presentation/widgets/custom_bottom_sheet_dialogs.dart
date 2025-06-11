@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomBottomAppSheet {
+class CustomDialogBottomAppSheet {
   // material bottom sheet purposefully for selecting media selection type
   static FutureOr<void> mediaSelectionBottomSheet({
     required BuildContext context,
@@ -141,6 +141,50 @@ class CustomBottomAppSheet {
                 ),
               );
             },
+          ),
+    );
+  }
+
+  static FutureOr<void> cupertinoAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required void Function() onDestructiveActionPressed,
+  }) async {
+    final textTheme = Theme.of(context).textTheme;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder:
+          (context) => CupertinoAlertDialog(
+            title: Text(
+              title,
+              style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              content,
+              style: textTheme.bodySmall?.copyWith(color: AppColors.greyText),
+            ),
+            actions: [
+              CupertinoDialogAction(
+                child: Text(
+                  'Cancel',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: AppColors.greyText,
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              CupertinoDialogAction(
+                onPressed: onDestructiveActionPressed,
+                child: Text(
+                  'OK',
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
     );
   }

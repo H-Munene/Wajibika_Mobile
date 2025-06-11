@@ -14,6 +14,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
   final String time;
   final String description;
   final String scheduleDate;
+  final VoidCallback onPressed;
 
   final bool showMyAvatar;
   const WajibikaReportFeedCard({
@@ -24,6 +25,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.volunteerCount,
     required this.scheduleDate, // i.e "EEE, MMM d, ''yyyy"-> Wed, Jul 10, '2025
     this.showMyAvatar = false,
+    required this.onPressed,
   });
 
   @override
@@ -109,7 +111,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: onPressed,
                     ),
 
                     // conditionally rendered avatars

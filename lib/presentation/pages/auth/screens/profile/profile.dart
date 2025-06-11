@@ -16,23 +16,23 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Future<void> _selectProfilePicture(bool showRemoveMediaActionbutton) async {
-    CustomBottomAppSheet.mediaSelectionBottomSheet(
+    CustomDialogBottomAppSheet.mediaSelectionBottomSheet(
       context: context,
       onCameraSelected: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         context.read<ProfileMediaBloc>().add(
           ProfileMediaChangeProfilePictureFromCameraEvent(),
         );
       },
       onGallerySelected: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         context.read<ProfileMediaBloc>().add(
           ProfileMediaChangeProfilePictureFromGalleryEvent(),
         );
       },
       showRemoveMediaActionbutton: showRemoveMediaActionbutton,
       onRemoveMediaSelected: () {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         context.read<ProfileMediaBloc>().add(
           ProfileMediaRemoveCurrentProfilePictureEvent(),
         );
