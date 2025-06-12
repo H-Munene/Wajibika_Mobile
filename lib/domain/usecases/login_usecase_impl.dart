@@ -1,7 +1,7 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 
 class UserLoginParams {
   UserLoginParams({required this.email, required this.password});

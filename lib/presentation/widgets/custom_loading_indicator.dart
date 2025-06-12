@@ -1,5 +1,5 @@
-import 'package:bloc_clean_arch/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {

@@ -59,6 +59,14 @@ class FormValidation {
         : null;
   }
 
+  static String? descriptionValidator(String? description) {
+    return (description == null || description.isEmpty)
+        ? 'Description is required'
+        : !passwordExp.hasMatch(description)
+        ? 'Password should have at least 8 characters'
+        : null;
+  }
+
   // static otpValidator(String? otpCode) {
   //   return otpCode!.isEmpty || otpCode.length < 6
   //       ? 'OTP Code is required'
@@ -70,3 +78,4 @@ final passwordExp = RegExp(r'^.{6,}$'); //password not less than 6
 final nameRegExp = RegExp(r'^[a-zA-Z]+$'); //name regex
 final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
 final phoneRegexExp = RegExp(r'^\d{10}$');
+final descriptionRegexExp = RegExp(r'^(?:\b\w+\b\s*){1,15}$');

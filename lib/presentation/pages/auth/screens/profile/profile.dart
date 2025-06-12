@@ -1,10 +1,7 @@
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/report_history_calender.dart';
-import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -138,7 +135,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 20),
-                child: Text('Report history', style: textTheme.bodyLarge),
+                child: Text(
+                  Globals.reportsHistorySectionTitle,
+                  style: textTheme.bodyLarge,
+                ),
               ),
 
               const ReportHistoryCalender(),

@@ -1,5 +1,5 @@
-import 'package:bloc_clean_arch/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
 
 class WajibikaPointsProgress extends StatefulWidget {
   final int wajibikaPoints;
@@ -53,7 +53,7 @@ class _WajibikaPointsProgressState extends State<WajibikaPointsProgress>
       children: [
         Row(
           children: [
-            const Text('Wajibika Points'),
+            const Text(Globals.wajibikaPoints),
             const Spacer(),
             Text(
               '${(_wajibikaPointsLinearProgressIndicatorAnimation.value * widget.wajibikaPoints).floor()} wp',

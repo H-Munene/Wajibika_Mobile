@@ -1,9 +1,4 @@
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
-import 'package:bloc_clean_arch/domain/usecases/already_signed_in.dart';
-import 'package:bloc_clean_arch/domain/usecases/signout_usecase_impl.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 

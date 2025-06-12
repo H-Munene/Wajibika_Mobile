@@ -1,12 +1,9 @@
-import 'package:bloc_clean_arch/core/utils/snackbar_definitions.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'pages.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../widgets/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
   static Route signUpPage() =>
@@ -62,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     children: [
                       CustomTextFieldFormWidget(
-                        label: 'Username',
+                        label: Globals.usernameTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
                         controller: _usernameTextEditingController,
                         validator:
@@ -73,14 +70,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
 
                       CustomTextFieldFormWidget(
-                        label: 'Email',
+                        label: Globals.emailTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
                         controller: _emailTextEditingController,
                         validator: FormValidation.emailValidator,
                       ),
                       CustomPasswordTextformfield(
                         controller: _passwordTextEditingController,
-                        label: 'Password',
+                        label: Globals.passwordTextFieldLabel,
                         validator:
                             (value) => FormValidation.matchpasswordValidator(
                               value,
@@ -89,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       CustomPasswordTextformfield(
                         controller: _confirmPasswordTextEditingController,
-                        label: 'Confirm Password',
+                        label: Globals.confirmPasswordTextFieldLabel,
                         validator:
                             (value) => FormValidation.matchpasswordValidator(
                               value,

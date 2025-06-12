@@ -1,7 +1,7 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/data/data_sources/local_db_datasource.dart';
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:bloc_clean_arch/data/data.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:fpdart/fpdart.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final LocalDbDataSource _localDbDataSource;

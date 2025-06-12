@@ -1,9 +1,6 @@
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/core/utils/app_assets.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
-import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -43,23 +40,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               OnboardPageLayout(
                 imageUrl: images[0],
                 textTheme: textTheme,
-                title: 'Your Neighborhood, Your Voice',
-                content:
-                    'See a clogged drain causing flooding? Spot illegal dumping in your area? Your reports help local authorities prioritize what needs fixing first',
+                title: Globals.onboardingPageOneTitle,
+                content: Globals.onboardingPageOneContent,
               ),
               OnboardPageLayout(
                 imageUrl: images[1],
                 textTheme: textTheme,
-                title: 'Simple Reporting Process',
-                content:
-                    'Just snap a photo or pick one from your gallery, add a description, select the category, and submit. Make a difference in under 1 minute.',
+                title: Globals.onboardingPageTwoTitle,
+                content: Globals.onboardingPageTwoContent,
               ),
               OnboardPageLayout(
                 imageUrl: images[2],
                 textTheme: textTheme,
-                title: 'Community Action',
-                content:
-                    'Join volunteer cleanup events organized by your neighbors, or become a community lead to spearhead environmental action.',
+                title: Globals.onboardingPageThreeTitle,
+                content: Globals.onboardingPageThreeContent,
               ),
             ],
           ),

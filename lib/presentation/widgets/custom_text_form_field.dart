@@ -13,6 +13,8 @@ class CustomTextFieldFormWidget extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool? fillColor;
   final TextInputType? keyboardType;
+  final String? hintText;
+  final bool hasMaxLines;
 
   const CustomTextFieldFormWidget({
     super.key,
@@ -25,6 +27,8 @@ class CustomTextFieldFormWidget extends StatefulWidget {
     required this.validator,
     this.onChanged,
     this.keyboardType,
+    this.hintText,
+    this.hasMaxLines = false,
   });
 
   @override
@@ -39,6 +43,8 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
       padding: AppDimensions.textfieldVerticalSpacing,
       width: 0.7 * MediaQuery.of(context).size.width,
       child: TextFormField(
+        maxLength: widget.hasMaxLines ? 60 : null,
+        maxLines: widget.hasMaxLines ? 3 : null,
         enableInteractiveSelection: false,
         inputFormatters:
             widget.label == 'Phone Number' ||
@@ -52,7 +58,7 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
             widget.keyboardType ??
             (widget.label == 'Phone Number'
                 ? TextInputType.number
-                : widget.label == 'Email'
+                : widget.label == Globals.emailTextFieldLabel
                 ? TextInputType.emailAddress
                 : TextInputType.text),
         controller: widget.controller,
@@ -63,6 +69,8 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
         cursorColor: AppColors.primaryColor,
         onChanged: widget.onChanged,
         decoration: InputDecoration(
+          hintText: widget.hintText,
+
           suffixIconColor: AppColors.defaultIconColor,
           labelText: widget.label,
           labelStyle: Theme.of(
