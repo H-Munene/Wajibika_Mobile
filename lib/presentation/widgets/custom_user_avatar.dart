@@ -1,8 +1,6 @@
-import 'dart:io';
-
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'dart:io';
 
 class CustomUserAvatar extends StatelessWidget {
   final void Function()? onCameraIconTapped;

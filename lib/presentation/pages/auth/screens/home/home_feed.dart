@@ -1,11 +1,7 @@
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/week_highlights.dart';
-import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_progress.dart';
-import 'package:bloc_clean_arch/presentation/widgets/wajibika_report_feed_card.dart';
-import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:bloc_clean_arch/core/utils/app_assets.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 class HomeFeed extends StatefulWidget {
@@ -30,9 +26,8 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   void _confirmVolunteerForThisEvent() {
     CustomDialogBottomAppSheet.cupertinoAlertDialog(
       context: context,
-      title: 'Volunteer for this reported event?',
-      content:
-          'You are about to register as a volunteer for this event. Proceed?',
+      title: Globals.volunterForThisEventAlertTitle,
+      content: Globals.volunterForThisEventAlertContent,
       // TODO: mark as volunteer for event -> will need report id
       onDestructiveActionPressed: () => Navigator.of(context).pop(),
     );
@@ -64,7 +59,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 
                     WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),
                     Text(
-                      'Week highlights',
+                      Globals.homeWeekHighlightsSectionTitle,
                       style: textTheme.titleMedium?.copyWith(fontSize: 20),
                     ),
                     const WeekHighlights(),
@@ -81,7 +76,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                 primary: false,
                 toolbarHeight: 20,
                 title: Text(
-                  'Reports',
+                  Globals.homereportsSectionTitle,
                   style: textTheme.titleMedium?.copyWith(fontSize: 20),
                 ),
                 backgroundColor: Colors.white,
@@ -90,13 +85,13 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   tabs: [
                     Tab(
                       child: Text(
-                        'Clogged Drains',
+                        Globals.homeReportsTabTitle1,
                         style: textTheme.bodyMedium?.copyWith(fontSize: 13),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        'Negligent Dumping',
+                        Globals.homeReportsTabTitle2,
                         style: textTheme.bodyMedium?.copyWith(fontSize: 13),
                       ),
                     ),

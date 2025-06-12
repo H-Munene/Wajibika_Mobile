@@ -1,7 +1,5 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'media_event.dart';
@@ -58,7 +56,6 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
         final currentState = state as MediaReportPictureSelected;
         emit(MediaReportPictureSelected(image: currentState.image));
       } else {
-        emit(MediaReportPictureSelectionFailedState());
         emit(MediaNoReportPicturesSelectedState());
       }
     }

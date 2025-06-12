@@ -1,15 +1,7 @@
-import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/login.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/bookmarks.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/home_feed.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/profile/profile.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/volunteer/volunteer.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_bottom_sheet_dialogs.dart';
-import 'package:bloc_clean_arch/presentation/widgets/wajibika_points_icon.dart';
-import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNav extends StatefulWidget {
@@ -38,10 +30,20 @@ class _BottomNavState extends State<BottomNav> {
       onCameraSelected: () {
         Navigator.of(context).pop();
         context.read<MediaBloc>().add(MediaTakePictureWithCameraEvent());
+
+        // redirect to report page
+        Navigator.of(
+          context,
+        ).push(CupertinoPageRoute(builder: (context) => const ReportPage()));
       },
       onGallerySelected: () {
         Navigator.of(context).pop();
         context.read<MediaBloc>().add(MediaSelectImageFromGalleryEvent());
+
+        // redirect to report page
+        Navigator.of(
+          context,
+        ).push(CupertinoPageRoute(builder: (context) => const ReportPage()));
       },
     );
   }
@@ -51,7 +53,7 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Wajibika'),
+        title: const Text(Globals.mainPageTitle),
         actions: [
           // TODO: get from user model
           const WajibikaPointsIcon(wajibikaPoints: '47'),
@@ -85,23 +87,23 @@ class _BottomNavState extends State<BottomNav> {
           destinations: const [
             NavigationDestination(
               icon: Icon(CupertinoIcons.house_alt),
-              label: 'Home',
+              label: Globals.bottomNavHomeIconLabel,
               selectedIcon: Icon(CupertinoIcons.house_alt_fill),
             ),
 
             NavigationDestination(
               icon: Icon(CupertinoIcons.hand_raised),
-              label: 'Volunteer',
+              label: Globals.bottomNavVolunteerIconLabel,
               selectedIcon: Icon(CupertinoIcons.hand_raised_fill),
             ),
             NavigationDestination(
               icon: Icon(CupertinoIcons.bookmark),
-              label: 'Bookmarks',
+              label: Globals.bottomNavBookmarksIconLabel,
               selectedIcon: Icon(CupertinoIcons.bookmark_fill),
             ),
             NavigationDestination(
               icon: Icon(CupertinoIcons.person_circle),
-              label: 'Profile',
+              label: Globals.bottomNavProfileIconLabel,
               selectedIcon: Icon(CupertinoIcons.person_circle_fill),
             ),
           ],
@@ -112,7 +114,7 @@ class _BottomNavState extends State<BottomNav> {
           if (state is AuthLoggedOut) {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => const LoginPage()),
-              (route) => false, // Remove all routes
+              (route) => false,
             );
           }
         },

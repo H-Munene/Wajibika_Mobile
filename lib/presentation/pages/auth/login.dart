@@ -1,13 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/form_validator.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'pages.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   static Route loginPage() =>
@@ -55,14 +51,14 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       CustomTextFieldFormWidget(
-                        label: 'Email',
+                        label: Globals.emailTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
                         controller: _emailTextEditingController,
                         validator: FormValidation.emailValidator,
                       ),
                       CustomPasswordTextformfield(
                         controller: _passwordTextEditingController,
-                        label: 'Password',
+                        label: Globals.passwordTextFieldLabel,
                         validator: FormValidation.passwordValidator,
                       ),
                     ],

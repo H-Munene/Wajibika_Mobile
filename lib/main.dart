@@ -1,19 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/dependencies.dart';
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
-import 'package:bloc_clean_arch/presentation/bloc/auth/auth_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/report_media/media_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/pages.dart';
-import 'package:bloc_clean_arch/presentation/pages/auth/screens/onboarding/onboarding.dart';
-import 'package:bloc_clean_arch/presentation/widgets/custom_loading_indicator.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

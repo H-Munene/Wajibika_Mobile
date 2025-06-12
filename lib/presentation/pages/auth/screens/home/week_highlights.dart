@@ -1,5 +1,5 @@
-import 'package:bloc_clean_arch/core/utils/app_assets.dart';
-import 'package:bloc_clean_arch/presentation/widgets/weekly_highlight_card.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 
 class WeekHighlights extends StatelessWidget {

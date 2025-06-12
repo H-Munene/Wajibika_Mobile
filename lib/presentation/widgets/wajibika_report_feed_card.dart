@@ -1,12 +1,9 @@
-import 'dart:io';
-
-import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/core/utils/app_assets.dart';
-import 'package:bloc_clean_arch/presentation/bloc/profile_media/profile_media_bloc.dart';
-import 'package:bloc_clean_arch/presentation/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/presentation/presentation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:io';
 
 class WajibikaReportFeedCard extends StatelessWidget {
   final int volunteerCount;
@@ -49,7 +46,18 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Image.asset(AppImages.clogged),
+            child: Stack(
+              children: [
+                Image.asset(AppImages.clogged),
+                Positioned(
+                  right: 5,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(CupertinoIcons.bookmark),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 5),
 

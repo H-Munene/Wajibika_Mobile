@@ -11,6 +11,7 @@ class AppTheme {
     // splashFactory: NoSplash.splashFactory,
     // splashColor: GuardianAppColors.primaryColor,
     // scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
+    fontFamily: 'Lexend Exa',
     scaffoldBackgroundColor: Colors.white,
     // bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     textTheme: lightTextTheme(),
