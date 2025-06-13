@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +11,7 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
   MediaBloc() : super(MediaNoReportPicturesSelectedState()) {
     on<MediaSelectImageFromGalleryEvent>(_onMediaObtainedFromGallery);
     on<MediaTakePictureWithCameraEvent>(_onMediaObtainedFromCamera);
+    on<MediaRemoveCurrentReportPictureEvent>(_onRemoveReportPicture);
   }
 
   Future<void> _onMediaObtainedFromGallery(
@@ -23,6 +26,13 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
     Emitter<MediaState> emit,
   ) async {
     await _processImageSelection(emit, ImageSource.camera);
+  }
+
+  Future<void> _onRemoveReportPicture(
+    MediaRemoveCurrentReportPictureEvent event,
+    Emitter<MediaState> emit,
+  ) async {
+    emit(MediaNoReportPicturesSelectedState());
   }
 
   // Primarily checks if there is already a selected image in the current state
