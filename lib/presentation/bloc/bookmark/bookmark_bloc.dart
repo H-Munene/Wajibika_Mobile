@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:equatable/equatable.dart';
 

@@ -9,11 +9,11 @@ class BookmarkState {
   });
 
   final BookMarkStatus bookMarkStatus;
-  final List<WajibikaReportFeedCard> bookMarks;
+  final List<ReportModel> bookMarks;
 
   BookmarkState copyWith({
     BookMarkStatus? newBookmarkStatus,
-    WajibikaReportFeedCard? newBookmark,
+    ReportModel? newBookmark,
   }) {
     if (newBookmark != null) {
       bookMarks.add(newBookmark);

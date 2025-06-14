@@ -8,3 +8,4 @@ export 'usecases/login_usecase_impl.dart';
 export 'usecases/already_signed_in.dart';
 
 export 'entities/user_entity.dart';
+export 'entities/report_entity.dart';

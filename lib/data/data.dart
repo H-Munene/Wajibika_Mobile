@@ -7,3 +7,4 @@ export 'repositories/auth_repository_impl.dart';
 export 'repositories/user_repository_impl.dart';
 
 export 'models/user_model.dart';
+export 'models/report_model.dart';
