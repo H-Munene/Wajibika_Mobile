@@ -72,11 +72,10 @@ class _MyAppState extends State<MyApp> {
       title: 'Bloc Clean Arch',
       theme: AppTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
-      home: const ReportVolunteerHistoryPage(type: 'report'),
-
-      // doNotShowOnboardingScreen
-      //     ? const AuthWrapper()
-      //     : const OnboardingScreen(),
+      home:
+          doNotShowOnboardingScreen
+              ? const AuthWrapper()
+              : const OnboardingScreen(),
     );
   }
 }

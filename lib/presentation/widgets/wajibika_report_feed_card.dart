@@ -46,18 +46,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Stack(
-              children: [
-                Image.asset(AppImages.clogged),
-                Positioned(
-                  right: 5,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(CupertinoIcons.bookmark),
-                  ),
-                ),
-              ],
-            ),
+            child: Image.asset(AppImages.clogged),
           ),
           const SizedBox(height: 5),
 
@@ -74,6 +63,11 @@ class WajibikaReportFeedCard extends StatelessWidget {
                     Text(username, style: textTheme.bodySmall),
                     Text(time, style: textTheme.bodySmall),
                   ],
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.bookmark),
                 ),
               ],
             ),

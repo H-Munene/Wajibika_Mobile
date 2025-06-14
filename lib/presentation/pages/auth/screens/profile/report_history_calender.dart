@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:bloc_clean_arch/presentation/pages/auth/report_volunteer_history_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
@@ -12,7 +13,14 @@ class ReportHistoryCalender extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: HeatMapCalendar(
-          // onClick: should view posts made on that day if available,
+          onClick:
+              (date) => Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder:
+                      (context) =>
+                          const ReportVolunteerHistoryPage(type: 'report'),
+                ),
+              ),
           // onMonthChange: ,
           datasets: {
             DateTime(DateTime.now().year, DateTime.now().month, 1): 1,
