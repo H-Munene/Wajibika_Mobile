@@ -1,10 +1,11 @@
 import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'report_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ReportModel extends ReportEntity {
+class ReportModel extends ReportEntity with EquatableMixin {
   ReportModel({
     required super.volunteerCount,
     required super.username,
@@ -17,4 +18,13 @@ class ReportModel extends ReportEntity {
       _$ReportModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReportModelToJson(this);
+
+  @override
+  List<Object?> get props => [
+    volunteerCount,
+    username,
+    time,
+    description,
+    scheduleDate,
+  ];
 }

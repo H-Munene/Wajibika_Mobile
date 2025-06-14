@@ -5,13 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 
+// builds a card with the report image, a description, the user and time the
+// report was submitted
 class WajibikaReportFeedCard extends StatelessWidget {
   final int volunteerCount;
   final String username;
   final String time;
   final String description;
   final String scheduleDate;
-  final VoidCallback onPressed;
+  final VoidCallback onVolunteerButtonPressed;
+  final void Function() onBookmarkButtonPressed;
+  final bool isBookmarked;
 
   final bool showMyAvatar;
   const WajibikaReportFeedCard({
@@ -22,7 +26,9 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.volunteerCount,
     required this.scheduleDate, // i.e "EEE, MMM d, ''yyyy"-> Wed, Jul 10, '2025
     this.showMyAvatar = false,
-    required this.onPressed,
+    required this.onVolunteerButtonPressed,
+    required this.onBookmarkButtonPressed,
+    this.isBookmarked = false,
   });
 
   @override
@@ -66,8 +72,12 @@ class WajibikaReportFeedCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(CupertinoIcons.bookmark),
+                  onPressed: onBookmarkButtonPressed,
+                  icon: Icon(
+                    isBookmarked
+                        ? CupertinoIcons.bookmark_fill
+                        : CupertinoIcons.bookmark,
+                  ),
                 ),
               ],
             ),
@@ -102,7 +112,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
                     CustomButtonWidget(
                       makeButtonRounded: true,
                       color: Colors.black,
-                      onPressed: onPressed,
+                      onPressed: onVolunteerButtonPressed,
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 3,

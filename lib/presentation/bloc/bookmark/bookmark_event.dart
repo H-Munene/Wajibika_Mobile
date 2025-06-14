@@ -6,3 +6,9 @@ sealed class BookmarkEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class BookmarkEventToggleReportBookmarksPresence extends BookmarkEvent {
+  const BookmarkEventToggleReportBookmarksPresence({required this.reportModel});
+
+  final ReportModel reportModel;
+}

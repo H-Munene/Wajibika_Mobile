@@ -27,13 +27,14 @@ class _VolunteerPageState extends State<VolunteerPage> {
     return ListView.separated(
       itemBuilder:
           (context, index) => WajibikaReportFeedCard(
+            onBookmarkButtonPressed: () {},
             showMyAvatar: true,
             scheduleDate: 'Sat, July 12',
             volunteerCount: 2,
             username: 'User101',
             time: '7hrs ago',
             description: 'Clogged drain around Madaraka shopping centre',
-            onPressed: () {},
+            onVolunteerButtonPressed: () {},
           ),
       separatorBuilder:
           (context, index) => const Divider(indent: 10, endIndent: 10),

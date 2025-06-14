@@ -1,26 +1,40 @@
 part of 'bookmark_bloc.dart';
 
-enum BookMarkStatus { hasBookmark, noBookmark }
+class BookmarkState extends Equatable {
+  const BookmarkState({required this.bookMarkedReports});
 
-class BookmarkState {
-  BookmarkState({
-    this.bookMarkStatus = BookMarkStatus.noBookmark,
-    this.bookMarks = const [],
-  });
+  final List<ReportModel> bookMarkedReports;
 
-  final BookMarkStatus bookMarkStatus;
-  final List<ReportModel> bookMarks;
+  // determine if a report is bookmarked
+  bool isReportBookMarked({required ReportModel reportModel}) =>
+      bookMarkedReports.contains(reportModel);
 
-  BookmarkState copyWith({
-    BookMarkStatus? newBookmarkStatus,
-    ReportModel? newBookmark,
-  }) {
-    if (newBookmark != null) {
-      bookMarks.add(newBookmark);
-    }
-    return BookmarkState(
-      bookMarkStatus: newBookmarkStatus ?? bookMarkStatus,
-      bookMarks: bookMarks,
-    );
+  // add report to bookmarks
+  BookmarkState _addReportToBookmarks({required ReportModel reportModel}) {
+    final updatedBookmarks = List.of(bookMarkedReports)..add(reportModel);
+    return BookmarkState(bookMarkedReports: updatedBookmarks);
   }
+
+  // remove report from bookmarks
+  BookmarkState _removeReportFromBookmarks({required ReportModel reportModel}) {
+    final updatedBookmarks = List.of(bookMarkedReports)..remove(reportModel);
+
+    return BookmarkState(bookMarkedReports: updatedBookmarks);
+  }
+
+  // primary method used in bookmarks_bloc
+  BookmarkState toggleReportBookmarkPresence({
+    required ReportModel reportModel,
+  }) {
+    // remove report if bookmarked
+    if (isReportBookMarked(reportModel: reportModel)) {
+      return _removeReportFromBookmarks(reportModel: reportModel);
+    }
+
+    // add report as its not bookmarked
+    return _addReportToBookmarks(reportModel: reportModel);
+  }
+
+  @override
+  List<Object?> get props => [bookMarkedReports];
 }
