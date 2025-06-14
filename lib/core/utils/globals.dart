@@ -25,6 +25,8 @@ class Globals {
   static const String mainPageTitle = 'Wajibika';
   static const String reportPageTitle = 'Report';
   static const String profilePageTitle = 'Profile';
+  static const String reportHistoryPageTitle = 'Report History';
+  static const String volunteerHistoryPageTitle = 'Volunteer History';
 
   static const String wajibikaPoints = 'Wajibika Points';
 

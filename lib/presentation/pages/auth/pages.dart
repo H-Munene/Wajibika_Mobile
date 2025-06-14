@@ -1,6 +1,7 @@
 export 'bottom_nav.dart';
 export 'login.dart';
 export 'signup.dart';
+export 'report_volunteer_history_page.dart';
 
 export 'screens/report/report.dart';
 export 'screens/volunteer/volunteer.dart';
