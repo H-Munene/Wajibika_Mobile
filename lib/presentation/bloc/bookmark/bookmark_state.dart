@@ -1,5 +1,6 @@
 part of 'bookmark_bloc.dart';
 
+@JsonSerializable(explicitToJson: true)
 class BookmarkState extends Equatable {
   const BookmarkState({required this.bookMarkedReports});
 
@@ -35,6 +36,22 @@ class BookmarkState extends Equatable {
     return _addReportToBookmarks(reportModel: reportModel);
   }
 
+  factory BookmarkState.fromJson(Map<String, dynamic> json) =>
+      _$BookmarkStateFromJson(json);
   @override
   List<Object?> get props => [bookMarkedReports];
 }
+
+BookmarkState _$BookmarkStateFromJson(Map<String, dynamic> json) =>
+    BookmarkState(
+      bookMarkedReports:
+          (json['bookMarkedReports'] as List<dynamic>)
+              .map((e) => ReportModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+    );
+
+Map<String, dynamic> _$BookmarkStateToJson(BookmarkState instance) =>
+    <String, dynamic>{
+      'bookMarkedReports':
+          instance.bookMarkedReports.map((e) => e.toJson()).toList(),
+    };

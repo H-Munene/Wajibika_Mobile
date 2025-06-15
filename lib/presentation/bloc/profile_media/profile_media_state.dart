@@ -27,6 +27,7 @@ final class ProfileMediaState {
   Map<String, dynamic> toJson() => _$ProfileMediaStateToJson(this);
 }
 
+// used to retain state
 ProfileMediaState _$ProfileMediaStateFromJson(Map<String, dynamic> json) =>
     ProfileMediaState(
       profileMediaStatus:

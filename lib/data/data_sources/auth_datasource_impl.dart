@@ -29,7 +29,7 @@ class AuthDataSourceImpl implements AuthDataSource {
       throw ServerException(message: e.message);
     } catch (e) {
       // TODO(H-Munene): https://github.com/H-Munene/bloc_CleanArch/issues/5
-      throw ServerException(message: e.toString());
+      throw ServerException(message: 'Login failed. Please try again!');
     }
   }
 
@@ -55,7 +55,7 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthApiException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: 'Sign Up failed. Please try again!');
     }
   }
 

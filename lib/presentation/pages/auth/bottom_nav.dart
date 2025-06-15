@@ -54,19 +54,11 @@ class _BottomNavState extends State<BottomNav> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(Globals.mainPageTitle),
-        actions: [
+        actions: const [
           // TODO: get from user model
-          const WajibikaPointsIcon(wajibikaPoints: 162),
-          IconButton(
-            onPressed:
-                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
-                  onLogoutPressed:
-                      () => context.read<AuthBloc>().add(AuthSignOut()),
-                  context: context,
-                ),
-            icon: const Icon(CupertinoIcons.power),
-          ),
+          WajibikaPointsIcon(wajibikaPoints: 162),
         ],
+        actionsPadding: const EdgeInsets.only(right: 10),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -157,9 +149,3 @@ class _BottomNavState extends State<BottomNav> {
     );
   }
 }
-
-// hasRegisteredAsVolunteer
-//                       ? Badge(
-//                         label: Text('$registeredAsVolunteerEventsCount'),
-//                         child: const Icon(CupertinoIcons.hand_raised),
-//                       )

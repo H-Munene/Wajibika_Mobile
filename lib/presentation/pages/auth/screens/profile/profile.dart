@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 clipper: _CurvedBottomContainer(),
                 child: Container(
                   color: AppColors.primaryColor,
-                  height: 150,
+                  height: 140,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, bottom: 20),
                     child: Row(
@@ -130,6 +130,38 @@ class _ProfilePageState extends State<ProfilePage> {
                               onPressed: () {},
                             ),
                           ],
+                        ),
+
+                        // logout button
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 18, left: 20),
+                          child: IconButton(
+                            onPressed:
+                                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
+                                  onLogoutPressed: () async {
+                                    context.read<AuthBloc>().add(AuthSignOut());
+
+                                    // clear volunteer events and bookmarks:
+                                    // ideally supposed to have db save them so that they are
+                                    // restored.We clear it for now just so that if another
+                                    // user logs in they dont find saved volunteer events
+                                    // they didnt register to
+                                    context.read<VolunteerBloc>().add(
+                                      VolunteerEventClear(),
+                                    );
+
+                                    context.read<BookmarkBloc>().add(
+                                      BookmarkEventClear(),
+                                    );
+                                  },
+                                  context: context,
+                                ),
+                            icon: const Icon(
+                              CupertinoIcons.square_arrow_right,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ],
                     ),

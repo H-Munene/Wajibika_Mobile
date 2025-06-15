@@ -12,3 +12,5 @@ final class BookmarkEventToggleReportBookmarksPresence extends BookmarkEvent {
 
   final ReportModel reportModel;
 }
+
+final class BookmarkEventClear extends BookmarkEvent {}

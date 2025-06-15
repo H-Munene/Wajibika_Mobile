@@ -15,3 +15,5 @@ final class VolunteerEventToggleVolunteerPresence extends VolunteerEvent {
 
 final class VolunteerEventFetchInitialRegisteredVolunteerEvents
     extends VolunteerEvent {}
+
+final class VolunteerEventClear extends VolunteerEvent {}

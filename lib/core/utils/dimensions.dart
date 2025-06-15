@@ -9,7 +9,7 @@ class AppDimensions {
   static EdgeInsets pagePadding = const EdgeInsets.symmetric(horizontal: 8);
 
   static EdgeInsets profilePageWidgetsPadding = const EdgeInsets.only(
-    top: 10,
+    top: 5,
     left: 20,
     right: 35,
   );

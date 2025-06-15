@@ -49,6 +49,23 @@ class VolunteerState extends Equatable {
     return _addToVolunteerEvents(reportModel: reportModel);
   }
 
+  factory VolunteerState.fromJson(Map<String, dynamic> json) =>
+      _$VolunteerStateFromJson(json);
+
   @override
   List<Object> get props => [registeredVolunteerEvents];
 }
+
+VolunteerState _$VolunteerStateFromJson(Map<String, dynamic> json) =>
+    VolunteerState(
+      registeredVolunteerEvents:
+          (json['registeredVolunteerEvents'] as List<dynamic>)
+              .map((e) => ReportModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+    );
+
+Map<String, dynamic> _$VolunteerStateToJson(VolunteerState instance) =>
+    <String, dynamic>{
+      'registeredVolunteerEvents':
+          instance.registeredVolunteerEvents.map((e) => e.toJson()).toList(),
+    };
