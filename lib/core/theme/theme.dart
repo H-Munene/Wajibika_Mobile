@@ -16,6 +16,7 @@ class AppTheme {
     // bottomNavigationBarTheme: _bottomNavigationBarTheme(),
     textTheme: lightTextTheme(),
     badgeTheme: BadgeThemeData(
+      // offset: Offset(-13, -5),
       textStyle: lightTextTheme().bodySmall?.copyWith(
         fontWeight: FontWeight.bold,
       ),

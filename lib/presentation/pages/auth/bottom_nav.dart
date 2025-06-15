@@ -84,24 +84,56 @@ class _BottomNavState extends State<BottomNav> {
               _currentIndex = value;
             });
           },
-          destinations: const [
-            NavigationDestination(
+          destinations: [
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.house_alt),
               label: Globals.bottomNavHomeIconLabel,
               selectedIcon: Icon(CupertinoIcons.house_alt_fill),
             ),
 
             NavigationDestination(
-              icon: Icon(CupertinoIcons.hand_raised),
+              icon: BlocBuilder<VolunteerBloc, VolunteerState>(
+                builder: (BuildContext context, state) {
+                  final registeredAsVolunteerEventsCount =
+                      context
+                          .read<VolunteerBloc>()
+                          .state
+                          .registeredVolunteerEvents
+                          .length;
+
+                  return registeredAsVolunteerEventsCount != 0
+                      ? Badge(
+                        label: Text('$registeredAsVolunteerEventsCount'),
+                        child: const Icon(CupertinoIcons.hand_raised),
+                      )
+                      : const Icon(CupertinoIcons.hand_raised);
+                },
+              ),
               label: Globals.bottomNavVolunteerIconLabel,
-              selectedIcon: Icon(CupertinoIcons.hand_raised_fill),
+              selectedIcon: BlocBuilder<VolunteerBloc, VolunteerState>(
+                builder: (BuildContext context, state) {
+                  final registeredAsVolunteerEventsCount =
+                      context
+                          .read<VolunteerBloc>()
+                          .state
+                          .registeredVolunteerEvents
+                          .length;
+
+                  return registeredAsVolunteerEventsCount != 0
+                      ? Badge(
+                        label: Text('$registeredAsVolunteerEventsCount'),
+                        child: const Icon(CupertinoIcons.hand_raised_fill),
+                      )
+                      : const Icon(CupertinoIcons.hand_raised_fill);
+                },
+              ),
             ),
-            NavigationDestination(
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.bookmark),
               label: Globals.bottomNavBookmarksIconLabel,
               selectedIcon: Icon(CupertinoIcons.bookmark_fill),
             ),
-            NavigationDestination(
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.person_circle),
               label: Globals.bottomNavProfileIconLabel,
               selectedIcon: Icon(CupertinoIcons.person_circle_fill),
@@ -125,3 +157,9 @@ class _BottomNavState extends State<BottomNav> {
     );
   }
 }
+
+// hasRegisteredAsVolunteer
+//                       ? Badge(
+//                         label: Text('$registeredAsVolunteerEventsCount'),
+//                         child: const Icon(CupertinoIcons.hand_raised),
+//                       )

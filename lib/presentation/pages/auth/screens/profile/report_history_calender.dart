@@ -17,8 +17,6 @@ class ReportHistoryCalender extends StatefulWidget {
 class _ReportHistoryCalenderState extends State<ReportHistoryCalender> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
