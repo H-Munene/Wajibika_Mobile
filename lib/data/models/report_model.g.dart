@@ -7,6 +7,8 @@ part of 'report_model.dart';
 // **************************************************************************
 
 ReportModel _$ReportModelFromJson(Map<String, dynamic> json) => ReportModel(
+  reportCategory: json['reportCategory'] as String,
+  imageUrl: json['imageUrl'] as String,
   volunteerCount: (json['volunteerCount'] as num).toInt(),
   username: json['username'] as String,
   time: json['time'] as String,
@@ -21,4 +23,6 @@ Map<String, dynamic> _$ReportModelToJson(ReportModel instance) =>
       'time': instance.time,
       'description': instance.description,
       'scheduleDate': instance.scheduleDate,
+      'imageUrl': instance.imageUrl,
+      'reportCategory': instance.reportCategory,
     };

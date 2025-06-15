@@ -1,7 +1,6 @@
-import 'package:bloc_clean_arch/data/models/report_model.dart';
-import 'package:bloc_clean_arch/presentation/bloc/bookmark/bookmark_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,34 +17,43 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   late TabController _tabController;
   List<ReportModel> cloggedDrainReports = [
     ReportModel(
+      reportCategory: Globals.reportCategoryItems[0],
+      imageUrl: AppImages.clogged,
       volunteerCount: 3,
       username: 'User101',
       time: 'Mon, Jul 9',
-      description: 'Clogged Drain along Ole Sangale Road',
+      description:
+          'Clogged Drain as you get into the Siwaka Plaza back entrance',
       scheduleDate: 'Sat, Jul 14',
     ),
     ReportModel(
+      reportCategory: Globals.reportCategoryItems[0],
+      imageUrl: AppImages.clogged2,
       volunteerCount: 2,
       username: 'User102',
       time: 'Tue, Jul 9',
-      description: 'Clogged Drain along Ole Sangale Road',
+      description: 'Clogged Drain towards Madaraka Primary School',
       scheduleDate: 'Sat, Jul 14',
     ),
   ];
 
   List<ReportModel> negligentDumpingReports = [
     ReportModel(
+      reportCategory: Globals.reportCategoryItems[1],
+      imageUrl: AppImages.garbage1,
       volunteerCount: 3,
       username: 'User103',
       time: 'Mon, Jul 7',
-      description: 'Negligent Dumping along Ole Sangale Road',
+      description: 'Negligent Dumping along Ole Sangale Road past Weche Court',
       scheduleDate: 'Sat, Jul 14',
     ),
     ReportModel(
+      reportCategory: Globals.reportCategoryItems[1],
+      imageUrl: AppImages.garbage2,
       volunteerCount: 2,
       username: 'User108',
       time: 'Tue, Jul 10',
-      description: 'Improper Waster disposal along Ole Sangale Road',
+      description: 'Improper Waster close to Shopping Centre',
       scheduleDate: 'Sat, Jul 14',
     ),
   ];
@@ -140,6 +148,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
                     builder: (context, state) {
                       return WajibikaReportFeedCard(
+                        imageUrl: cloggedDrainReports[index].imageUrl,
                         username: cloggedDrainReports[index].username,
                         time: cloggedDrainReports[index].time,
                         description: cloggedDrainReports[index].description,
@@ -168,6 +177,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
                     builder: (context, state) {
                       return WajibikaReportFeedCard(
+                        imageUrl: negligentDumpingReports[index].imageUrl,
                         username: negligentDumpingReports[index].username,
                         time: negligentDumpingReports[index].time,
                         description: negligentDumpingReports[index].description,

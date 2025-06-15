@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 
@@ -27,6 +28,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
     return ListView.separated(
       itemBuilder:
           (context, index) => WajibikaReportFeedCard(
+            imageUrl: AppImages.clogged3,
             onBookmarkButtonPressed: () {},
             showMyAvatar: true,
             scheduleDate: 'Sat, July 12',

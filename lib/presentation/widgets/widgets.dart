@@ -11,3 +11,4 @@ export 'wajibika_points_progress.dart';
 export 'wajibika_report_feed_card.dart';
 export 'weekly_highlight_card.dart';
 export 'report_history_card.dart';
+export 'wajibika_bookmark_card.dart';

@@ -8,6 +8,7 @@ import 'dart:io';
 // builds a card with the report image, a description, the user and time the
 // report was submitted
 class WajibikaReportFeedCard extends StatelessWidget {
+  final String imageUrl;
   final int volunteerCount;
   final String username;
   final String time;
@@ -29,6 +30,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.onVolunteerButtonPressed,
     required this.onBookmarkButtonPressed,
     this.isBookmarked = false,
+    required this.imageUrl,
   });
 
   @override
@@ -45,6 +47,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
         borderRadius: AppDimensions.circleBorderRadius,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // report image
           ClipRRect(
@@ -52,7 +55,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Image.asset(AppImages.clogged),
+            child: Image.asset(imageUrl),
           ),
           const SizedBox(height: 5),
 

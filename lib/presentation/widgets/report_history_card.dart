@@ -36,23 +36,28 @@ class ReportVolunteerHistoryCard extends StatelessWidget {
         borderRadius: AppDimensions.circleBorderRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Row(
-          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(
               type == 'volunteer'
                   ? CupertinoIcons.hand_raised_fill
                   : CupertinoIcons.photo_camera,
+
+              size: 25,
             ),
 
             Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(description),
-                  Text(date, style: TextStyle(color: AppColors.greyText)),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(description),
+                    Text(date, style: TextStyle(color: AppColors.greyText)),
+                  ],
+                ),
               ),
             ),
 
@@ -61,7 +66,7 @@ class ReportVolunteerHistoryCard extends StatelessWidget {
               children: [
                 const Icon(
                   CupertinoIcons.add,
-                  size: 10,
+                  size: 15,
                   color: AppColors.primaryColor,
                 ),
                 Text(

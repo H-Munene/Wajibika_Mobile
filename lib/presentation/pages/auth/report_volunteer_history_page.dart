@@ -14,6 +14,7 @@ class ReportVolunteerHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: true,
         title: Text(
           type == 'report'

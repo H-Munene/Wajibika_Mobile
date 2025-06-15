@@ -7,6 +7,8 @@ part 'report_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ReportModel extends ReportEntity with EquatableMixin {
   ReportModel({
+    required super.reportCategory,
+    required super.imageUrl,
     required super.volunteerCount,
     required super.username,
     required super.time,

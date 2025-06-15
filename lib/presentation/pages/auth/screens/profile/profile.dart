@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
@@ -12,6 +13,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool showReportHistory = true;
+
   Future<void> _selectProfilePicture(bool showRemoveMediaActionbutton) async {
     CustomDialogBottomAppSheet.mediaSelectionBottomSheet(
       context: context,
@@ -134,14 +137,32 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                  Globals.reportsHistorySectionTitle,
-                  style: textTheme.bodyLarge,
+                padding: const EdgeInsets.only(top: 10, left: 20, right: 35),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      showReportHistory
+                          ? Globals.reportsHistorySectionTitle
+                          : Globals.volunteerHistorySectionTitle,
+                      style: textTheme.bodyLarge,
+                    ),
+
+                    CupertinoSwitch(
+                      value: showReportHistory,
+                      activeTrackColor: AppColors.primaryColor,
+                      inactiveTrackColor: AppColors.secondaryColor,
+                      onChanged: (value) {
+                        setState(() {
+                          showReportHistory = value;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
 
-              const ReportHistoryCalender(),
+              ReportHistoryCalender(toggleCalendar: showReportHistory),
 
               const Divider(),
               Center(
