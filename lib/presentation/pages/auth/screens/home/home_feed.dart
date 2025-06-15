@@ -13,7 +13,7 @@ class HomeFeed extends StatefulWidget {
 }
 
 class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
-  int wajibikaPoints = 47;
+  int wajibikaPoints = 162;
   late TabController _tabController;
   List<ReportModel> cloggedDrainReports = [
     ReportModel(

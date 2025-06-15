@@ -56,7 +56,7 @@ class _BottomNavState extends State<BottomNav> {
         title: const Text(Globals.mainPageTitle),
         actions: [
           // TODO: get from user model
-          const WajibikaPointsIcon(wajibikaPoints: '47'),
+          const WajibikaPointsIcon(wajibikaPoints: 162),
           IconButton(
             onPressed:
                 () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(

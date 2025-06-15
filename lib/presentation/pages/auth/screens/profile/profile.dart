@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/widgets/profile_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
@@ -137,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20, right: 35),
+                padding: AppDimensions.profilePageWidgetsPadding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -165,27 +166,35 @@ class _ProfilePageState extends State<ProfilePage> {
               ReportHistoryCalender(toggleCalendar: showReportHistory),
 
               const Divider(),
-              Center(
-                child: CustomButtonWidget(
-                  child:
-                      state is AuthLoading
-                          ? const CustomLoadingIndicator()
-                          : Text(
-                            'Logout',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
-                          ),
-                  onPressed: () {
-                    context.read<AuthBloc>().add(AuthSignOut());
 
-                    // remove the profile picture when user logs out since when
-                    // a different user logs in the other user's profile
-                    // picture is retained by hydrated bloc
-                    // TODO: save the profile picture in db to restore it on login
-                    context.read<ProfileMediaBloc>().add(
-                      ProfileMediaRemoveCurrentProfilePictureEvent(),
-                    );
-                  },
+              Padding(
+                padding: AppDimensions.profilePageWidgetsPadding,
+
+                child: Text(
+                  Globals.profileSummarySectionTitle,
+                  style: textTheme.bodyLarge,
+                ),
+              ),
+
+              Padding(
+                padding: AppDimensions.profilePageWidgetsPadding,
+
+                child: const Row(
+                  children: [
+                    ProfileSummary(
+                      summaryCount: 162,
+                      profileSummaryCategory:
+                          ProfileSummaryCategory.wajibikaPoints,
+                    ),
+                    ProfileSummary(
+                      summaryCount: 3,
+                      profileSummaryCategory: ProfileSummaryCategory.volunteer,
+                    ),
+                    ProfileSummary(
+                      summaryCount: 13,
+                      profileSummaryCategory: ProfileSummaryCategory.report,
+                    ),
+                  ],
                 ),
               ),
             ],

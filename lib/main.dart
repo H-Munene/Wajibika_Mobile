@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/presentation/bloc/bookmark/bookmark_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';

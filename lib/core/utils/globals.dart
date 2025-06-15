@@ -34,6 +34,7 @@ class Globals {
   static const String homereportsSectionTitle = 'Reports';
   static const String reportsHistorySectionTitle = 'Reports History';
   static const String volunteerHistorySectionTitle = 'Volunteer History';
+  static const String profileSummarySectionTitle = 'Summary';
 
   static const String homeReportsTabTitle1 = 'Clogged Drains';
   static const String homeReportsTabTitle2 = 'Negligent Dumping';
