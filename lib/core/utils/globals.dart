@@ -24,6 +24,7 @@ class Globals {
   static const String profilePageTitle = 'Profile';
   static const String reportHistoryPageTitle = 'Report History';
   static const String volunteerHistoryPageTitle = 'Volunteer History';
+  static const String editProfilePageTitle = 'Edit Profile';
 
   // textformfield labels
   static const String usernameTextFieldLabel = 'Username';

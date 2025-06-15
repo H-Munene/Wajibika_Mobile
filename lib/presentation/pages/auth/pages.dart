@@ -10,4 +10,5 @@ export 'screens/home/home_feed.dart';
 export 'screens/home/week_highlights.dart';
 export 'screens/onboarding/onboarding.dart';
 export 'screens/profile/profile.dart';
+export 'screens/profile/edit_profile.dart';
 export 'screens/profile/report_history_calender.dart';
