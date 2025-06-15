@@ -22,9 +22,14 @@ class ProfileSummary extends StatelessWidget {
           spacing: 3,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              '$summaryCount',
-              style: Theme.of(context).textTheme.titleLarge,
+            Offstage(
+              offstage:
+                  profileSummaryCategory ==
+                  ProfileSummaryCategory.wajibikaPoints,
+              child: Text(
+                '$summaryCount',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             if (profileSummaryCategory == ProfileSummaryCategory.wajibikaPoints)
               WajibikaPointsIcon(wajibikaPoints: summaryCount)
