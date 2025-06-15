@@ -17,8 +17,6 @@ class ReportHistoryCalender extends StatefulWidget {
 class _ReportHistoryCalenderState extends State<ReportHistoryCalender> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -81,8 +79,6 @@ class _ReportHistoryCalenderState extends State<ReportHistoryCalender> {
                   datasets: {
                     DateTime(DateTime.now().year, DateTime.now().month, 1): 1,
                     DateTime(DateTime.now().year, DateTime.now().month, 7): 2,
-                    DateTime(DateTime.now().year, DateTime.now().month, 14): 3,
-                    DateTime(DateTime.now().year, DateTime.now().month, 21): 4,
                     DateTime(DateTime.now().year, DateTime.now().month, 28): 5,
                   },
                   colorTipHelper: const [

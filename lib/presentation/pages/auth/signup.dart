@@ -58,6 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      // username field
                       CustomTextFieldFormWidget(
                         label: Globals.usernameTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
@@ -69,12 +70,15 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                       ),
 
+                      // email field
                       CustomTextFieldFormWidget(
                         label: Globals.emailTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
                         controller: _emailTextEditingController,
                         validator: FormValidation.emailValidator,
                       ),
+
+                      // password field
                       CustomPasswordTextformfield(
                         controller: _passwordTextEditingController,
                         label: Globals.passwordTextFieldLabel,
@@ -84,6 +88,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               '${_passwordTextEditingController.text.trim()} ${_confirmPasswordTextEditingController.text.trim()}',
                             ),
                       ),
+
+                      // confirm password field
                       CustomPasswordTextformfield(
                         controller: _confirmPasswordTextEditingController,
                         label: Globals.confirmPasswordTextFieldLabel,

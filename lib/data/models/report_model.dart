@@ -16,7 +16,7 @@ class ReportModel extends ReportEntity with EquatableMixin {
     required super.scheduleDate,
   });
 
-  factory ReportModel.froJson(Map<String, dynamic> json) =>
+  factory ReportModel.fromJson(Map<String, dynamic> json) =>
       _$ReportModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReportModelToJson(this);

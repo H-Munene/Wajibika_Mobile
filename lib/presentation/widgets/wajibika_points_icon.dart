@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 
 class WajibikaPointsIcon extends StatelessWidget {
-  final String wajibikaPoints;
+  final int wajibikaPoints;
 
   const WajibikaPointsIcon({super.key, required this.wajibikaPoints});
 
@@ -10,7 +10,7 @@ class WajibikaPointsIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 26,
-      width: wajibikaPoints.length <= 2 ? 52 : 67,
+      width: wajibikaPoints.toString().length <= 2 ? 52 : 67,
       decoration: BoxDecoration(
         color: AppColors.wajibikaIconBackgroundColor,
         border: Border.all(),
@@ -19,7 +19,7 @@ class WajibikaPointsIcon extends StatelessWidget {
       child: Row(
         children: [
           const _InnerWajibikaIcon(),
-          Text(wajibikaPoints, style: const TextStyle(color: Colors.black)),
+          Text('$wajibikaPoints', style: const TextStyle(color: Colors.black)),
         ],
       ),
     );

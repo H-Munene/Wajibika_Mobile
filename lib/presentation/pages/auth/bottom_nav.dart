@@ -54,19 +54,11 @@ class _BottomNavState extends State<BottomNav> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(Globals.mainPageTitle),
-        actions: [
+        actions: const [
           // TODO: get from user model
-          const WajibikaPointsIcon(wajibikaPoints: '47'),
-          IconButton(
-            onPressed:
-                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
-                  onLogoutPressed:
-                      () => context.read<AuthBloc>().add(AuthSignOut()),
-                  context: context,
-                ),
-            icon: const Icon(CupertinoIcons.power),
-          ),
+          WajibikaPointsIcon(wajibikaPoints: 162),
         ],
+        actionsPadding: const EdgeInsets.only(right: 10),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -84,24 +76,56 @@ class _BottomNavState extends State<BottomNav> {
               _currentIndex = value;
             });
           },
-          destinations: const [
-            NavigationDestination(
+          destinations: [
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.house_alt),
               label: Globals.bottomNavHomeIconLabel,
               selectedIcon: Icon(CupertinoIcons.house_alt_fill),
             ),
 
             NavigationDestination(
-              icon: Icon(CupertinoIcons.hand_raised),
+              icon: BlocBuilder<VolunteerBloc, VolunteerState>(
+                builder: (BuildContext context, state) {
+                  final registeredAsVolunteerEventsCount =
+                      context
+                          .read<VolunteerBloc>()
+                          .state
+                          .registeredVolunteerEvents
+                          .length;
+
+                  return registeredAsVolunteerEventsCount != 0
+                      ? Badge(
+                        label: Text('$registeredAsVolunteerEventsCount'),
+                        child: const Icon(CupertinoIcons.hand_raised),
+                      )
+                      : const Icon(CupertinoIcons.hand_raised);
+                },
+              ),
               label: Globals.bottomNavVolunteerIconLabel,
-              selectedIcon: Icon(CupertinoIcons.hand_raised_fill),
+              selectedIcon: BlocBuilder<VolunteerBloc, VolunteerState>(
+                builder: (BuildContext context, state) {
+                  final registeredAsVolunteerEventsCount =
+                      context
+                          .read<VolunteerBloc>()
+                          .state
+                          .registeredVolunteerEvents
+                          .length;
+
+                  return registeredAsVolunteerEventsCount != 0
+                      ? Badge(
+                        label: Text('$registeredAsVolunteerEventsCount'),
+                        child: const Icon(CupertinoIcons.hand_raised_fill),
+                      )
+                      : const Icon(CupertinoIcons.hand_raised_fill);
+                },
+              ),
             ),
-            NavigationDestination(
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.bookmark),
               label: Globals.bottomNavBookmarksIconLabel,
               selectedIcon: Icon(CupertinoIcons.bookmark_fill),
             ),
-            NavigationDestination(
+            const NavigationDestination(
               icon: Icon(CupertinoIcons.person_circle),
               label: Globals.bottomNavProfileIconLabel,
               selectedIcon: Icon(CupertinoIcons.person_circle_fill),

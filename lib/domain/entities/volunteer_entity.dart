@@ -1,6 +1,5 @@
-class ReportEntity {
-  ReportEntity({
-    required this.reportCategory,
+class VolunteerEntity {
+  VolunteerEntity({
     required this.imageUrl,
     required this.volunteerCount,
     required this.username,
@@ -9,12 +8,10 @@ class ReportEntity {
     required this.scheduleDate,
   });
 
-  //final int id
+  final String imageUrl;
   final int volunteerCount;
   final String username;
   final String time;
   final String description;
   final String scheduleDate;
-  final String imageUrl;
-  final String reportCategory; // 'Clogged Drain', 'Improper Garbage Disposal',
 }

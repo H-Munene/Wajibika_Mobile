@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 clipper: _CurvedBottomContainer(),
                 child: Container(
                   color: AppColors.primaryColor,
-                  height: 150,
+                  height: 140,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, bottom: 20),
                     child: Row(
@@ -131,13 +131,45 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
+
+                        // logout button
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 18, left: 20),
+                          child: IconButton(
+                            onPressed:
+                                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
+                                  onLogoutPressed: () async {
+                                    context.read<AuthBloc>().add(AuthSignOut());
+
+                                    // clear volunteer events and bookmarks:
+                                    // ideally supposed to have db save them so that they are
+                                    // restored.We clear it for now just so that if another
+                                    // user logs in they dont find saved volunteer events
+                                    // they didnt register to
+                                    context.read<VolunteerBloc>().add(
+                                      VolunteerEventClear(),
+                                    );
+
+                                    context.read<BookmarkBloc>().add(
+                                      BookmarkEventClear(),
+                                    );
+                                  },
+                                  context: context,
+                                ),
+                            icon: const Icon(
+                              CupertinoIcons.square_arrow_right,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20, right: 35),
+                padding: AppDimensions.profilePageWidgetsPadding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -165,27 +197,35 @@ class _ProfilePageState extends State<ProfilePage> {
               ReportHistoryCalender(toggleCalendar: showReportHistory),
 
               const Divider(),
-              Center(
-                child: CustomButtonWidget(
-                  child:
-                      state is AuthLoading
-                          ? const CustomLoadingIndicator()
-                          : Text(
-                            'Logout',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
-                          ),
-                  onPressed: () {
-                    context.read<AuthBloc>().add(AuthSignOut());
 
-                    // remove the profile picture when user logs out since when
-                    // a different user logs in the other user's profile
-                    // picture is retained by hydrated bloc
-                    // TODO: save the profile picture in db to restore it on login
-                    context.read<ProfileMediaBloc>().add(
-                      ProfileMediaRemoveCurrentProfilePictureEvent(),
-                    );
-                  },
+              Padding(
+                padding: AppDimensions.profilePageWidgetsPadding,
+
+                child: Text(
+                  Globals.profileSummarySectionTitle,
+                  style: textTheme.bodyLarge,
+                ),
+              ),
+
+              Padding(
+                padding: AppDimensions.profilePageWidgetsPadding,
+
+                child: const Row(
+                  children: [
+                    ProfileSummary(
+                      summaryCount: 162,
+                      profileSummaryCategory:
+                          ProfileSummaryCategory.wajibikaPoints,
+                    ),
+                    ProfileSummary(
+                      summaryCount: 3,
+                      profileSummaryCategory: ProfileSummaryCategory.volunteer,
+                    ),
+                    ProfileSummary(
+                      summaryCount: 13,
+                      profileSummaryCategory: ProfileSummaryCategory.report,
+                    ),
+                  ],
                 ),
               ),
             ],

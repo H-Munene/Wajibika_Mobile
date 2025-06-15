@@ -49,6 +49,12 @@ class _WajibikaPointsProgressState extends State<WajibikaPointsProgress>
 
   @override
   Widget build(BuildContext context) {
+    final progressBarValue = (_wajibikaPointsLinearProgressIndicatorAnimation
+                .value *
+            widget.wajibikaPoints /
+            100)
+        .clamp(0.0, 0.82);
+
     return Column(
       children: [
         Row(
@@ -63,10 +69,7 @@ class _WajibikaPointsProgressState extends State<WajibikaPointsProgress>
         LinearProgressIndicator(
           valueColor: _wajibikaPointsLinearProgressIndicatorColorAnimation,
           borderRadius: AppDimensions.circleBorderRadius,
-          value:
-              _wajibikaPointsLinearProgressIndicatorAnimation.value *
-              widget.wajibikaPoints /
-              100,
+          value: progressBarValue,
           minHeight: 10,
           color: AppColors.primaryColor,
         ),

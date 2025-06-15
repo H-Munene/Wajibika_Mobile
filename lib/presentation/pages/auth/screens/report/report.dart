@@ -16,6 +16,7 @@ class _ReportPageState extends State<ReportPage> {
   final TextEditingController _descriptionTextEditingController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final MediaBloc mediaBloc;
 
   String category = '';
   bool hasImagePresent = false;
@@ -41,13 +42,14 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   void initState() {
+    mediaBloc = context.read<MediaBloc>();
     super.initState();
   }
 
   @override
   void dispose() {
     _descriptionTextEditingController.dispose();
-    context.read<MediaBloc>().add(MediaRemoveCurrentReportPictureEvent());
+    mediaBloc.add(MediaRemoveCurrentReportPictureEvent());
     super.dispose();
   }
 
