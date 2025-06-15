@@ -50,12 +50,15 @@ class _LoginPageState extends State<LoginPage> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      // email field
                       CustomTextFieldFormWidget(
                         label: Globals.emailTextFieldLabel,
                         prefixIcon: FontAwesomeIcons.envelope,
                         controller: _emailTextEditingController,
                         validator: FormValidation.emailValidator,
                       ),
+
+                      // password field
                       CustomPasswordTextformfield(
                         controller: _passwordTextEditingController,
                         label: Globals.passwordTextFieldLabel,

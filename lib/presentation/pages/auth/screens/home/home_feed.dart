@@ -64,13 +64,29 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void _confirmVolunteerForThisEvent() {
+  void confirmVolunteerForThisEvent({required ReportModel reportModel}) {
+    final isVolunteer = context
+        .read<VolunteerBloc>()
+        .state
+        .registeredAsVolunteerForThisReport(reportModel: reportModel);
+
     CustomDialogBottomAppSheet.cupertinoAlertDialog(
       context: context,
-      title: Globals.volunterForThisEventAlertTitle,
-      content: Globals.volunterForThisEventAlertContent,
+      title:
+          isVolunteer
+              ? Globals.unregisterAsVolunteerFromThisEventAlertTitle
+              : Globals.volunterForThisEventAlertTitle,
+      content:
+          isVolunteer
+              ? Globals.unregisterAsVolunterFromThisEventAlertContent
+              : Globals.volunterForThisEventAlertContent,
       // TODO: mark as volunteer for event -> will need report id
-      onDestructiveActionPressed: () => Navigator.of(context).pop(),
+      onDestructiveActionPressed: () {
+        context.read<VolunteerBloc>().add(
+          VolunteerEventToggleVolunteerPresence(reportModel: reportModel),
+        );
+        Navigator.of(context).pop();
+      },
     );
   }
 
@@ -145,25 +161,40 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           children: [
             ListView.separated(
               itemBuilder:
-                  (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
-                    builder: (context, state) {
-                      return WajibikaReportFeedCard(
-                        imageUrl: cloggedDrainReports[index].imageUrl,
-                        username: cloggedDrainReports[index].username,
-                        time: cloggedDrainReports[index].time,
-                        description: cloggedDrainReports[index].description,
-                        volunteerCount:
-                            cloggedDrainReports[index].volunteerCount,
-                        scheduleDate: cloggedDrainReports[index].scheduleDate,
-                        onVolunteerButtonPressed: () {},
-                        isBookmarked: state.isReportBookMarked(
-                          reportModel: cloggedDrainReports[index],
-                        ),
-                        onBookmarkButtonPressed:
-                            () => context.read<BookmarkBloc>().add(
-                              BookmarkEventToggleReportBookmarksPresence(
+                  (
+                    context,
+                    index,
+                  ) => BlocBuilder<VolunteerBloc, VolunteerState>(
+                    builder: (context, volunteerState) {
+                      return BlocBuilder<BookmarkBloc, BookmarkState>(
+                        builder:
+                            (context, bookmarkState) => WajibikaReportFeedCard(
+                              isVolunteerForThisReport: volunteerState
+                                  .registeredAsVolunteerForThisReport(
+                                    reportModel: cloggedDrainReports[index],
+                                  ),
+                              imageUrl: cloggedDrainReports[index].imageUrl,
+                              username: cloggedDrainReports[index].username,
+                              time: cloggedDrainReports[index].time,
+                              description:
+                                  cloggedDrainReports[index].description,
+                              volunteerCount:
+                                  cloggedDrainReports[index].volunteerCount,
+                              scheduleDate:
+                                  cloggedDrainReports[index].scheduleDate,
+                              onVolunteerButtonPressed:
+                                  () => confirmVolunteerForThisEvent(
+                                    reportModel: cloggedDrainReports[index],
+                                  ),
+                              isBookmarked: bookmarkState.isReportBookMarked(
                                 reportModel: cloggedDrainReports[index],
                               ),
+                              onBookmarkButtonPressed:
+                                  () => context.read<BookmarkBloc>().add(
+                                    BookmarkEventToggleReportBookmarksPresence(
+                                      reportModel: cloggedDrainReports[index],
+                                    ),
+                                  ),
                             ),
                       );
                     },
@@ -174,27 +205,42 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
             ),
             ListView.separated(
               itemBuilder:
-                  (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
-                    builder: (context, state) {
-                      return WajibikaReportFeedCard(
-                        imageUrl: negligentDumpingReports[index].imageUrl,
-                        username: negligentDumpingReports[index].username,
-                        time: negligentDumpingReports[index].time,
-                        description: negligentDumpingReports[index].description,
-                        volunteerCount:
-                            negligentDumpingReports[index].volunteerCount,
-                        scheduleDate:
-                            negligentDumpingReports[index].scheduleDate,
-                        onVolunteerButtonPressed: () {},
-                        isBookmarked: state.isReportBookMarked(
-                          reportModel: negligentDumpingReports[index],
-                        ),
-                        onBookmarkButtonPressed:
-                            () => context.read<BookmarkBloc>().add(
-                              BookmarkEventToggleReportBookmarksPresence(
-                                reportModel: negligentDumpingReports[index],
-                              ),
+                  (
+                    context,
+                    index,
+                  ) => BlocBuilder<VolunteerBloc, VolunteerState>(
+                    builder: (context, volunteerState) {
+                      return BlocBuilder<BookmarkBloc, BookmarkState>(
+                        builder: (context, bookmarkState) {
+                          return WajibikaReportFeedCard(
+                            isVolunteerForThisReport: volunteerState
+                                .registeredAsVolunteerForThisReport(
+                                  reportModel: negligentDumpingReports[index],
+                                ),
+                            imageUrl: negligentDumpingReports[index].imageUrl,
+                            username: negligentDumpingReports[index].username,
+                            time: negligentDumpingReports[index].time,
+                            description:
+                                negligentDumpingReports[index].description,
+                            volunteerCount:
+                                negligentDumpingReports[index].volunteerCount,
+                            scheduleDate:
+                                negligentDumpingReports[index].scheduleDate,
+                            onVolunteerButtonPressed:
+                                () => confirmVolunteerForThisEvent(
+                                  reportModel: negligentDumpingReports[index],
+                                ),
+                            isBookmarked: bookmarkState.isReportBookMarked(
+                              reportModel: negligentDumpingReports[index],
                             ),
+                            onBookmarkButtonPressed:
+                                () => context.read<BookmarkBloc>().add(
+                                  BookmarkEventToggleReportBookmarksPresence(
+                                    reportModel: negligentDumpingReports[index],
+                                  ),
+                                ),
+                          );
+                        },
                       );
                     },
                   ),

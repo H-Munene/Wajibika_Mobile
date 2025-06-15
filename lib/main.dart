@@ -42,6 +42,7 @@ void main() async {
           BlocProvider(create: (_) => MediaBloc()),
           BlocProvider(create: (_) => ProfileMediaBloc()),
           BlocProvider(create: (_) => BookmarkBloc()),
+          BlocProvider(create: (_) => VolunteerBloc()),
         ],
 
         child: const MyApp(),

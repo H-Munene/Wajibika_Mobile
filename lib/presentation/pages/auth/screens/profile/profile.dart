@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/presentation/widgets/profile_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';

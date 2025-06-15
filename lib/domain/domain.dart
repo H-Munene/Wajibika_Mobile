@@ -9,3 +9,4 @@ export 'usecases/already_signed_in.dart';
 
 export 'entities/user_entity.dart';
 export 'entities/report_entity.dart';
+export 'entities/volunteer_entity.dart';

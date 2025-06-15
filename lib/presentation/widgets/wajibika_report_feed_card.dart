@@ -17,8 +17,9 @@ class WajibikaReportFeedCard extends StatelessWidget {
   final VoidCallback onVolunteerButtonPressed;
   final void Function() onBookmarkButtonPressed;
   final bool isBookmarked;
-
+  final bool isVolunteerForThisReport;
   final bool showMyAvatar;
+
   const WajibikaReportFeedCard({
     super.key,
     required this.username,
@@ -31,6 +32,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.onBookmarkButtonPressed,
     this.isBookmarked = false,
     required this.imageUrl,
+    this.isVolunteerForThisReport = false,
   });
 
   @override
@@ -114,16 +116,34 @@ class WajibikaReportFeedCard extends StatelessWidget {
                   children: [
                     CustomButtonWidget(
                       makeButtonRounded: true,
-                      color: Colors.black,
+                      color:
+                          isVolunteerForThisReport
+                              ? Colors.white
+                              : Colors.black,
                       onPressed: onVolunteerButtonPressed,
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 3,
                         children: [
-                          Icon(CupertinoIcons.hand_raised, color: Colors.white),
+                          Icon(
+                            isVolunteerForThisReport
+                                ? CupertinoIcons.hand_raised_fill
+                                : CupertinoIcons.hand_raised,
+                            color:
+                                isVolunteerForThisReport
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                           Text(
-                            'Volunteer',
-                            style: TextStyle(color: Colors.white),
+                            isVolunteerForThisReport
+                                ? 'Registered'
+                                : 'Volunteer',
+                            style: TextStyle(
+                              color:
+                                  isVolunteerForThisReport
+                                      ? Colors.black
+                                      : Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -133,9 +153,9 @@ class WajibikaReportFeedCard extends StatelessWidget {
                     Positioned(
                       bottom: 0.5,
                       right: 5,
-                      child: _UserAvatarsWithCount(
+                      child: _UserAvatarandOtherUserAvatWithCount(
                         volunteerCount: volunteerCount,
-                        showMyAvatar: showMyAvatar,
+                        showMyAvatar: isVolunteerForThisReport,
                       ),
                     ),
                   ],
@@ -172,11 +192,11 @@ class _ScheduleDate extends StatelessWidget {
 
 // conditionally diplays the user avatar and another user avatar with the count
 // to signify number of volunteers in a report
-class _UserAvatarsWithCount extends StatelessWidget {
+class _UserAvatarandOtherUserAvatWithCount extends StatelessWidget {
   final bool showMyAvatar; // current user avatar
   final int volunteerCount; // number of volunteers for this report
 
-  const _UserAvatarsWithCount({
+  const _UserAvatarandOtherUserAvatWithCount({
     this.showMyAvatar = false,
     required this.volunteerCount,
   });
