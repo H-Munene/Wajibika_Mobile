@@ -17,6 +17,7 @@ class AuthDataSourceImpl implements AuthDataSource {
         email: email,
         password: password,
       );
+
       final user =
           signInResponse.session!.user.toJson()['user_metadata']
               as Map<String, dynamic>;
@@ -54,7 +55,7 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthApiException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
-      throw ServerException(message: 'Sign in failed. Please try again!!');
+      throw ServerException(message: e.toString());
     }
   }
 

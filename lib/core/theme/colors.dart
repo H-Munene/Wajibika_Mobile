@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // static const Color primaryColor = Colors.teal
   static const Color primaryColor = Color.fromARGB(255, 5, 143, 5);
+  static const Color secondaryColor = Color(0xFFFF9A9A);
   static const Color errorColor = Color.fromARGB(255, 220, 33, 42);
   static const Color borderColor = Colors.grey;
   static const Color selectedItemColor = Colors.black;

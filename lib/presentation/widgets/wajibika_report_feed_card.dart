@@ -5,13 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 
+// builds a card with the report image, a description, the user and time the
+// report was submitted
 class WajibikaReportFeedCard extends StatelessWidget {
+  final String imageUrl;
   final int volunteerCount;
   final String username;
   final String time;
   final String description;
   final String scheduleDate;
-  final VoidCallback onPressed;
+  final VoidCallback onVolunteerButtonPressed;
+  final void Function() onBookmarkButtonPressed;
+  final bool isBookmarked;
 
   final bool showMyAvatar;
   const WajibikaReportFeedCard({
@@ -22,7 +27,10 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.volunteerCount,
     required this.scheduleDate, // i.e "EEE, MMM d, ''yyyy"-> Wed, Jul 10, '2025
     this.showMyAvatar = false,
-    required this.onPressed,
+    required this.onVolunteerButtonPressed,
+    required this.onBookmarkButtonPressed,
+    this.isBookmarked = false,
+    required this.imageUrl,
   });
 
   @override
@@ -39,6 +47,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
         borderRadius: AppDimensions.circleBorderRadius,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // report image
           ClipRRect(
@@ -46,18 +55,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Stack(
-              children: [
-                Image.asset(AppImages.clogged),
-                Positioned(
-                  right: 5,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(CupertinoIcons.bookmark),
-                  ),
-                ),
-              ],
-            ),
+            child: Image.asset(imageUrl),
           ),
           const SizedBox(height: 5),
 
@@ -74,6 +72,15 @@ class WajibikaReportFeedCard extends StatelessWidget {
                     Text(username, style: textTheme.bodySmall),
                     Text(time, style: textTheme.bodySmall),
                   ],
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: onBookmarkButtonPressed,
+                  icon: Icon(
+                    isBookmarked
+                        ? CupertinoIcons.bookmark_fill
+                        : CupertinoIcons.bookmark,
+                  ),
                 ),
               ],
             ),
@@ -108,7 +115,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
                     CustomButtonWidget(
                       makeButtonRounded: true,
                       color: Colors.black,
-                      onPressed: onPressed,
+                      onPressed: onVolunteerButtonPressed,
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 3,

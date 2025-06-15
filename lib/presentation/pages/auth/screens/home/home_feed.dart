@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeFeed extends StatefulWidget {
   const HomeFeed({super.key});
@@ -13,9 +14,49 @@ class HomeFeed extends StatefulWidget {
 
 class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   int wajibikaPoints = 47;
-  List<String> images = [AppImages.cleanup, AppImages.cleanup2, AppImages.team];
-
   late TabController _tabController;
+  List<ReportModel> cloggedDrainReports = [
+    ReportModel(
+      reportCategory: Globals.reportCategoryItems[0],
+      imageUrl: AppImages.clogged,
+      volunteerCount: 3,
+      username: 'User101',
+      time: 'Mon, Jul 9',
+      description:
+          'Clogged Drain as you get into the Siwaka Plaza back entrance',
+      scheduleDate: 'Sat, Jul 14',
+    ),
+    ReportModel(
+      reportCategory: Globals.reportCategoryItems[0],
+      imageUrl: AppImages.clogged2,
+      volunteerCount: 2,
+      username: 'User102',
+      time: 'Tue, Jul 9',
+      description: 'Clogged Drain towards Madaraka Primary School',
+      scheduleDate: 'Sat, Jul 14',
+    ),
+  ];
+
+  List<ReportModel> negligentDumpingReports = [
+    ReportModel(
+      reportCategory: Globals.reportCategoryItems[1],
+      imageUrl: AppImages.garbage1,
+      volunteerCount: 3,
+      username: 'User103',
+      time: 'Mon, Jul 7',
+      description: 'Negligent Dumping along Ole Sangale Road past Weche Court',
+      scheduleDate: 'Sat, Jul 14',
+    ),
+    ReportModel(
+      reportCategory: Globals.reportCategoryItems[1],
+      imageUrl: AppImages.garbage2,
+      volunteerCount: 2,
+      username: 'User108',
+      time: 'Tue, Jul 10',
+      description: 'Improper Waster close to Shopping Centre',
+      scheduleDate: 'Sat, Jul 14',
+    ),
+  ];
 
   @override
   void initState() {
@@ -104,35 +145,62 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           children: [
             ListView.separated(
               itemBuilder:
-                  (context, index) => WajibikaReportFeedCard(
-                    showMyAvatar: true,
-                    scheduleDate: 'Sat, July 12',
-                    volunteerCount: 2,
-                    username: 'User101',
-                    time: '7hrs ago',
-                    description:
-                        'Clogged drain around Madaraka shopping centre',
-                    onPressed: _confirmVolunteerForThisEvent,
+                  (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
+                    builder: (context, state) {
+                      return WajibikaReportFeedCard(
+                        imageUrl: cloggedDrainReports[index].imageUrl,
+                        username: cloggedDrainReports[index].username,
+                        time: cloggedDrainReports[index].time,
+                        description: cloggedDrainReports[index].description,
+                        volunteerCount:
+                            cloggedDrainReports[index].volunteerCount,
+                        scheduleDate: cloggedDrainReports[index].scheduleDate,
+                        onVolunteerButtonPressed: () {},
+                        isBookmarked: state.isReportBookMarked(
+                          reportModel: cloggedDrainReports[index],
+                        ),
+                        onBookmarkButtonPressed:
+                            () => context.read<BookmarkBloc>().add(
+                              BookmarkEventToggleReportBookmarksPresence(
+                                reportModel: cloggedDrainReports[index],
+                              ),
+                            ),
+                      );
+                    },
                   ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
-              itemCount: 10,
+              itemCount: cloggedDrainReports.length,
             ),
             ListView.separated(
               itemBuilder:
-                  (context, index) => WajibikaReportFeedCard(
-                    showMyAvatar: true,
-                    scheduleDate: 'Sat, July 12',
-                    volunteerCount: 2,
-                    username: 'User101',
-                    time: 'Mon, July 10',
-                    description:
-                        'Clogged drain around Madaraka shopping centre',
-                    onPressed: _confirmVolunteerForThisEvent,
+                  (context, index) => BlocBuilder<BookmarkBloc, BookmarkState>(
+                    builder: (context, state) {
+                      return WajibikaReportFeedCard(
+                        imageUrl: negligentDumpingReports[index].imageUrl,
+                        username: negligentDumpingReports[index].username,
+                        time: negligentDumpingReports[index].time,
+                        description: negligentDumpingReports[index].description,
+                        volunteerCount:
+                            negligentDumpingReports[index].volunteerCount,
+                        scheduleDate:
+                            negligentDumpingReports[index].scheduleDate,
+                        onVolunteerButtonPressed: () {},
+                        isBookmarked: state.isReportBookMarked(
+                          reportModel: negligentDumpingReports[index],
+                        ),
+                        onBookmarkButtonPressed:
+                            () => context.read<BookmarkBloc>().add(
+                              BookmarkEventToggleReportBookmarksPresence(
+                                reportModel: negligentDumpingReports[index],
+                              ),
+                            ),
+                      );
+                    },
                   ),
               separatorBuilder:
                   (context, index) => const Divider(indent: 10, endIndent: 10),
-              itemCount: 10,
+              itemCount: negligentDumpingReports.length,
             ),
           ],
         ),

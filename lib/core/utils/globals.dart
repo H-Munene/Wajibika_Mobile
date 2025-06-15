@@ -25,12 +25,15 @@ class Globals {
   static const String mainPageTitle = 'Wajibika';
   static const String reportPageTitle = 'Report';
   static const String profilePageTitle = 'Profile';
+  static const String reportHistoryPageTitle = 'Report History';
+  static const String volunteerHistoryPageTitle = 'Volunteer History';
 
   static const String wajibikaPoints = 'Wajibika Points';
 
   static const String homeWeekHighlightsSectionTitle = 'Week Highlights';
   static const String homereportsSectionTitle = 'Reports';
   static const String reportsHistorySectionTitle = 'Reports History';
+  static const String volunteerHistorySectionTitle = 'Volunteer History';
 
   static const String homeReportsTabTitle1 = 'Clogged Drains';
   static const String homeReportsTabTitle2 = 'Negligent Dumping';

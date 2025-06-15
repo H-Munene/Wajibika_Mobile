@@ -16,18 +16,12 @@ class AppImages {
   static const team = '$_imagesPath/team.jpg';
   static const clogged = '$_imagesPath/clogged.jpg';
   static const volunteer = '$_imagesPath/volunteer.jpg';
-  static const bin = '$_imagesPath/bin.jpg';
+  static const garbage1 = '$_imagesPath/garbage1.jpg';
+  static const garbage2 = '$_imagesPath/garbage2.jpg';
   static const report = '$_imagesPath/report.jpg';
   static const neighbourhood = '$_imagesPath/neighbourhood.jpg';
-}
-
-//**VECTOR ASSETS CLASS BELOW *//
-
-// provides unified access to svgs
-class AppVectors {
-  // *NOTE*
-  //if svg is unable to load, especially in web, try: ↓↓↓↓↓↓
-  // static const String _vectorsPath = 'vectors';
-
-  static const String _vectorsPath = 'assets/vectors';
+  static const clogged2 = '$_imagesPath/clogged2.jpg';
+  static const clogged3 = '$_imagesPath/clogged3.jpg';
+  static const no_bookmarks = '$_imagesPath/no_bookmarks.jpg';
+  static const no_bookmarks2 = '$_imagesPath/empty.jpg';
 }
