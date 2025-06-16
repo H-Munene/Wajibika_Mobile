@@ -24,7 +24,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
       time: 'Mon, Jul 9',
       description:
           'Clogged Drain as you get into the Siwaka Plaza back entrance',
-      scheduleDate: 'Sat, Jul 14',
+      scheduleDate: 'Sat, Jul 21',
     ),
     ReportModel(
       reportCategory: Globals.reportCategoryItems[0],
@@ -33,7 +33,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
       username: 'User102',
       time: 'Tue, Jul 9',
       description: 'Clogged Drain towards Madaraka Primary School',
-      scheduleDate: 'Sat, Jul 14',
+      scheduleDate: 'Sat, Jul 21',
     ),
   ];
 
@@ -45,7 +45,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
       username: 'User103',
       time: 'Mon, Jul 7',
       description: 'Negligent Dumping along Ole Sangale Road past Weche Court',
-      scheduleDate: 'Sat, Jul 14',
+      scheduleDate: 'Sat, Jul 21',
     ),
     ReportModel(
       reportCategory: Globals.reportCategoryItems[1],
@@ -54,7 +54,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
       username: 'User108',
       time: 'Tue, Jul 10',
       description: 'Improper Waster close to Shopping Centre',
-      scheduleDate: 'Sat, Jul 14',
+      scheduleDate: 'Sat, Jul 21',
     ),
   ];
 

@@ -49,7 +49,7 @@ class Globals {
   static const String volunterForThisEventAlertTitle =
       'Volunteer for this Reported event?';
   static const String unregisterAsVolunteerFromThisEventAlertTitle =
-      'Unregister as a volunteer from this Reported Event?';
+      'Unregister as a volunteer?';
   static const String reportSubmissionAlertTitle = 'Submit?';
 
   // alert box content

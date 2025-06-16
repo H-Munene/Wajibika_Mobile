@@ -4,6 +4,7 @@ import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -44,6 +45,31 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
   }
 
+  Future<void> _selectProfilePicture(bool showRemoveMediaActionbutton) async {
+    CustomDialogBottomAppSheet.mediaSelectionBottomSheet(
+      context: context,
+      onCameraSelected: () {
+        Navigator.of(context).pop();
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaChangeProfilePictureFromCameraEvent(),
+        );
+      },
+      onGallerySelected: () {
+        Navigator.of(context).pop();
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaChangeProfilePictureFromGalleryEvent(),
+        );
+      },
+      showRemoveMediaActionbutton: showRemoveMediaActionbutton,
+      onRemoveMediaSelected: () {
+        Navigator.of(context).pop();
+        context.read<ProfileMediaBloc>().add(
+          ProfileMediaRemoveCurrentProfilePictureEvent(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +103,30 @@ class _EditProfileState extends State<EditProfile> {
         child: Form(
           key: _formKey,
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 7,
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 10),
+              BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+                builder: (context, state) {
+                  // if the user has set a profile picture
+                  final isThereimageSelected =
+                      state.profileMediaStatus ==
+                      ProfileMediaStatus.profilePicturePresent;
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 7),
+                    child: CustomUserAvatar(
+                      //display the user image when tapped
+                      onCameraIconTapped:
+                          () => _selectProfilePicture(isThereimageSelected),
+                      userProfilePicture:
+                          isThereimageSelected ? state.profilePicture : '',
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 15),
+
               CustomTextFieldFormWidget(
                 label: Globals.usernameTextFieldLabel,
                 prefixIcon: Icons.person,
@@ -106,19 +153,6 @@ class _EditProfileState extends State<EditProfile> {
                   });
                 },
               ),
-
-              // password field
-              // CustomButtonWidget(
-              //   child: const Text('Update'),
-              //   onPressed: () {
-              //     if (hasChanged()) {
-              //       if (_formKey.currentState!.validate()) {
-              //         print('Username changed from $oldusername to $username');
-              //         print('Email changed from $oldemail to $email');
-              //       }
-              //     }
-              //   },
-              // ),
             ],
           ),
         ),
