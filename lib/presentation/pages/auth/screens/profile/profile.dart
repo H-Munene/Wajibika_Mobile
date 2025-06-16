@@ -127,7 +127,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Edit Profile',
                                 style: textTheme.bodyMedium,
                               ),
-                              onPressed: () {},
+                              onPressed:
+                                  () => Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (context) => const EditProfile(),
+                                    ),
+                                  ),
                             ),
                           ],
                         ),

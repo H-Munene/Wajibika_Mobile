@@ -24,6 +24,7 @@ class Globals {
   static const String profilePageTitle = 'Profile';
   static const String reportHistoryPageTitle = 'Report History';
   static const String volunteerHistoryPageTitle = 'Volunteer History';
+  static const String editProfilePageTitle = 'Edit Profile';
 
   // textformfield labels
   static const String usernameTextFieldLabel = 'Username';
@@ -48,7 +49,7 @@ class Globals {
   static const String volunterForThisEventAlertTitle =
       'Volunteer for this Reported event?';
   static const String unregisterAsVolunteerFromThisEventAlertTitle =
-      'Unregister as a volunteer from this Reported Event?';
+      'Unregister as a volunteer?';
   static const String reportSubmissionAlertTitle = 'Submit?';
 
   // alert box content
