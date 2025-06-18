@@ -23,6 +23,7 @@ analyzer:
     unnecessary_await_in_return: ignore
     omit_local_variable_types: ignore 
     flutter_style_todos: ignore
+    non_constant_identifier_names: ignore
 
   exclude:
     - test/.test_coverage.dart

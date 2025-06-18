@@ -3,6 +3,11 @@ import 'package:bloc_clean_arch/data/data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // ** Supabase DataSource Implementation ** //
+
+// ** THIS WONT WORK *
+
+// ** This needs refactoring as the user entity has changed 
+
 class SupabaseDataSourceImpl implements AuthDataSource {
   SupabaseDataSourceImpl({required this.supabaseClient});
 
@@ -51,8 +56,9 @@ class SupabaseDataSourceImpl implements AuthDataSource {
               as Map<String, dynamic>;
       final userModel = UserModel.fromJson(user);
 
+      // return int.parse(userModel.id);
 
-      return int.parse(userModel.id);
+      return userModel.user_id;
     } on AuthApiException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
