@@ -92,6 +92,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: move from here
     final textTheme = Theme.of(context).textTheme;
     final username = context.read<UserRepository>().getUserName().fold(
       (_) => 'user',
