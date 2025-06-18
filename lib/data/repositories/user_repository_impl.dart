@@ -87,4 +87,24 @@ class UserRepositoryImpl implements UserRepository {
   bool doNotshowOnboardingScreen() {
     return _localDbDataSource.doNotShowOnboardingScreen();
   }
+
+  @override
+  Either<Failure, String> getToken() {
+    try {
+      final token = _localDbDataSource.getToken();
+
+      return right(token!);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> saveToken({required String token}) async {
+    try {
+      return right(await _localDbDataSource.saveToken(token: token));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

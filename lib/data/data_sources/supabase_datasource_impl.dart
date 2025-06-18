@@ -2,11 +2,11 @@ import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-// ** Supabase DataSource Implementation ** //
+// // ** Supabase DataSource Implementation ** //
 
-// ** THIS WONT WORK *
+// // ***** THIS WONT WORK *****
 
-// ** This needs refactoring as the user entity has changed 
+// // ** This needs refactoring as the user entity has changed 
 
 class SupabaseDataSourceImpl implements AuthDataSource {
   SupabaseDataSourceImpl({required this.supabaseClient});

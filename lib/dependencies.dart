@@ -9,24 +9,24 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final locator = GetIt.instance;
 
 Future<void> init() async {
-  final supabase = await Supabase.initialize(
-    url: SupabaseSecrets.url,
-    anonKey: SupabaseSecrets.anonKey,
-  );
+  // final supabase = await Supabase.initialize(
+  //   url: SupabaseSecrets.url,
+  //   anonKey: SupabaseSecrets.anonKey,
+  // );
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
   locator
-    ..registerLazySingleton(() => supabase.client)
-    ..registerLazySingleton(() => sharedPreferences);
+    // ..registerLazySingleton(() => supabase.client)
+    .registerLazySingleton(() => sharedPreferences);
 
   _initAuth();
 }
 
 void _initAuth() {
   locator
-    ..registerFactory<AuthDataSource>(
-      () => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
+    ..registerLazySingleton<UserRepository>(
+      () => UserRepositoryImpl(localDbDataSource: locator()),
     )
     ..registerLazySingleton<LocalDbDataSource>(
       () => LocalDbDatasourceImpl(
@@ -36,8 +36,9 @@ void _initAuth() {
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(authDatasource: locator()),
     )
-    ..registerLazySingleton<UserRepository>(
-      () => UserRepositoryImpl(localDbDataSource: locator()),
+    ..registerFactory<AuthDataSource>(
+      // () => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
+      () => LocahostDatasourceImpl(userRepository: locator()),
     )
     ..registerFactory(() => UserSignUpUseCase(authRepository: locator()))
     ..registerFactory(() => UserLoginUseCase(authRepository: locator()))

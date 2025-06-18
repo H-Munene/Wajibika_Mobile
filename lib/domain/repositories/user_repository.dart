@@ -11,7 +11,8 @@ abstract interface class UserRepository {
   Future<void> deleteSavedUserDetails();
   Future<Either<Failure, void>> setDoNotShowOnboardingScreen();
   bool doNotshowOnboardingScreen();
-
+  Future<Either<Failure, void>> saveToken({required String token});
+  Either<Failure, String> getToken();
 
   //TODO : add methods to update existing fields
 }

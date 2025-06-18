@@ -14,6 +14,7 @@ class LocalDbDatasourceImpl implements LocalDbDataSource {
     await _sharedPreferences.remove(_LocalDbKeys.idKey);
     await _sharedPreferences.remove(_LocalDbKeys.usernameKey);
     await _sharedPreferences.remove(_LocalDbKeys.emailKey);
+    await _sharedPreferences.remove(_LocalDbKeys.tokenKey);
     debugPrint('🗑️ Cleared User repo');
   }
 
@@ -79,6 +80,21 @@ class LocalDbDatasourceImpl implements LocalDbDataSource {
 
     return doNotShowOnboardingScreen;
   }
+
+  @override
+  String? getToken() {
+    try {
+      return _sharedPreferences.getString(_LocalDbKeys.tokenKey);
+    } catch (_) {
+      throw ServerException(message: 'Token not found');
+    }
+  }
+
+  @override
+  Future<void> saveToken({required String token}) async {
+    debugPrint('🔐Token Saved');
+    await _sharedPreferences.setString(_LocalDbKeys.tokenKey, token);
+  }
 }
 
 class _LocalDbKeys {
@@ -86,4 +102,5 @@ class _LocalDbKeys {
   static String usernameKey = 'username';
   static String emailKey = 'email';
   static String onBoardingScreenKey = 'doNotShowOnboardingScreen';
+  static String tokenKey = 'token';
 }
