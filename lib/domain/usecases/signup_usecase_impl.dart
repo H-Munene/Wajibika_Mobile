@@ -15,13 +15,13 @@ class UserSignUpParams {
   final String password;
 }
 
-class UserSignUpUseCase implements Usecase<UserModel, UserSignUpParams> {
+class UserSignUpUseCase implements Usecase<int, UserSignUpParams> {
   UserSignUpUseCase({required this.authRepository});
 
   final AuthRepository authRepository;
 
   @override
-  Future<Either<Failure, UserModel>> call(
+  Future<Either<Failure, int>> call(
     UserSignUpParams userSignUpParams,
   ) async {
     return await authRepository.signUpWithUsernameEmailPassword(

@@ -34,7 +34,7 @@ class SupabaseDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<UserModel> signUpWithUsernameEmailPassword({
+  Future<int> signUpWithUsernameEmailPassword({
     required String username,
     required String email,
     required String password,
@@ -51,7 +51,8 @@ class SupabaseDataSourceImpl implements AuthDataSource {
               as Map<String, dynamic>;
       final userModel = UserModel.fromJson(user);
 
-      return userModel;
+
+      return int.parse(userModel.id);
     } on AuthApiException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {

@@ -43,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     userSignUpEvent.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess()),
+      (userID) => emit(AuthSuccess()),
     );
   }
 

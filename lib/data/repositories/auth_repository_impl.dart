@@ -28,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithUsernameEmailPassword({
+  Future<Either<Failure, int>> signUpWithUsernameEmailPassword({
     required String username,
     required String email,
     required String password,
