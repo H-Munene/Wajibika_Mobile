@@ -26,7 +26,7 @@ Future<void> init() async {
 void _initAuth() {
   locator
     ..registerFactory<AuthDataSource>(
-      () => AuthDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
+      () => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
     )
     ..registerLazySingleton<LocalDbDataSource>(
       () => LocalDbDatasourceImpl(

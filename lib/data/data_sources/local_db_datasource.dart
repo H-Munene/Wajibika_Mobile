@@ -8,4 +8,6 @@ abstract interface class LocalDbDataSource {
   Future<void> deleteSavedUserDetails();
   Future<void> setDoNotShowOnboardingScreen();
   bool doNotShowOnboardingScreen();
+
+  //UPDATE 
 }

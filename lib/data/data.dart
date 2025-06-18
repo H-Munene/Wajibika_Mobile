@@ -1,5 +1,5 @@
 export 'data_sources/auth_datasource.dart';
-export 'data_sources/auth_datasource_impl.dart';
+export 'data_sources/supabase_datasource_impl.dart';
 export 'data_sources/local_db_datasource.dart';
 export 'data_sources/local_db_datasource_impl.dart';
 
