@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // // ***** THIS WONT WORK *****
 
-// // ** This needs refactoring as the user entity has changed 
+// // ** This needs refactoring as the user entity has changed
 
 class SupabaseDataSourceImpl implements AuthDataSource {
   SupabaseDataSourceImpl({required this.supabaseClient});

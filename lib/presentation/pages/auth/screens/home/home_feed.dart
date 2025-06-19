@@ -94,10 +94,6 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     // TODO: move from here
     final textTheme = Theme.of(context).textTheme;
-    final username = context.read<UserRepository>().getUserName().fold(
-      (_) => 'user',
-      (username) => username,
-    );
 
     return Padding(
       padding: AppDimensions.pagePadding,
@@ -109,10 +105,16 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                   spacing: 5,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomRichText(
-                      highlightColor: Colors.black,
-                      regularText: 'Good Morning, ',
-                      highlightedText: '$username☀️',
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        final username =
+                            (state as AuthLoggedIn).userModel.username;
+                        return CustomRichText(
+                          highlightColor: Colors.black,
+                          regularText: 'Good Morning, ',
+                          highlightedText: '$username☀️',
+                        );
+                      },
                     ),
 
                     WajibikaPointsProgress(wajibikaPoints: wajibikaPoints),

@@ -62,6 +62,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // context.read<AuthBloc>().add(AuthCheckUserAlreadySignedIn());
+
+    context.read<AuthBloc>().add(AuthSignOut()); // sign out on hot restart
     super.initState();
   }
 
@@ -96,7 +98,7 @@ class AuthWrapper extends StatelessWidget {
               transitionDuration: Duration.zero,
             ),
           );
-        } else {
+        } else if (state is AuthLoggedOut) {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (_, __, ___) => const LoginPage(),

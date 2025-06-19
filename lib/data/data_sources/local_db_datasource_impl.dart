@@ -12,8 +12,8 @@ class LocalDbDatasourceImpl implements LocalDbDataSource {
   @override
   Future<void> deleteSavedUserDetails() async {
     await _sharedPreferences.remove(_LocalDbKeys.idKey);
-    await _sharedPreferences.remove(_LocalDbKeys.usernameKey);
-    await _sharedPreferences.remove(_LocalDbKeys.emailKey);
+    // await _sharedPreferences.remove(_LocalDbKeys.usernameKey);
+    // await _sharedPreferences.remove(_LocalDbKeys.emailKey);
     await _sharedPreferences.remove(_LocalDbKeys.tokenKey);
     debugPrint('🗑️ Cleared User repo');
   }

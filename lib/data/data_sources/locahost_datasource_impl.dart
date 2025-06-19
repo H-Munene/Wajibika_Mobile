@@ -50,6 +50,8 @@ class LocahostDatasourceImpl implements AuthDataSource {
             body: jsonEncode({'email': email, 'password': password}),
           )
           .timeout(const Duration(seconds: 10));
+
+      // success
       if (userLoginResponse.statusCode == 200) {
         final Map<String, dynamic> userRegisterResponseBody =
             jsonDecode(userLoginResponse.body) as Map<String, dynamic>;
@@ -58,7 +60,13 @@ class LocahostDatasourceImpl implements AuthDataSource {
           userRegisterResponseBody['user'] as Map<String, dynamic>,
         );
       }
-      throw ServerException(message: 'Login failed. Try again!');
+
+      //failed
+      //get error message
+      final Map<String, dynamic> errorMessage =
+          jsonDecode(userLoginResponse.body) as Map<String, dynamic>;
+
+      throw ServerException(message: errorMessage['message'] as String);
     } catch (e) {
       if (e is ServerException) rethrow;
       throw ServerException(message: 'Some error occurred. Please try again!');
@@ -66,9 +74,8 @@ class LocahostDatasourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    await _userRepository.deleteSavedUserDetails();
   }
 
   @override
@@ -98,6 +105,7 @@ class LocahostDatasourceImpl implements AuthDataSource {
 
         return userRegisterResponseBody['userId'] as int;
       }
+
       throw ServerException(message: 'Registration failed. Try again!');
     } catch (e) {
       if (e is ServerException) rethrow;

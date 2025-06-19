@@ -16,12 +16,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final response = await _authDatasource.loginWithEmailPassword(
+      final userModel = await _authDatasource.loginWithEmailPassword(
         email: email,
         password: password,
       );
 
-      return right(response);
+      return right(userModel);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

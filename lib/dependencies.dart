@@ -17,8 +17,8 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
 
   locator
-    // ..registerLazySingleton(() => supabase.client)
-    .registerLazySingleton(() => sharedPreferences);
+  // ..registerLazySingleton(() => supabase.client)
+  .registerLazySingleton(() => sharedPreferences);
 
   _initAuth();
 }

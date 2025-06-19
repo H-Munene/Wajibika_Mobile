@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
@@ -58,11 +59,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (failure) => emit(AuthFailure(message: failure.message)),
       (user) {
         _userRepository
+          ..saveToken(token: user.token)
           ..saveUserEmail(email: user.email)
           ..saveUserID(id: user.user_id.toString())
           ..saveUserName(username: user.username)
           ..setDoNotShowOnboardingScreen();
-        emit(AuthLoggedIn());
+        emit(AuthLoggedIn(userModel: user));
       },
     );
   }
@@ -76,16 +78,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _signOutUseCase.call(NoParams());
 
     await response.fold(
-      (failure) {
-        emit(AuthFailure(message: failure.message));
+      (_) {
+        // clearing the saved details.
+        // cannot fail?
+        // emit(AuthFailure(message: failure.message));
       },
       (_) async {
         emit(AuthLoggedOut());
 
-        await Future.delayed(
-          const Duration(seconds: 2),
-          _userRepository.deleteSavedUserDetails,
-        );
+        await _userRepository.deleteSavedUserDetails();
       },
     );
   }
@@ -105,7 +106,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ..saveUserID(id: user.user_id.toString())
           ..saveUserName(username: user.username)
           ..setDoNotShowOnboardingScreen();
-        return emit(AuthLoggedIn());
+        return emit(AuthLoggedIn(userModel: user));
       },
     );
   }
