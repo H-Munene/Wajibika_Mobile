@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/data/data.dart';
-import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/domain/entities/report_home_feed_entity.dart';
+import 'package:bloc_clean_arch/data/data.dart';
 
 class HomeFeedEntity {
   HomeFeedEntity({
@@ -6,6 +6,6 @@ class HomeFeedEntity {
     required this.negligent_dumping,
   });
 
-  final List<ReportHomeFeedEntity> clogged_drain;
-  final List<ReportHomeFeedEntity> negligent_dumping;
+  final List<ReportHomeFeedModel> clogged_drain;
+  final List<ReportHomeFeedModel> negligent_dumping;
 }
