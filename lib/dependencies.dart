@@ -31,17 +31,21 @@ void _initAuth() {
         sharedPreferences: locator<SharedPreferences>(),
       ),
     )
-    ..registerFactory<AuthRepository>(
-      () => AuthRepositoryImpl(authDatasource: locator()),
+    ..registerFactory<LocalHostAuthRepository>(
+      () => LocalHostAuthRepositoryImpl(authDatasource: locator()),
     )
     ..registerFactory<LocalHostAuthDataSource>(
-      // () => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
+      //() => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
       () => LocahostDatasourceImpl(userRepository: locator()),
     )
-    ..registerFactory(() => UserSignUpUseCase(authRepository: locator()))
-    ..registerFactory(() => UserLoginUseCase(authRepository: locator()))
-    ..registerFactory(() => SignOutUseCase(authRepository: locator()))
-    ..registerFactory(() => AlreadySignedIn(authRepository: locator()))
+    ..registerFactory(
+      () => UserSignUpUseCase(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => UserLoginUseCase(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(() => SignOutUseCase(localHostAuthRepository: locator()))
+    ..registerFactory(() => AlreadySignedIn(localHostAuthRepository: locator()))
     ..registerLazySingleton(
       () => AuthBloc(
         userSignUpUseCase: locator(),

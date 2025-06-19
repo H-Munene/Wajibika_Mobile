@@ -66,4 +66,15 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, HomeFeedModel>> getHomeFeed() async {
+    try {
+      final homeFeed = await _localHostAuthDatasource.getHomeFeed();
+
+      return right(homeFeed);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

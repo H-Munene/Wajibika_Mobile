@@ -1,8 +1,8 @@
-export 'data_sources/auth_datasource.dart';
+export 'data_sources/local_host_auth_datasource.dart';
 export 'data_sources/supabase/supabase_datasource_impl.dart';
 export 'data_sources/local_db/local_db_datasource.dart';
 export 'data_sources/local_db/local_db_datasource_impl.dart';
-export 'data_sources/local_host/locahost_datasource_impl.dart';
+export 'data_sources/local_host/local_host_datasource_impl.dart';
 
 export 'repositories/auth_repository_impl.dart';
 export 'repositories/user_repository_impl.dart';

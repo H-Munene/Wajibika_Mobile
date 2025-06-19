@@ -1,4 +1,4 @@
-export 'repositories/auth_repository.dart';
+export 'repositories/local_host_auth_repository.dart';
 export 'repositories/user_repository.dart';
 
 export 'usecases/signup_usecase_impl.dart';

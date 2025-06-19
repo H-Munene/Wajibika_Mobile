@@ -17,4 +17,6 @@ abstract interface class LocalHostAuthRepository {
   Future<Either<Failure, void>> signOut();
 
   Future<Either<Failure, UserModel>> getUserSession();
+
+  Future<Either<Failure, HomeFeedModel>> getHomeFeed();
 }
