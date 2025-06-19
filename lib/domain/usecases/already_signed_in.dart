@@ -4,11 +4,11 @@ import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AlreadySignedIn implements Usecase<UserModel, NoParams> {
-  AlreadySignedIn({required this.authRepository});
+  AlreadySignedIn({required this.localHostAuthRepository});
 
-  final AuthRepository authRepository;
+  final LocalHostAuthRepository localHostAuthRepository;
   @override
   Future<Either<Failure, UserModel>> call(NoParams noParams) async {
-    return await authRepository.getUserSession();
+    return await localHostAuthRepository.getUserSession();
   }
 }

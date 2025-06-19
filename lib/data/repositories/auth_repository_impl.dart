@@ -4,11 +4,11 @@ import 'package:bloc_clean_arch/domain/domain.dart';
 
 import 'package:fpdart/fpdart.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
-  final AuthDataSource _authDatasource;
+class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
+  final LocalHostAuthDataSource _localHostAuthDatasource;
 
-  AuthRepositoryImpl({required AuthDataSource authDatasource})
-    : _authDatasource = authDatasource;
+  LocalHostAuthRepositoryImpl({required LocalHostAuthDataSource authDatasource})
+    : _localHostAuthDatasource = authDatasource;
 
   @override
   Future<Either<Failure, UserModel>> loginWithEmailPassword({
@@ -16,7 +16,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final userModel = await _authDatasource.loginWithEmailPassword(
+      final userModel = await _localHostAuthDatasource.loginWithEmailPassword(
         email: email,
         password: password,
       );
@@ -34,11 +34,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final response = await _authDatasource.signUpWithUsernameEmailPassword(
-        username: username,
-        email: email,
-        password: password,
-      );
+      final response = await _localHostAuthDatasource
+          .signUpWithUsernameEmailPassword(
+            username: username,
+            email: email,
+            password: password,
+          );
 
       return right(response);
     } on ServerException catch (e) {
@@ -49,7 +50,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, void>> signOut() async {
     try {
-      return right(await _authDatasource.signOut());
+      return right(await _localHostAuthDatasource.signOut());
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
@@ -58,7 +59,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, UserModel>> getUserSession() async {
     try {
-      final user = await _authDatasource.getUserSession();
+      final user = await _localHostAuthDatasource.getUserSession();
 
       return right(user!);
     } on ServerException catch (e) {

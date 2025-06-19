@@ -15,13 +15,13 @@ class UserSignUpParams {
 }
 
 class UserSignUpUseCase implements Usecase<int, UserSignUpParams> {
-  UserSignUpUseCase({required this.authRepository});
+  UserSignUpUseCase({required this.localHostAuthRepository});
 
-  final AuthRepository authRepository;
+  final LocalHostAuthRepository localHostAuthRepository;
 
   @override
   Future<Either<Failure, int>> call(UserSignUpParams userSignUpParams) async {
-    return await authRepository.signUpWithUsernameEmailPassword(
+    return await localHostAuthRepository.signUpWithUsernameEmailPassword(
       username: userSignUpParams.username,
       email: userSignUpParams.email,
       password: userSignUpParams.password,

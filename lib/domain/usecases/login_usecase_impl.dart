@@ -11,14 +11,14 @@ class UserLoginParams {
 }
 
 class UserLoginUseCase implements Usecase<UserModel, UserLoginParams> {
-  UserLoginUseCase({required this.authRepository});
+  UserLoginUseCase({required this.localHostAuthRepository});
 
-  final AuthRepository authRepository;
+  final LocalHostAuthRepository localHostAuthRepository;
   @override
   Future<Either<Failure, UserModel>> call(
     UserLoginParams userLoginParams,
   ) async {
-    return await authRepository.loginWithEmailPassword(
+    return await localHostAuthRepository.loginWithEmailPassword(
       email: userLoginParams.email,
       password: userLoginParams.password,
     );

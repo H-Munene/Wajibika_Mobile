@@ -5,7 +5,7 @@ import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:http/http.dart' as http;
 
-class LocahostDatasourceImpl implements AuthDataSource {
+class LocahostDatasourceImpl implements LocalHostAuthDataSource {
   LocahostDatasourceImpl({required UserRepository userRepository})
     : _userRepository = userRepository;
 
@@ -111,6 +111,36 @@ class LocahostDatasourceImpl implements AuthDataSource {
       if (e is ServerException) rethrow;
 
       throw ServerException(message: 'Some error occurred. Please try again!');
+    }
+  }
+
+  @override
+  Future<HomeFeedModel> getHomeFeed() async {
+    final Uri url = Uri.parse(LocalhostEndpoints.homeFeedEndpoint);
+
+    try {
+      final homeFeedResponse = await http
+          .get(url, headers: await _getHeaders(needsAuthorization: false))
+          .timeout(const Duration(seconds: 10));
+
+      if (homeFeedResponse.statusCode == 200) {
+        final Map<String, dynamic> homeFeed =
+            jsonDecode(homeFeedResponse.body) as Map<String, dynamic>;
+
+        return HomeFeedModel.fromJson(
+          homeFeed['home_feed'] as Map<String, dynamic>,
+        );
+      }
+
+      throw ServerException(
+        message: 'Failed to retrieve home feed. Refresh the page!',
+      );
+    } catch (e) {
+      if (e is ServerException) rethrow;
+
+      throw ServerException(
+        message: 'Some error occurred. Please refresh the page!',
+      );
     }
   }
 }
