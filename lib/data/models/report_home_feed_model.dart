@@ -1,11 +1,13 @@
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
+
 
 part 'report_home_feed_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ReportHomeFeedModel extends ReportHomeFeedEntity {
+class ReportHomeFeedModel extends ReportHomeFeedEntity with EquatableMixin{
   ReportHomeFeedModel(
     super.resolved_image_url, {
     required super.report_id,
@@ -24,4 +26,6 @@ class ReportHomeFeedModel extends ReportHomeFeedEntity {
       _$ReportHomeFeedModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReportHomeFeedModelToJson(this);
+  
+  
 }

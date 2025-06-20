@@ -1,7 +1,8 @@
 import 'package:bloc_clean_arch/data/data.dart';
+import 'package:equatable/equatable.dart';
 
-class ReportHomeFeedEntity {
-  ReportHomeFeedEntity(
+class ReportHomeFeedEntity extends Equatable {
+  const ReportHomeFeedEntity(
     this.resolved_image_url, {
     required this.report_id,
     required this.reporter_username,
@@ -26,4 +27,19 @@ class ReportHomeFeedEntity {
   final String resolved_date;
   final List<ReportHomefeedRelatedEventsModel> related_events;
   final bool is_volunteer;
+
+  @override
+  List<Object?> get props => [
+    resolved_image_url,
+    report_id,
+    reporter_username,
+    description,
+    report_date,
+    report_image_url,
+    is_resolved_by_volunteer,
+    is_resolved_by_council,
+    resolved_date,
+    related_events,
+    is_volunteer,
+  ];
 }

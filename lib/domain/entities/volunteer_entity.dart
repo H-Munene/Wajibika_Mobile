@@ -1,4 +1,6 @@
-class VolunteerEntity {
+import 'package:equatable/equatable.dart';
+
+class VolunteerEntity extends Equatable {
   VolunteerEntity({
     required this.imageUrl,
     required this.volunteerCount,
@@ -14,4 +16,14 @@ class VolunteerEntity {
   final String time;
   final String description;
   final String scheduleDate;
+
+  @override
+  List<Object?> get props => [
+    imageUrl,
+    volunteerCount,
+    username,
+    time,
+    description,
+    scheduleDate,
+  ];
 }
