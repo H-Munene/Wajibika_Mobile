@@ -170,17 +170,25 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                                     (context, bookmarkState) =>
                                     // clogged drain
                                     WajibikaReportFeedCard(
-                                      isVolunteerForThisReport: volunteerState
-                                          .registeredAsVolunteerForThisReport(
-                                            reportHomeFeedModel:
-                                                cloggedDrains[index],
-                                          ),
+                                      // isVolunteerForThisReport: volunteerState
+                                      //     .registeredAsVolunteerForThisReport(
+                                      //       reportHomeFeedModel:
+                                      //           cloggedDrains[index],
+                                      //     ),
+                                      isVolunteerForThisReport:
+                                          cloggedDrains[index].is_volunteer ||
+                                          volunteerState
+                                              .registeredAsVolunteerForThisReport(
+                                                reportHomeFeedModel:
+                                                    cloggedDrains[index],
+                                              ),
                                       imageUrl:
                                           cloggedDrains[index].report_image_url,
                                       username:
                                           cloggedDrains[index]
                                               .reporter_username,
-                                      time: cloggedDrains[index].report_date,
+                                      report_date:
+                                          cloggedDrains[index].report_date,
                                       description:
                                           cloggedDrains[index].description,
                                       volunteerCount:
@@ -238,18 +246,26 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                               return BlocBuilder<BookmarkBloc, BookmarkState>(
                                 builder: (context, bookmarkState) {
                                   return WajibikaReportFeedCard(
-                                    isVolunteerForThisReport: volunteerState
-                                        .registeredAsVolunteerForThisReport(
-                                          reportHomeFeedModel:
-                                              negligentDumping[index],
-                                        ),
+                                    // isVolunteerForThisReport: volunteerState
+                                    //     .registeredAsVolunteerForThisReport(
+                                    //       reportHomeFeedModel:
+                                    //           negligentDumping[index],
+                                    //     ),
+                                    isVolunteerForThisReport:
+                                        negligentDumping[index].is_volunteer ||
+                                        volunteerState
+                                            .registeredAsVolunteerForThisReport(
+                                              reportHomeFeedModel:
+                                                  negligentDumping[index],
+                                            ),
                                     imageUrl:
                                         negligentDumping[index]
                                             .report_image_url,
                                     username:
                                         negligentDumping[index]
                                             .reporter_username,
-                                    time: negligentDumping[index].report_date,
+                                    report_date:
+                                        negligentDumping[index].report_date,
                                     description:
                                         negligentDumping[index].description,
                                     volunteerCount:

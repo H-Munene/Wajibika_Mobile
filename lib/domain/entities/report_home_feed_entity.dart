@@ -12,6 +12,7 @@ class ReportHomeFeedEntity {
     required this.is_resolved_by_council,
     required this.resolved_date,
     required this.related_events,
+    required this.is_volunteer,
   });
 
   final int report_id;
@@ -24,4 +25,5 @@ class ReportHomeFeedEntity {
   final String? resolved_image_url;
   final String resolved_date;
   final List<ReportHomefeedRelatedEventsModel> related_events;
+  final bool is_volunteer;
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 
+import 'package:bloc/bloc.dart';
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'volunteer_event.dart';
 part 'volunteer_state.dart';
 
-class VolunteerBloc extends HydratedBloc<VolunteerEvent, VolunteerState> {
+class VolunteerBloc extends Bloc<VolunteerEvent, VolunteerState> {
   VolunteerBloc() : super(const VolunteerState(registeredVolunteerEvents: [])) {
     on<VolunteerEventToggleVolunteerPresence>(_onToggleVolunteerEventStatus);
     on<VolunteerEventFetchInitialRegisteredVolunteerEvents>(
@@ -51,12 +51,4 @@ class VolunteerBloc extends HydratedBloc<VolunteerEvent, VolunteerState> {
   ) async {
     emit(state.copyWith(initialRegisteredVolunteerEvents: []));
   }
-
-  @override
-  VolunteerState? fromJson(Map<String, dynamic> json) =>
-      VolunteerState.fromJson(json);
-
-  @override
-  Map<String, dynamic>? toJson(VolunteerState state) =>
-      _$VolunteerStateToJson(state);
 }

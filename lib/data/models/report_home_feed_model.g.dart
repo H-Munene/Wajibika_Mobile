@@ -25,6 +25,7 @@ ReportHomeFeedModel _$ReportHomeFeedModelFromJson(Map<String, dynamic> json) =>
                 ),
               )
               .toList(),
+      is_volunteer: json['is_volunteer'] as bool,
     );
 
 Map<String, dynamic> _$ReportHomeFeedModelToJson(
@@ -40,4 +41,5 @@ Map<String, dynamic> _$ReportHomeFeedModelToJson(
   'resolved_image_url': instance.resolved_image_url,
   'resolved_date': instance.resolved_date,
   'related_events': instance.related_events.map((e) => e.toJson()).toList(),
+  'is_volunteer': instance.is_volunteer,
 };

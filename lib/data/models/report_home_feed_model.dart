@@ -17,6 +17,7 @@ class ReportHomeFeedModel extends ReportHomeFeedEntity {
     required super.is_resolved_by_council,
     required super.resolved_date,
     required super.related_events,
+    required super.is_volunteer,
   });
 
   factory ReportHomeFeedModel.fromJson(Map<String, dynamic> json) =>

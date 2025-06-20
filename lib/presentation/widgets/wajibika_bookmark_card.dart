@@ -56,7 +56,7 @@ class WajibikaBookmarkCard extends StatelessWidget {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.only(left: 170),
+                    padding: const EdgeInsets.only(left: 170, top: 35),
                     child: IconButton(
                       onPressed: onBookmarkIconPressed,
                       icon: const Icon(CupertinoIcons.bookmark_fill),
