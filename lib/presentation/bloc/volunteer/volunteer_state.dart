@@ -4,7 +4,7 @@ class VolunteerState extends Equatable {
   const VolunteerState({required this.registeredVolunteerEvents});
 
   VolunteerState copyWith({
-    List<ReportModel>? initialRegisteredVolunteerEvents,
+    List<ReportHomeFeedModel>? initialRegisteredVolunteerEvents,
   }) {
     return VolunteerState(
       registeredVolunteerEvents:
@@ -12,14 +12,17 @@ class VolunteerState extends Equatable {
     );
   }
 
-  final List<ReportModel> registeredVolunteerEvents;
+  final List<ReportHomeFeedModel> registeredVolunteerEvents;
 
-  bool registeredAsVolunteerForThisReport({required ReportModel reportModel}) =>
-      registeredVolunteerEvents.contains(reportModel);
+  bool registeredAsVolunteerForThisReport({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) => registeredVolunteerEvents.contains(reportHomeFeedModel);
 
-  VolunteerState _addToVolunteerEvents({required ReportModel reportModel}) {
+  VolunteerState _addToVolunteerEvents({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) {
     final updatedregisteredVolunteerEvents = List.of(registeredVolunteerEvents)
-      ..add(reportModel);
+      ..add(reportHomeFeedModel);
 
     return VolunteerState(
       registeredVolunteerEvents: updatedregisteredVolunteerEvents,
@@ -27,10 +30,10 @@ class VolunteerState extends Equatable {
   }
 
   VolunteerState _removeFromVolunteerEvents({
-    required ReportModel reportModel,
+    required ReportHomeFeedModel reportHomeFeedModel,
   }) {
     final updatedregisteredVolunteerEvents = List.of(registeredVolunteerEvents)
-      ..remove(reportModel);
+      ..remove(reportHomeFeedModel);
 
     return VolunteerState(
       registeredVolunteerEvents: updatedregisteredVolunteerEvents,
@@ -38,15 +41,19 @@ class VolunteerState extends Equatable {
   }
 
   VolunteerState togglePresenceinVolunteerEvents({
-    required ReportModel reportModel,
+    required ReportHomeFeedModel reportHomeFeedModel,
   }) {
     // registered as volunteer for event, hence remove
-    if (registeredAsVolunteerForThisReport(reportModel: reportModel)) {
-      return _removeFromVolunteerEvents(reportModel: reportModel);
+    if (registeredAsVolunteerForThisReport(
+      reportHomeFeedModel: reportHomeFeedModel,
+    )) {
+      return _removeFromVolunteerEvents(
+        reportHomeFeedModel: reportHomeFeedModel,
+      );
     }
 
     // not registered as volunteer for event, hence add
-    return _addToVolunteerEvents(reportModel: reportModel);
+    return _addToVolunteerEvents(reportHomeFeedModel: reportHomeFeedModel);
   }
 
   factory VolunteerState.fromJson(Map<String, dynamic> json) =>
@@ -60,7 +67,9 @@ VolunteerState _$VolunteerStateFromJson(Map<String, dynamic> json) =>
     VolunteerState(
       registeredVolunteerEvents:
           (json['registeredVolunteerEvents'] as List<dynamic>)
-              .map((e) => ReportModel.fromJson(e as Map<String, dynamic>))
+              .map(
+                (e) => ReportHomeFeedModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList(),
     );
 

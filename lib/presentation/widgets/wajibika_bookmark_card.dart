@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 class WajibikaBookmarkCard extends StatelessWidget {
   final String imageUrl;
   final String description;
-  final String reportCategory; // clogged drains, negligent dumping
   final void Function() onBookmarkIconPressed;
 
   const WajibikaBookmarkCard({
     super.key,
     required this.imageUrl,
     required this.description,
-    required this.reportCategory,
     required this.onBookmarkIconPressed,
   });
 
@@ -25,7 +23,7 @@ class WajibikaBookmarkCard extends StatelessWidget {
         child: Row(
           children: [
             ClipRRect(
-              child: Image.asset(
+              child: Image.network(
                 imageUrl,
                 height: 150,
                 width: 150,
@@ -39,17 +37,16 @@ class WajibikaBookmarkCard extends StatelessWidget {
                 spacing: 7,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(CupertinoIcons.photo_camera),
-                      Text(
-                        '  |  ${reportCategory == Globals.reportCategoryItems[0] ? 'Clogged Drain' : 'Negligent Dumping'}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     const Icon(CupertinoIcons.photo_camera),
+                  //     Text(
+                  //       '  |  ${reportCategory == Globals.reportCategoryItems[0] ? 'Clogged Drain' : 'Negligent Dumping'}',
+                  //       style: const TextStyle(fontWeight: FontWeight.bold),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     width: 210,
                     child: Text(

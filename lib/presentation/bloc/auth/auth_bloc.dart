@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
@@ -11,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserLoginUseCase _userLoginUseCase;
   final SignOutUseCase _signOutUseCase;
   final AlreadySignedIn _alreadySignedIn;
+
   final UserRepository _userRepository;
 
   AuthBloc({

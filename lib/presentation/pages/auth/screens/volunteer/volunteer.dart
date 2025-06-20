@@ -24,11 +24,15 @@ class _VolunteerPageState extends State<VolunteerPage> {
     super.dispose();
   }
 
-  void confirmVolunteerForThisEvent({required ReportModel reportModel}) {
+  void confirmVolunteerForThisEvent({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) {
     final isVolunteer = context
         .read<VolunteerBloc>()
         .state
-        .registeredAsVolunteerForThisReport(reportModel: reportModel);
+        .registeredAsVolunteerForThisReport(
+          reportHomeFeedModel: reportHomeFeedModel,
+        );
 
     CustomDialogBottomAppSheet.cupertinoAlertDialog(
       context: context,
@@ -40,10 +44,11 @@ class _VolunteerPageState extends State<VolunteerPage> {
           isVolunteer
               ? Globals.unregisterAsVolunterFromThisEventAlertContent
               : Globals.volunterForThisEventAlertContent,
-      // TODO: mark as volunteer for event -> will need report id
       onDestructiveActionPressed: () {
         context.read<VolunteerBloc>().add(
-          VolunteerEventToggleVolunteerPresence(reportModel: reportModel),
+          VolunteerEventToggleVolunteerPresence(
+            reportHomeFeedModel: reportHomeFeedModel,
+          ),
         );
         Navigator.of(context).pop();
       },
@@ -80,28 +85,47 @@ class _VolunteerPageState extends State<VolunteerPage> {
                         (context, index) => WajibikaReportFeedCard(
                           isVolunteerForThisReport: volunteerState
                               .registeredAsVolunteerForThisReport(
-                                reportModel: registeredVolunteerEvents[index],
+                                reportHomeFeedModel:
+                                    registeredVolunteerEvents[index],
                               ),
-                          imageUrl: registeredVolunteerEvents[index].imageUrl,
-                          username: registeredVolunteerEvents[index].username,
-                          time: registeredVolunteerEvents[index].time,
+                          imageUrl:
+                              registeredVolunteerEvents[index].report_image_url,
+                          username:
+                              registeredVolunteerEvents[index]
+                                  .reporter_username,
+                          time: registeredVolunteerEvents[index].report_date,
                           description:
                               registeredVolunteerEvents[index].description,
                           volunteerCount:
-                              registeredVolunteerEvents[index].volunteerCount,
+                              registeredVolunteerEvents[index]
+                                      .related_events
+                                      .isEmpty
+                                  ? 0
+                                  : registeredVolunteerEvents[index]
+                                      .related_events[0]
+                                      .participants_count,
                           scheduleDate:
-                              registeredVolunteerEvents[index].scheduleDate,
+                              registeredVolunteerEvents[index]
+                                      .related_events
+                                      .isEmpty
+                                  ? ''
+                                  : registeredVolunteerEvents[index]
+                                      .related_events[0]
+                                      .scheduled_volunteer_date,
                           onVolunteerButtonPressed:
                               () => confirmVolunteerForThisEvent(
-                                reportModel: registeredVolunteerEvents[index],
+                                reportHomeFeedModel:
+                                    registeredVolunteerEvents[index],
                               ),
                           isBookmarked: bookMarkState.isReportBookMarked(
-                            reportModel: registeredVolunteerEvents[index],
+                            reportHomeFeedModel:
+                                registeredVolunteerEvents[index],
                           ),
                           onBookmarkButtonPressed:
                               () => context.read<BookmarkBloc>().add(
                                 BookmarkEventToggleReportBookmarksPresence(
-                                  reportModel: registeredVolunteerEvents[index],
+                                  reportHomeFeedModel:
+                                      registeredVolunteerEvents[index],
                                 ),
                               ),
                         ),

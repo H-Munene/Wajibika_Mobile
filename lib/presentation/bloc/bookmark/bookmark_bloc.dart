@@ -20,7 +20,11 @@ class BookmarkBloc extends HydratedBloc<BookmarkEvent, BookmarkState> {
     BookmarkEventToggleReportBookmarksPresence event,
     Emitter<BookmarkState> emit,
   ) async {
-    emit(state.toggleReportBookmarkPresence(reportModel: event.reportModel));
+    emit(
+      state.toggleReportBookmarkPresence(
+        reportHomeFeedModel: event.reportHomeFeedModel,
+      ),
+    );
   }
 
   Future<void> _clearBookmarks(

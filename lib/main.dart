@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/bloc/home_feed/home_feed_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
@@ -43,6 +44,7 @@ void main() async {
           BlocProvider(create: (_) => ProfileMediaBloc()),
           BlocProvider(create: (_) => BookmarkBloc()),
           BlocProvider(create: (_) => VolunteerBloc()),
+          BlocProvider(create: (_) => locator<HomeFeedBloc>()),
         ],
 
         child: const MyApp(),

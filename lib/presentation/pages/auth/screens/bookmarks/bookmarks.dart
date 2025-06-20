@@ -33,12 +33,11 @@ class BookMarksPage extends StatelessWidget {
                     onBookmarkIconPressed:
                         () => context.read<BookmarkBloc>().add(
                           BookmarkEventToggleReportBookmarksPresence(
-                            reportModel: bookMarks[index],
+                            reportHomeFeedModel: bookMarks[index],
                           ),
                         ),
-                    imageUrl: bookMarks[index].imageUrl,
+                    imageUrl: bookMarks[index].report_image_url,
                     description: bookMarks[index].description,
-                    reportCategory: bookMarks[index].reportCategory,
                   ),
             );
       },

@@ -57,7 +57,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Image.asset(imageUrl),
+            child: Image.network(imageUrl),
           ),
           const SizedBox(height: 5),
 

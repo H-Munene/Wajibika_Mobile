@@ -20,7 +20,11 @@ class VolunteerBloc extends HydratedBloc<VolunteerEvent, VolunteerState> {
     VolunteerEventToggleVolunteerPresence event,
     Emitter<VolunteerState> emit,
   ) async {
-    emit(state.togglePresenceinVolunteerEvents(reportModel: event.reportModel));
+    emit(
+      state.togglePresenceinVolunteerEvents(
+        reportHomeFeedModel: event.reportHomeFeedModel,
+      ),
+    );
 
     emit(state);
   }
@@ -29,7 +33,7 @@ class VolunteerBloc extends HydratedBloc<VolunteerEvent, VolunteerState> {
     VolunteerEventFetchInitialRegisteredVolunteerEvents event,
     Emitter<VolunteerState> emit,
   ) async {
-    final List<ReportModel> fetchedVolunteerEvents = [];
+    final List<ReportHomeFeedModel> fetchedVolunteerEvents = [];
 
     emit(
       state.copyWith(
