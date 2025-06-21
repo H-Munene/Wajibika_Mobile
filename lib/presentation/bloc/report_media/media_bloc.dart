@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';

@@ -24,7 +24,7 @@ class ReportHomeFeedEntity extends Equatable {
   final bool is_resolved_by_volunteer;
   final bool is_resolved_by_council;
   final String? resolved_image_url;
-  final String resolved_date;
+  final String? resolved_date;
   final List<ReportHomefeedRelatedEventsModel> related_events;
   final bool is_volunteer;
 

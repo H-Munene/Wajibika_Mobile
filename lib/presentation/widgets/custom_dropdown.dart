@@ -28,7 +28,7 @@ class CustomDropDown extends StatelessWidget {
           onChanged: onChanged,
           initialItem: initialValue,
           validator: (value) {
-            return (value == null || value.isEmpty)
+            return (value == null || value.isEmpty || value == 'Select One')
                 ? 'Field is required'
                 : null;
           },

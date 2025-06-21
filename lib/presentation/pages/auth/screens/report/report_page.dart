@@ -40,6 +40,28 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
+  Future<void> _submitReport({required String category}) async {
+    final currentState =
+        context.read<MediaBloc>().state as MediaReportPictureSelected;
+    final selectedImage = currentState.image.path;
+
+    context.read<ReportSubmissionBloc>().add(
+      ReportSubmissionSubmit(
+        imagePath: selectedImage,
+        category: category,
+        description: _descriptionTextEditingController.text.trim(),
+      ),
+    );
+
+    // clear description field
+    _descriptionTextEditingController.clear();
+
+    // remove sent image
+    context.read<MediaBloc>().add(MediaRemoveCurrentReportPictureEvent());
+
+    Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     mediaBloc = context.read<MediaBloc>();
@@ -101,6 +123,7 @@ class _ReportPageState extends State<ReportPage> {
                   child: Column(
                     children: [
                       CustomDropDown(
+                        initialValue: Globals.reportCategoryItems[0],
                         hintText: Globals.reportCategoryDropDownLabel,
                         items: Globals.reportCategoryItems,
                         onChanged: (value) {
@@ -135,22 +158,8 @@ class _ReportPageState extends State<ReportPage> {
                         context: context,
                         title: Globals.reportSubmissionAlertTitle,
                         content: Globals.reportSubmissionAlertContent,
-                        onDestructiveActionPressed: () {
-                          print('Category: $category');
-                          print(
-                            'Description: ${_descriptionTextEditingController.text}',
-                          );
-
-                          // clear description field
-                          _descriptionTextEditingController.clear();
-
-                          // remove sent image
-                          context.read<MediaBloc>().add(
-                            MediaRemoveCurrentReportPictureEvent(),
-                          );
-
-                          Navigator.of(context).pop();
-                        },
+                        onDestructiveActionPressed:
+                            () => _submitReport(category: category),
                       );
                     }
                   },

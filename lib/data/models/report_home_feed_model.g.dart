@@ -16,7 +16,7 @@ ReportHomeFeedModel _$ReportHomeFeedModelFromJson(Map<String, dynamic> json) =>
       report_image_url: json['report_image_url'] as String,
       is_resolved_by_volunteer: json['is_resolved_by_volunteer'] as bool,
       is_resolved_by_council: json['is_resolved_by_council'] as bool,
-      resolved_date: json['resolved_date'] as String,
+      resolved_date: json['resolved_date'] as String?,
       related_events:
           (json['related_events'] as List<dynamic>)
               .map(

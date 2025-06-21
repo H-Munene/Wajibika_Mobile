@@ -8,7 +8,6 @@ export 'repositories/local_host_auth_repository_impl.dart';
 export 'repositories/user_repository_impl.dart';
 
 export 'models/user_model.dart';
-export 'models/report_model.dart';
 export 'models/home_feed_model.dart';
 export 'models/report_home_feed_model.dart';
 export 'models/report_home_feed_related_events_model.dart';

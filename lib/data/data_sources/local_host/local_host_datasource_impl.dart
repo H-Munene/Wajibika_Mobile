@@ -170,9 +170,7 @@ class LocahostDatasourceImpl implements LocalHostAuthDataSource {
         makeRequest,
       );
 
-      if (reportSubmissionResponse.statusCode == 201) {
-        debugPrint('***********Success sending report***********');
-      }
+      if (reportSubmissionResponse.statusCode == 201) {}
     } catch (e) {
       throw ServerException(message: 'Failed to submit report');
     }

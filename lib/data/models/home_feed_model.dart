@@ -15,4 +15,10 @@ class HomeFeedModel extends HomeFeedEntity {
       _$HomeFeedModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeFeedModelToJson(this);
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'HomeFeed: cloggedDrain[${clogged_drain}] negligentDumping [${negligent_dumping}]';
+  }
 }

@@ -45,14 +45,5 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
         },
       );
     });
-
-    // response.fold(
-    //   (error) {
-    //     emit(state.copyWith(updatedIsLoading: false));
-    //   },
-    //   (homeFeed) {
-    //     emit(HomeFeedState(homeFeedModel: homeFeed, isLoading: false));
-    //   },
-    // );
   }
 }

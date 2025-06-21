@@ -16,7 +16,7 @@ class ReportHomeFeedModel extends ReportHomeFeedEntity with EquatableMixin {
     required super.report_image_url,
     required super.is_resolved_by_volunteer,
     required super.is_resolved_by_council,
-    required super.resolved_date,
+    super.resolved_date,
     required super.related_events,
     required super.is_volunteer,
   });
