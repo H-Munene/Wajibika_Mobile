@@ -17,6 +17,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
         HomeFeedState(
           isLoading: false,
           homeFeedModel: HomeFeedModel(
+            0,
             clogged_drain: [],
             negligent_dumping: [],
           ),

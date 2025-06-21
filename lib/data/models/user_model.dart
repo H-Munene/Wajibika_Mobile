@@ -9,7 +9,6 @@ class UserModel extends UserEntity {
     required super.user_id,
     required super.username,
     required super.email,
-    required super.wajibika_points,
     required super.token,
   });
 

@@ -19,7 +19,7 @@ class LocahostDatasourceImpl implements LocalHostAuthDataSource {
       if (needsAuthorization)
         'Authorization': _userRepository.getToken().fold(
           (_) => '',
-          (token) => token,
+          (token) => 'Bearer $token',
         ),
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -121,13 +121,12 @@ class LocahostDatasourceImpl implements LocalHostAuthDataSource {
 
     try {
       final homeFeedResponse = await http
-          .get(url, headers: await _getHeaders(needsAuthorization: false))
+          .get(url, headers: await _getHeaders(needsAuthorization: true))
           .timeout(const Duration(seconds: 10));
-
+      debugPrint('*****Status code :  ${homeFeedResponse.statusCode}*****');
       if (homeFeedResponse.statusCode == 200) {
         final Map<String, dynamic> homeFeed =
             jsonDecode(homeFeedResponse.body) as Map<String, dynamic>;
-
         return HomeFeedModel.fromJson(
           homeFeed['home_feed'] as Map<String, dynamic>,
         );
@@ -138,9 +137,9 @@ class LocahostDatasourceImpl implements LocalHostAuthDataSource {
       );
     } catch (e) {
       if (e is ServerException) rethrow;
-
+      print(e.toString());
       throw ServerException(
-        message: 'Some error occurred. Please refresh the page!',
+        message: 'Some error occurred. Please refresh the page!}',
       );
     }
   }

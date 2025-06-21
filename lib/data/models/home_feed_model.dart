@@ -6,7 +6,8 @@ part 'home_feed_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class HomeFeedModel extends HomeFeedEntity {
-  HomeFeedModel({
+  HomeFeedModel(
+    super.current_user_wajibika_points, {
     required super.clogged_drain,
     required super.negligent_dumping,
   });
@@ -18,7 +19,6 @@ class HomeFeedModel extends HomeFeedEntity {
 
   @override
   String toString() {
-    // TODO: implement toString
     return 'HomeFeed: cloggedDrain[${clogged_drain}] negligentDumping [${negligent_dumping}]';
   }
 }

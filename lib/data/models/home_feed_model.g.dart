@@ -17,6 +17,7 @@ HomeFeedModel _$HomeFeedModelFromJson(
       (json['negligent_dumping'] as List<dynamic>)
           .map((e) => ReportHomeFeedModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+  (json['current_user_wajibika_points'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$HomeFeedModelToJson(HomeFeedModel instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$HomeFeedModelToJson(HomeFeedModel instance) =>
       'clogged_drain': instance.clogged_drain.map((e) => e.toJson()).toList(),
       'negligent_dumping':
           instance.negligent_dumping.map((e) => e.toJson()).toList(),
+      'current_user_wajibika_points': instance.current_user_wajibika_points,
     };
