@@ -40,6 +40,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Future<void> onRefresh() async {
+    print('Chaha');
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -77,170 +81,180 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         },
         builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipPath(
-                clipper: _CurvedBottomContainer(),
-                child: Container(
-                  color: AppColors.primaryColor,
-                  height: 140,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, bottom: 20),
-                    child: Row(
-                      children: [
-                        BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
-                          builder: (context, state) {
-                            // if the user has set a profile picture
-                            final isThereimageSelected =
-                                state.profileMediaStatus ==
-                                ProfileMediaStatus.profilePicturePresent;
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 7),
-                              child: CustomUserAvatar(
-                                //display the user image when tapped
-                                onCameraIconTapped:
-                                    () => _selectProfilePicture(
-                                      isThereimageSelected,
-                                    ),
-                                userProfilePicture:
-                                    isThereimageSelected
-                                        ? state.profilePicture
-                                        : '',
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              username,
-                              style: textTheme.bodyMedium?.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              email,
-                              style: textTheme.bodyMedium?.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                            CustomButtonWidget(
-                              color: AppColors.otherButtonBackgroundColor,
-                              child: Text(
-                                'Edit Profile',
-                                style: textTheme.bodyMedium,
-                              ),
-                              onPressed:
-                                  () => Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (context) => const EditProfile(),
-                                    ),
-                                  ),
-                            ),
-                          ],
-                        ),
-
-                        // logout button
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 18, left: 20),
-                          child: IconButton(
-                            onPressed:
-                                () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
-                                  onLogoutPressed: () async {
-                                    context.read<AuthBloc>().add(AuthSignOut());
-
-                                    // clear volunteer events and bookmarks:
-                                    // ideally supposed to have db save them so that they are
-                                    // restored.We clear it for now just so that if another
-                                    // user logs in they dont find saved volunteer events
-                                    // they didnt register to
-                                    context.read<VolunteerBloc>().add(
-                                      VolunteerEventClear(),
-                                    );
-
-                                    context.read<BookmarkBloc>().add(
-                                      BookmarkEventClear(),
-                                    );
-                                  },
-                                  context: context,
+          return RefreshIndicator(
+            onRefresh: onRefresh,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipPath(
+                  clipper: _CurvedBottomContainer(),
+                  child: Container(
+                    color: AppColors.primaryColor,
+                    height: 140,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20, bottom: 20),
+                      child: Row(
+                        children: [
+                          BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+                            builder: (context, state) {
+                              // if the user has set a profile picture
+                              final isThereimageSelected =
+                                  state.profileMediaStatus ==
+                                  ProfileMediaStatus.profilePicturePresent;
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 7),
+                                child: CustomUserAvatar(
+                                  //display the user image when tapped
+                                  onCameraIconTapped:
+                                      () => _selectProfilePicture(
+                                        isThereimageSelected,
+                                      ),
+                                  userProfilePicture:
+                                      isThereimageSelected
+                                          ? state.profilePicture
+                                          : '',
                                 ),
-                            icon: const Icon(
-                              CupertinoIcons.square_arrow_right,
-                              size: 40,
-                              color: Colors.white,
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                username,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                email,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              CustomButtonWidget(
+                                color: AppColors.otherButtonBackgroundColor,
+                                child: Text(
+                                  'Edit Profile',
+                                  style: textTheme.bodyMedium,
+                                ),
+                                onPressed:
+                                    () => Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder:
+                                            (context) => const EditProfile(),
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
+
+                          // logout button
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 18,
+                              left: 20,
+                            ),
+                            child: IconButton(
+                              onPressed:
+                                  () => CustomDialogBottomAppSheet.cupertinoLogoutBottomSheet(
+                                    onLogoutPressed: () async {
+                                      context.read<AuthBloc>().add(
+                                        AuthSignOut(),
+                                      );
+
+                                      // clear volunteer events and bookmarks:
+                                      // ideally supposed to have db save them so that they are
+                                      // restored.We clear it for now just so that if another
+                                      // user logs in they dont find saved volunteer events
+                                      // they didnt register to
+                                      context.read<VolunteerBloc>().add(
+                                        VolunteerEventClear(),
+                                      );
+
+                                      context.read<BookmarkBloc>().add(
+                                        BookmarkEventClear(),
+                                      );
+                                    },
+                                    context: context,
+                                  ),
+                              icon: const Icon(
+                                CupertinoIcons.square_arrow_right,
+                                size: 40,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: AppDimensions.profilePageWidgetsPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      showReportHistory
-                          ? Globals.reportsHistorySectionTitle
-                          : Globals.volunteerHistorySectionTitle,
-                      style: textTheme.bodyLarge,
-                    ),
+                Padding(
+                  padding: AppDimensions.profilePageWidgetsPadding,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        showReportHistory
+                            ? Globals.reportsHistorySectionTitle
+                            : Globals.volunteerHistorySectionTitle,
+                        style: textTheme.bodyLarge,
+                      ),
 
-                    CupertinoSwitch(
-                      value: showReportHistory,
-                      activeTrackColor: AppColors.primaryColor,
-                      inactiveTrackColor: AppColors.secondaryColor,
-                      onChanged: (value) {
-                        setState(() {
-                          showReportHistory = value;
-                        });
-                      },
-                    ),
-                  ],
+                      CupertinoSwitch(
+                        value: showReportHistory,
+                        activeTrackColor: AppColors.primaryColor,
+                        inactiveTrackColor: AppColors.secondaryColor,
+                        onChanged: (value) {
+                          setState(() {
+                            showReportHistory = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              ReportHistoryCalender(toggleCalendar: showReportHistory),
+                ReportHistoryCalender(toggleCalendar: showReportHistory),
 
-              const Divider(),
+                const Divider(),
 
-              Padding(
-                padding: AppDimensions.profilePageWidgetsPadding,
+                Padding(
+                  padding: AppDimensions.profilePageWidgetsPadding,
 
-                child: Text(
-                  Globals.profileSummarySectionTitle,
-                  style: textTheme.bodyLarge,
+                  child: Text(
+                    Globals.profileSummarySectionTitle,
+                    style: textTheme.bodyLarge,
+                  ),
                 ),
-              ),
 
-              Padding(
-                padding: AppDimensions.profilePageWidgetsPadding,
+                Padding(
+                  padding: AppDimensions.profilePageWidgetsPadding,
 
-                child: Row(
-                  children: [
-                    ProfileSummary(
-                      summaryCount: wajibikaPoints ?? 0,
-                      profileSummaryCategory:
-                          ProfileSummaryCategory.wajibikaPoints,
-                    ),
-                    ProfileSummary(
-                      summaryCount: 3,
-                      profileSummaryCategory: ProfileSummaryCategory.volunteer,
-                    ),
-                    ProfileSummary(
-                      summaryCount: 13,
-                      profileSummaryCategory: ProfileSummaryCategory.report,
-                    ),
-                  ],
+                  child: Row(
+                    children: [
+                      ProfileSummary(
+                        summaryCount: wajibikaPoints ?? 0,
+                        profileSummaryCategory:
+                            ProfileSummaryCategory.wajibikaPoints,
+                      ),
+                      ProfileSummary(
+                        summaryCount: 3,
+                        profileSummaryCategory:
+                            ProfileSummaryCategory.volunteer,
+                      ),
+                      ProfileSummary(
+                        summaryCount: 13,
+                        profileSummaryCategory: ProfileSummaryCategory.report,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

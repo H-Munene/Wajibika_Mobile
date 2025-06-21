@@ -38,7 +38,7 @@ void _initAuth() {
     )
     ..registerFactory<LocalHostAuthDataSource>(
       //() => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
-      () => LocahostDatasourceImpl(userRepository: locator()),
+      () => LocahostAuthDatasourceImpl(userRepository: locator()),
     )
     ..registerFactory(
       () => UserSignUpUseCase(localHostAuthRepository: locator()),

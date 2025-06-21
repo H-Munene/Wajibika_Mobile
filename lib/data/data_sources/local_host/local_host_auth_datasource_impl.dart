@@ -6,8 +6,8 @@ import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class LocahostDatasourceImpl implements LocalHostAuthDataSource {
-  LocahostDatasourceImpl({required UserRepository userRepository})
+class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
+  LocahostAuthDatasourceImpl({required UserRepository userRepository})
     : _userRepository = userRepository;
 
   final UserRepository _userRepository;

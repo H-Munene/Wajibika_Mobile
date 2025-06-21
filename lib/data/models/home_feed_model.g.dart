@@ -9,6 +9,7 @@ part of 'home_feed_model.dart';
 HomeFeedModel _$HomeFeedModelFromJson(
   Map<String, dynamic> json,
 ) => HomeFeedModel(
+  (json['current_user_wajibika_points'] as num?)?.toInt(),
   clogged_drain:
       (json['clogged_drain'] as List<dynamic>)
           .map((e) => ReportHomeFeedModel.fromJson(e as Map<String, dynamic>))
@@ -17,7 +18,6 @@ HomeFeedModel _$HomeFeedModelFromJson(
       (json['negligent_dumping'] as List<dynamic>)
           .map((e) => ReportHomeFeedModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-  (json['current_user_wajibika_points'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$HomeFeedModelToJson(HomeFeedModel instance) =>

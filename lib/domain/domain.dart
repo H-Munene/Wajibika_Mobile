@@ -15,3 +15,4 @@ export 'entities/volunteer_entity.dart';
 export 'entities/home_feed.dart';
 export 'entities/report_home_feed_entity.dart';
 export 'entities/report_home_feed_related_events_entity.dart';
+export 'entities/report_volunteer_history_entity.dart';
