@@ -77,4 +77,24 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> submitReport({
+    required String imagePath,
+    required String category,
+    required String description,
+  }) async {
+    try {
+      final reportSubmitionResponse = await _localHostAuthDatasource
+          .submitReport(
+            imagePath: imagePath,
+            category: category,
+            description: description,
+          );
+
+      return right(reportSubmitionResponse);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/core/secrets/localhost_endpoints.dart';
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class LocahostDatasourceImpl implements LocalHostAuthDataSource {
@@ -141,6 +142,39 @@ class LocahostDatasourceImpl implements LocalHostAuthDataSource {
       throw ServerException(
         message: 'Some error occurred. Please refresh the page!',
       );
+    }
+  }
+
+  @override
+  Future<void> submitReport({
+    required String imagePath,
+    required String category,
+    required String description,
+  }) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.submitReportEndpoint);
+
+    final reportSubmissionRequest = http.MultipartRequest('POST', url);
+    reportSubmissionRequest.headers['Authorization'] = _userRepository
+        .getToken()
+        .fold((_) => '', (token) => 'Bearer $token');
+    reportSubmissionRequest.fields['category'] = category;
+    reportSubmissionRequest.fields['description'] = description;
+    reportSubmissionRequest.files.add(
+      await http.MultipartFile.fromPath('report_image', imagePath),
+    );
+
+    try {
+      final makeRequest = await reportSubmissionRequest.send();
+
+      final reportSubmissionResponse = await http.Response.fromStream(
+        makeRequest,
+      );
+
+      if (reportSubmissionResponse.statusCode == 201) {
+        debugPrint('***********Success sending report***********');
+      }
+    } catch (e) {
+      throw ServerException(message: 'Failed to submit report');
     }
   }
 }

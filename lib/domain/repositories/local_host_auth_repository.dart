@@ -19,4 +19,10 @@ abstract interface class LocalHostAuthRepository {
   Future<Either<Failure, UserModel>> getUserSession();
 
   Future<Either<Failure, HomeFeedModel>> getHomeFeed();
+
+  Future<Either<Failure, void>> submitReport({
+    required String imagePath,
+    required String category,
+    required String description,
+  });
 }

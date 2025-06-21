@@ -17,4 +17,10 @@ abstract interface class LocalHostAuthDataSource {
   Future<UserModel?> getUserSession();
 
   Future<HomeFeedModel> getHomeFeed();
+
+  Future<void> submitReport({
+    required String imagePath,
+    required String category,
+    required String description,
+  });
 }
