@@ -5,3 +5,4 @@ export 'bookmark/bookmark_bloc.dart';
 export 'volunteer/volunteer_bloc.dart';
 export 'report_submission/report_submission_bloc.dart';
 export 'home_feed/home_feed_bloc.dart';
+export 'report_volunteer_history/report_volunteer_history_bloc.dart';

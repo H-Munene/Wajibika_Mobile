@@ -6,38 +6,13 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable(explicitToJson: true)
 class ReportVolunteerHistoryEntity extends Equatable {
   const ReportVolunteerHistoryEntity({
-    required this.reportHistory,
-    required this.volunteerHistory,
+    required this.report_history,
+    required this.volunteer_history,
   });
 
-  final List<ReportHistoryModel> reportHistory;
-  final List<VolunteerHistoryModel> volunteerHistory;
+  final ReportHistoryModel report_history;
+  final VolunteerHistoryModel volunteer_history;
 
   @override
-  List<Object?> get props => [reportHistory, volunteerHistory];
+  List<Object?> get props => [report_history, volunteer_history];
 }
-
-// {
-//     "report_history": {
-//         "daily_counts": [
-//             {
-//                 "date": "2025-06-21",
-//                 "count": 3
-//             },
-//             {
-//                 "date": "2025-06-18",
-//                 "count": 2
-//             }
-//         ],
-//         "total_reports_count": 5
-//     },
-//     "volunteer_history": {
-//         "daily_counts": [
-//             {
-//                 "date": "2025-06-20",
-//                 "count": 1
-//             }
-//         ],
-//         "total_volunteer_events_count": 1
-//     }
-// }

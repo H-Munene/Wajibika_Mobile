@@ -41,7 +41,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> onRefresh() async {
-    print('Chaha');
+    context.read<ReportVolunteerHistoryBloc>().add(
+      ReportVolunteerHistoryEventRequest(),
+    );
   }
 
   @override
@@ -63,6 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
             .state
             .homeFeedModel
             .current_user_wajibika_points;
+    final reportHistoryCount =
+        context.read<ReportVolunteerHistoryBloc>().state.reportHistoryCount;
+
+    final volunteerHistoryCount =
+        context.read<ReportVolunteerHistoryBloc>().state.volunteerHistoryCount;
 
     return Center(
       child: BlocConsumer<AuthBloc, AuthState>(
@@ -218,7 +225,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
 
-                ReportHistoryCalender(toggleCalendar: showReportHistory),
+                BlocBuilder<
+                  ReportVolunteerHistoryBloc,
+                  ReportVolunteerHistoryState
+                >(
+                  builder: (context, reportVolunteerState) {
+                    final reportHistoryDataset =
+                        reportVolunteerState.reportHistoryDataset;
+
+                    final volunteerHistoryDataset =
+                        reportVolunteerState.volunteerHistoryDataset;
+
+                    return ReportHistoryCalender(
+                      toggleCalendar: showReportHistory,
+                      reportdatasets: reportHistoryDataset,
+                      volunteerdatasets: volunteerHistoryDataset,
+                    );
+                  },
+                ),
 
                 const Divider(),
 
@@ -242,12 +266,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileSummaryCategory.wajibikaPoints,
                       ),
                       ProfileSummary(
-                        summaryCount: 3,
+                        summaryCount: volunteerHistoryCount,
                         profileSummaryCategory:
                             ProfileSummaryCategory.volunteer,
                       ),
                       ProfileSummary(
-                        summaryCount: 13,
+                        summaryCount: reportHistoryCount,
                         profileSummaryCategory: ProfileSummaryCategory.report,
                       ),
                     ],

@@ -23,4 +23,6 @@ abstract interface class LocalHostAuthDataSource {
     required String category,
     required String description,
   });
+
+  Future<ReportVolunteerHistoryModel> getReportandVolunteerHistory();
 }

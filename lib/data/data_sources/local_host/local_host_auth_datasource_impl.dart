@@ -137,7 +137,6 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
     } catch (e) {
       if (e is ServerException) rethrow;
-      print(e.toString());
       throw ServerException(
         message: 'Some error occurred. Please refresh the page!}',
       );
@@ -172,6 +171,37 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       if (reportSubmissionResponse.statusCode == 201) {}
     } catch (e) {
       throw ServerException(message: 'Failed to submit report');
+    }
+  }
+
+  @override
+  Future<ReportVolunteerHistoryModel> getReportandVolunteerHistory() async {
+    final Uri url = Uri.parse(
+      LocalhostEndpoints.userReportVolunteerHistoryEndpoint,
+    );
+
+    try {
+      final response = await http.get(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+      );
+      print('✅✅✅STATUS CODE: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+        print('✅✅✅STATUS CODE: ${responseBody}');
+        return ReportVolunteerHistoryModel.fromJson(responseBody);
+      }
+
+      throw ServerException(
+        message: 'Failed to retrieve history. Refresh the page!',
+      );
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      print('❌❌❌${e.toString()}');
+      throw ServerException(
+        message: 'Failed to retrieve history. Refresh page',
+      );
     }
   }
 }

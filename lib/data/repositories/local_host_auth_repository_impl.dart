@@ -97,4 +97,17 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, ReportVolunteerHistoryModel>>
+  getReportandVolunteerHistory() async {
+    try {
+      final response =
+          await _localHostAuthDatasource.getReportandVolunteerHistory();
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

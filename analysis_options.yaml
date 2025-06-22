@@ -24,6 +24,7 @@ analyzer:
     omit_local_variable_types: ignore 
     flutter_style_todos: ignore
     non_constant_identifier_names: ignore
+    prefer_for_elements_to_map_fromiterable: ignore
 
   exclude:
     - test/.test_coverage.dart

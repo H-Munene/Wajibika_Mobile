@@ -7,8 +7,8 @@ part 'report_volunteer_history_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ReportVolunteerHistoryModel extends ReportVolunteerHistoryEntity {
   const ReportVolunteerHistoryModel({
-    required super.reportHistory,
-    required super.volunteerHistory,
+    required super.report_history,
+    required super.volunteer_history,
   });
 
   factory ReportVolunteerHistoryModel.fromJson(Map<String, dynamic> json) =>

@@ -13,12 +13,13 @@ VolunteerHistoryModel _$VolunteerHistoryModelFromJson(
       (json['daily_counts'] as List<dynamic>)
           .map((e) => DailyCounts.fromJson(e as Map<String, dynamic>))
           .toList(),
-  total_reports_count: (json['total_reports_count'] as num).toInt(),
+  total_volunteer_events_count:
+      (json['total_volunteer_events_count'] as num).toInt(),
 );
 
 Map<String, dynamic> _$VolunteerHistoryModelToJson(
   VolunteerHistoryModel instance,
 ) => <String, dynamic>{
   'daily_counts': instance.daily_counts.map((e) => e.toJson()).toList(),
-  'total_reports_count': instance.total_reports_count,
+  'total_volunteer_events_count': instance.total_volunteer_events_count,
 };

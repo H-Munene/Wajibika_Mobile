@@ -52,6 +52,9 @@ class _BottomNavState extends State<BottomNav> {
   void initState() {
     // get initial home feed after login
     context.read<HomeFeedBloc>().add(HomeFeedGetFeed());
+    context.read<ReportVolunteerHistoryBloc>().add(
+      ReportVolunteerHistoryEventRequest(),
+    );
     super.initState();
   }
 

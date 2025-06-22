@@ -1,14 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/presentation/pages/auth/report_volunteer_history_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
 class ReportHistoryCalender extends StatefulWidget {
-  //final Map<DateTime, int>? reportdatasets
-  //final Map<DateTime, int>? volunteerdatasets
+  final Map<DateTime, int>? reportdatasets;
+  final Map<DateTime, int>? volunteerdatasets;
+
   final bool toggleCalendar;
-  const ReportHistoryCalender({super.key, this.toggleCalendar = true});
+  const ReportHistoryCalender({
+    super.key,
+    this.toggleCalendar = true,
+    required this.reportdatasets,
+    required this.volunteerdatasets,
+  });
 
   @override
   State<ReportHistoryCalender> createState() => _ReportHistoryCalenderState();
@@ -35,21 +40,7 @@ class _ReportHistoryCalenderState extends State<ReportHistoryCalender> {
                         ),
                       ),
                   // onMonthChange: ,
-                  datasets: {
-                    DateTime(DateTime.now().year, DateTime.now().month, 1): 1,
-                    DateTime(DateTime.now().year, DateTime.now().month, 3): 2,
-                    DateTime(DateTime.now().year, DateTime.now().month, 4): 3,
-                    DateTime(DateTime.now().year, DateTime.now().month, 6): 4,
-                    DateTime(DateTime.now().year, DateTime.now().month, 6): 5,
-                    DateTime(DateTime.now().year, DateTime.now().month, 15): 5,
-                    DateTime(DateTime.now().year, DateTime.now().month, 23): 5,
-                    DateTime(DateTime.now().year, DateTime.now().month, 25): 1,
-                    DateTime(DateTime.now().year, DateTime.now().month, 26): 2,
-                    DateTime(DateTime.now().year, DateTime.now().month, 27): 3,
-                    DateTime(DateTime.now().year, DateTime.now().month, 28): 4,
-                    DateTime(DateTime.now().year, DateTime.now().month, 29): 5,
-                    DateTime(DateTime.now().year, DateTime.now().month, 30): 5,
-                  },
+                  datasets: widget.reportdatasets,
                   colorTipHelper: const [
                     Text('less reports'),
                     Text(' more reports'),
@@ -76,11 +67,7 @@ class _ReportHistoryCalenderState extends State<ReportHistoryCalender> {
                         ),
                       ),
                   // onMonthChange: ,
-                  datasets: {
-                    DateTime(DateTime.now().year, DateTime.now().month, 1): 1,
-                    DateTime(DateTime.now().year, DateTime.now().month, 7): 2,
-                    DateTime(DateTime.now().year, DateTime.now().month, 28): 5,
-                  },
+                  datasets: widget.volunteerdatasets,
                   colorTipHelper: const [
                     Text('less reports'),
                     Text(' more reports'),

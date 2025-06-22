@@ -8,6 +8,7 @@ export 'usecases/login_usecase_impl.dart';
 export 'usecases/already_signed_in.dart';
 export 'usecases/get_home_feed_usecase_impl.dart';
 export 'usecases/submit_report_usecase_impl.dart';
+export 'usecases/get_report_volunteer_history.dart';
 
 export 'entities/user_entity.dart';
 export 'entities/report_entity.dart';

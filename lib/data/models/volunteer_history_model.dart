@@ -7,11 +7,11 @@ part 'volunteer_history_model.g.dart';
 class VolunteerHistoryModel {
   const VolunteerHistoryModel({
     required this.daily_counts,
-    required this.total_reports_count,
+    required this.total_volunteer_events_count,
   });
 
   final List<DailyCounts> daily_counts;
-  final int total_reports_count;
+  final int total_volunteer_events_count;
 
   factory VolunteerHistoryModel.fromJson(Map<String, dynamic> json) =>
       _$VolunteerHistoryModelFromJson(json);

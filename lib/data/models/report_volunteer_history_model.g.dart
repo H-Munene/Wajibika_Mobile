@@ -9,19 +9,17 @@ part of 'report_volunteer_history_model.dart';
 ReportVolunteerHistoryModel _$ReportVolunteerHistoryModelFromJson(
   Map<String, dynamic> json,
 ) => ReportVolunteerHistoryModel(
-  reportHistory:
-      (json['reportHistory'] as List<dynamic>)
-          .map((e) => ReportHistoryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-  volunteerHistory:
-      (json['volunteerHistory'] as List<dynamic>)
-          .map((e) => VolunteerHistoryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  report_history: ReportHistoryModel.fromJson(
+    json['report_history'] as Map<String, dynamic>,
+  ),
+  volunteer_history: VolunteerHistoryModel.fromJson(
+    json['volunteer_history'] as Map<String, dynamic>,
+  ),
 );
 
 Map<String, dynamic> _$ReportVolunteerHistoryModelToJson(
   ReportVolunteerHistoryModel instance,
 ) => <String, dynamic>{
-  'reportHistory': instance.reportHistory.map((e) => e.toJson()).toList(),
-  'volunteerHistory': instance.volunteerHistory.map((e) => e.toJson()).toList(),
+  'report_history': instance.report_history.toJson(),
+  'volunteer_history': instance.volunteer_history.toJson(),
 };

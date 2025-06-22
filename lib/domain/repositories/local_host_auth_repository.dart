@@ -25,4 +25,7 @@ abstract interface class LocalHostAuthRepository {
     required String category,
     required String description,
   });
+
+  Future<Either<Failure, ReportVolunteerHistoryModel>>
+  getReportandVolunteerHistory();
 }
