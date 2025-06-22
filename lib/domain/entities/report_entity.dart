@@ -16,5 +16,5 @@ class ReportEntity {
   final String description;
   final String scheduleDate;
   final String imageUrl;
-  final String reportCategory; // 'Clogged Drain', 'Improper Garbage Disposal',
+  final String reportCategory; // 'Clogged Drain', 'Negligent',
 }

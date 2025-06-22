@@ -1,3 +1,5 @@
+import 'package:bloc_clean_arch/presentation/bloc/home_feed/home_feed_bloc.dart';
+import 'package:bloc_clean_arch/presentation/bloc/report_submission/report_submission_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
@@ -7,8 +9,6 @@ import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,12 +19,6 @@ void main() async {
   });
 
   Bloc.observer = AppBlocObserver();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory:
-        kIsWeb
-            ? HydratedStorageDirectory.web
-            : HydratedStorageDirectory((await getTemporaryDirectory()).path),
-  );
 
   await init();
 
@@ -43,6 +37,8 @@ void main() async {
           BlocProvider(create: (_) => ProfileMediaBloc()),
           BlocProvider(create: (_) => BookmarkBloc()),
           BlocProvider(create: (_) => VolunteerBloc()),
+          BlocProvider(create: (_) => locator<HomeFeedBloc>()),
+          BlocProvider(create: (_) => locator<ReportSubmissionBloc>()),
         ],
 
         child: const MyApp(),
@@ -61,7 +57,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    context.read<AuthBloc>().add(AuthCheckUserAlreadySignedIn());
+    // context.read<AuthBloc>().add(AuthCheckUserAlreadySignedIn());
+
+    context.read<AuthBloc>().add(AuthSignOut()); // sign out on hot restart
     super.initState();
   }
 
@@ -96,7 +94,7 @@ class AuthWrapper extends StatelessWidget {
               transitionDuration: Duration.zero,
             ),
           );
-        } else {
+        } else if (state is AuthLoggedOut) {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (_, __, ___) => const LoginPage(),

@@ -24,11 +24,15 @@ class _VolunteerPageState extends State<VolunteerPage> {
     super.dispose();
   }
 
-  void confirmVolunteerForThisEvent({required ReportModel reportModel}) {
+  void confirmVolunteerForThisEvent({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) {
     final isVolunteer = context
         .read<VolunteerBloc>()
         .state
-        .registeredAsVolunteerForThisReport(reportModel: reportModel);
+        .registeredAsVolunteerForThisReport(
+          reportHomeFeedModel: reportHomeFeedModel,
+        );
 
     CustomDialogBottomAppSheet.cupertinoAlertDialog(
       context: context,
@@ -40,10 +44,11 @@ class _VolunteerPageState extends State<VolunteerPage> {
           isVolunteer
               ? Globals.unregisterAsVolunterFromThisEventAlertContent
               : Globals.volunterForThisEventAlertContent,
-      // TODO: mark as volunteer for event -> will need report id
       onDestructiveActionPressed: () {
         context.read<VolunteerBloc>().add(
-          VolunteerEventToggleVolunteerPresence(reportModel: reportModel),
+          VolunteerEventToggleVolunteerPresence(
+            reportHomeFeedModel: reportHomeFeedModel,
+          ),
         );
         Navigator.of(context).pop();
       },
@@ -54,69 +59,88 @@ class _VolunteerPageState extends State<VolunteerPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<VolunteerBloc, VolunteerState>(
       builder:
-          (
-            BuildContext context,
-            VolunteerState volunteerState,
-          ) => BlocBuilder<BookmarkBloc, BookmarkState>(
-            builder: (BuildContext context, BookmarkState bookMarkState) {
-              final registeredVolunteerEvents =
-                  volunteerState.registeredVolunteerEvents;
+          (BuildContext context, VolunteerState volunteerState) =>
+              BlocBuilder<BookmarkBloc, BookmarkState>(
+                builder: (BuildContext context, BookmarkState bookMarkState) {
+                  final registeredVolunteerEvents =
+                      volunteerState.registeredVolunteerEvents;
 
-              return registeredVolunteerEvents.isEmpty
-                  ? const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(CupertinoIcons.hand_raised),
-                        Text(
-                          Globals.emptyVolunteerPageText,
-                          textAlign: TextAlign.center,
+                  return registeredVolunteerEvents.isEmpty
+                      ? const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(CupertinoIcons.hand_raised),
+                            Text(
+                              Globals.emptyVolunteerPageText,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                  : ListView.separated(
-                    itemBuilder:
-                        (context, index) => WajibikaReportFeedCard(
-                          isVolunteerForThisReport: volunteerState
-                              .registeredAsVolunteerForThisReport(
-                                reportModel: registeredVolunteerEvents[index],
+                      )
+                      : ListView.separated(
+                        itemBuilder:
+                            (context, index) => WajibikaReportFeedCard(
+                              isVolunteerForThisReport: volunteerState
+                                  .registeredAsVolunteerForThisReport(
+                                    reportHomeFeedModel:
+                                        registeredVolunteerEvents[index],
+                                  ),
+                              imageUrl:
+                                  registeredVolunteerEvents[index]
+                                      .report_image_url,
+                              username:
+                                  registeredVolunteerEvents[index]
+                                      .reporter_username,
+                              report_date:
+                                  registeredVolunteerEvents[index].report_date,
+                              description:
+                                  registeredVolunteerEvents[index].description,
+                              volunteerCount:
+                                  registeredVolunteerEvents[index]
+                                          .related_events
+                                          .isEmpty
+                                      ? 0
+                                      : registeredVolunteerEvents[index]
+                                          .related_events[0]
+                                          .participants_count,
+                              scheduleDate:
+                                  registeredVolunteerEvents[index]
+                                          .related_events
+                                          .isEmpty
+                                      ? ''
+                                      : registeredVolunteerEvents[index]
+                                          .related_events[0]
+                                          .scheduled_volunteer_date,
+                              onVolunteerButtonPressed:
+                                  () => confirmVolunteerForThisEvent(
+                                    reportHomeFeedModel:
+                                        registeredVolunteerEvents[index],
+                                  ),
+                              isBookmarked: bookMarkState.isReportBookMarked(
+                                reportHomeFeedModel:
+                                    registeredVolunteerEvents[index],
                               ),
-                          imageUrl: registeredVolunteerEvents[index].imageUrl,
-                          username: registeredVolunteerEvents[index].username,
-                          time: registeredVolunteerEvents[index].time,
-                          description:
-                              registeredVolunteerEvents[index].description,
-                          volunteerCount:
-                              registeredVolunteerEvents[index].volunteerCount,
-                          scheduleDate:
-                              registeredVolunteerEvents[index].scheduleDate,
-                          onVolunteerButtonPressed:
-                              () => confirmVolunteerForThisEvent(
-                                reportModel: registeredVolunteerEvents[index],
-                              ),
-                          isBookmarked: bookMarkState.isReportBookMarked(
-                            reportModel: registeredVolunteerEvents[index],
-                          ),
-                          onBookmarkButtonPressed:
-                              () => context.read<BookmarkBloc>().add(
-                                BookmarkEventToggleReportBookmarksPresence(
-                                  reportModel: registeredVolunteerEvents[index],
-                                ),
-                              ),
-                        ),
-                    separatorBuilder:
-                        (context, index) =>
-                            const Divider(indent: 10, endIndent: 10),
-                    itemCount:
-                        context
-                            .read<VolunteerBloc>()
-                            .state
-                            .registeredVolunteerEvents
-                            .length,
-                  );
-            },
-          ),
+                              onBookmarkButtonPressed:
+                                  () => context.read<BookmarkBloc>().add(
+                                    BookmarkEventToggleReportBookmarksPresence(
+                                      reportHomeFeedModel:
+                                          registeredVolunteerEvents[index],
+                                    ),
+                                  ),
+                            ),
+                        separatorBuilder:
+                            (context, index) =>
+                                const Divider(indent: 10, endIndent: 10),
+                        itemCount:
+                            context
+                                .read<VolunteerBloc>()
+                                .state
+                                .registeredVolunteerEvents
+                                .length,
+                      );
+                },
+              ),
     );
   }
 }

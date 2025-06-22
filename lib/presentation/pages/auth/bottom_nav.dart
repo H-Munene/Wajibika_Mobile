@@ -49,15 +49,25 @@ class _BottomNavState extends State<BottomNav> {
   }
 
   @override
+  void initState() {
+    // get initial home feed after login
+    context.read<HomeFeedBloc>().add(HomeFeedGetFeed());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final wajibikaPoints =
+        context
+            .read<HomeFeedBloc>()
+            .state
+            .homeFeedModel
+            .current_user_wajibika_points;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(Globals.mainPageTitle),
-        actions: const [
-          // TODO: get from user model
-          WajibikaPointsIcon(wajibikaPoints: 162),
-        ],
+        actions: [WajibikaPointsIcon(wajibikaPoints: wajibikaPoints ?? 0)],
         actionsPadding: const EdgeInsets.only(right: 10),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

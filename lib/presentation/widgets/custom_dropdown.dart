@@ -4,7 +4,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 
 class CustomDropDown extends StatelessWidget {
   final List<String> items;
-  final Function(String?) onChanged;
+  final void Function(String?) onChanged;
   final String? hintText;
   final String? initialValue;
 
@@ -28,7 +28,7 @@ class CustomDropDown extends StatelessWidget {
           onChanged: onChanged,
           initialItem: initialValue,
           validator: (value) {
-            return (value == null || value.isEmpty)
+            return (value == null || value.isEmpty || value == 'Select One')
                 ? 'Field is required'
                 : null;
           },

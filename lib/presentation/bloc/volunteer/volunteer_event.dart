@@ -8,9 +8,11 @@ sealed class VolunteerEvent extends Equatable {
 }
 
 final class VolunteerEventToggleVolunteerPresence extends VolunteerEvent {
-  const VolunteerEventToggleVolunteerPresence({required this.reportModel});
+  const VolunteerEventToggleVolunteerPresence({
+    required this.reportHomeFeedModel,
+  });
 
-  final ReportModel reportModel;
+  final ReportHomeFeedModel reportHomeFeedModel;
 }
 
 final class VolunteerEventFetchInitialRegisteredVolunteerEvents

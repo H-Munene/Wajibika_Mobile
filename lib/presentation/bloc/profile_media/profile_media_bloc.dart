@@ -1,5 +1,5 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,8 +8,7 @@ part 'profile_media_state.dart';
 
 /// This bloc defines the operations to add a new or remove the user profile
 /// picture.
-class ProfileMediaBloc
-    extends HydratedBloc<ProfileMediaEvent, ProfileMediaState> {
+class ProfileMediaBloc extends Bloc<ProfileMediaEvent, ProfileMediaState> {
   ProfileMediaBloc() : super(ProfileMediaState()) {
     on<ProfileMediaChangeProfilePictureFromCameraEvent>(
       _onProfilePictureChangeFromCamera,
@@ -103,11 +102,11 @@ class ProfileMediaBloc
     }
   }
 
-  @override
-  ProfileMediaState? fromJson(Map<String, dynamic> json) =>
-      ProfileMediaState.fromJson(json);
+  // @override
+  // ProfileMediaState? fromJson(Map<String, dynamic> json) =>
+  //     ProfileMediaState.fromJson(json);
 
-  @override
-  Map<String, dynamic>? toJson(ProfileMediaState state) =>
-      _$ProfileMediaStateToJson(state);
+  // @override
+  // Map<String, dynamic>? toJson(ProfileMediaState state) =>
+  //     _$ProfileMediaStateToJson(state);
 }

@@ -1,7 +1,7 @@
 import 'package:bloc_clean_arch/data/data.dart';
 
-abstract interface class AuthDataSource {
-  Future<UserModel> signUpWithUsernameEmailPassword({
+abstract interface class LocalHostAuthDataSource {
+  Future<int> signUpWithUsernameEmailPassword({
     required String username,
     required String email,
     required String password,
@@ -15,4 +15,12 @@ abstract interface class AuthDataSource {
   Future<void> signOut();
 
   Future<UserModel?> getUserSession();
+
+  Future<HomeFeedModel> getHomeFeed();
+
+  Future<void> submitReport({
+    required String imagePath,
+    required String category,
+    required String description,
+  });
 }

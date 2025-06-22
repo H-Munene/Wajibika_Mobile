@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
@@ -11,7 +12,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
   final String imageUrl;
   final int volunteerCount;
   final String username;
-  final String time;
+  final String report_date;
   final String description;
   final String scheduleDate;
   final VoidCallback onVolunteerButtonPressed;
@@ -23,7 +24,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
   const WajibikaReportFeedCard({
     super.key,
     required this.username,
-    required this.time,
+    required this.report_date,
     required this.description,
     required this.volunteerCount,
     required this.scheduleDate, // i.e "EEE, MMM d, ''yyyy"-> Wed, Jul 10, '2025
@@ -32,7 +33,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
     required this.onBookmarkButtonPressed,
     this.isBookmarked = false,
     required this.imageUrl,
-    this.isVolunteerForThisReport = false,
+    required this.isVolunteerForThisReport,
   });
 
   @override
@@ -57,7 +58,14 @@ class WajibikaReportFeedCard extends StatelessWidget {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            child: Image.asset(imageUrl),
+            child: Image.network(
+              fit: BoxFit.cover,
+              imageUrl,
+              height: AppDimensions.reportHomeFeedImageHeightWidth,
+              cacheHeight: AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
+              width: AppDimensions.reportHomeFeedImageHeightWidth,
+              cacheWidth: AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
+            ),
           ),
           const SizedBox(height: 5),
 
@@ -72,7 +80,10 @@ class WajibikaReportFeedCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(username, style: textTheme.bodySmall),
-                    Text(time, style: textTheme.bodySmall),
+                    Text(
+                      weekdayMonthDayFomat(date: report_date),
+                      style: textTheme.bodySmall,
+                    ),
                   ],
                 ),
                 const Spacer(),
@@ -100,15 +111,18 @@ class WajibikaReportFeedCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
             child: Row(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: AppDimensions.circleBorderRadius,
-                    border: Border.all(),
-                  ),
+                if (scheduleDate.isNotEmpty)
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: AppDimensions.circleBorderRadius,
+                      border: Border.all(),
+                    ),
 
-                  // volunteer date schedule
-                  child: _ScheduleDate(scheduleDate: scheduleDate),
-                ),
+                    // volunteer date schedule
+                    child: _ScheduleDate(
+                      scheduleDate: weekdayMonthDayFomat(date: scheduleDate),
+                    ),
+                  ),
                 const Spacer(),
 
                 //volunteer button with conditionally rendered avatars
@@ -222,7 +236,7 @@ class _UserAvatarandOtherUserAvatWithCount extends StatelessWidget {
             },
           ),
         // avatar to signify other volunteers
-        if (volunteerCount > 1)
+        if (volunteerCount >= 1)
           Row(
             spacing: 1,
             children: [

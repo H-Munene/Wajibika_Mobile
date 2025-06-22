@@ -3,12 +3,12 @@ import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:fpdart/fpdart.dart';
 
 class SignOutUseCase implements Usecase<void, NoParams> {
-  SignOutUseCase({required this.authRepository});
+  SignOutUseCase({required this.localHostAuthRepository});
 
-  final AuthRepository authRepository;
+  final LocalHostAuthRepository localHostAuthRepository;
 
   @override
   Future<Either<Failure, void>> call(NoParams noParams) async {
-    return await authRepository.signOut();
+    return await localHostAuthRepository.signOut();
   }
 }

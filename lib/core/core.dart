@@ -10,5 +10,3 @@ export 'utils/snackbar_definitions.dart';
 export 'utils/globals.dart';
 export 'utils/app_assets.dart';
 export 'utils/dimensions.dart';
-
-export 'mock_data/mock_reports.dart';

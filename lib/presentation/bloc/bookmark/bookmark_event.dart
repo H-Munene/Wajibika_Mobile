@@ -8,9 +8,11 @@ sealed class BookmarkEvent extends Equatable {
 }
 
 final class BookmarkEventToggleReportBookmarksPresence extends BookmarkEvent {
-  const BookmarkEventToggleReportBookmarksPresence({required this.reportModel});
+  const BookmarkEventToggleReportBookmarksPresence({
+    required this.reportHomeFeedModel,
+  });
 
-  final ReportModel reportModel;
+  final ReportHomeFeedModel reportHomeFeedModel;
 }
 
 final class BookmarkEventClear extends BookmarkEvent {}

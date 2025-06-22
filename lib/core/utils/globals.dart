@@ -62,8 +62,9 @@ class Globals {
 
   // report dropdown items
   static const List<String> reportCategoryItems = [
+    'Select One',
     'Clogged Drain',
-    'Improper Garbage Disposal',
+    'Negligent Dumping',
   ];
 
   // report description hint

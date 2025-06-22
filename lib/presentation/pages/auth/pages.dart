@@ -3,7 +3,7 @@ export 'login.dart';
 export 'signup.dart';
 export 'report_volunteer_history_page.dart';
 
-export 'screens/report/report.dart';
+export 'screens/report/report_page.dart';
 export 'screens/volunteer/volunteer.dart';
 export 'screens/bookmarks/bookmarks.dart';
 export 'screens/home/home_feed.dart';

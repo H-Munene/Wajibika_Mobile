@@ -50,22 +50,28 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
         final currentState = state as MediaReportPictureSelected;
 
         if (pictureTaken == null) {
+          // retains already selected image if no image is selected
           emit(MediaReportPictureSelected(image: currentState.image));
         } else {
+          // updates state with selected image
           emit(MediaReportPictureSelected(image: pictureTaken));
         }
       } else {
         if (pictureTaken == null) {
+          // no image is selected
           emit(MediaNoReportPicturesSelectedState());
         } else {
+          // image selected, update state
           emit(MediaReportPictureSelected(image: pictureTaken));
         }
       }
     } catch (e) {
       if (isThereReportedMedia) {
+        // error in selecting image, retain previous state
         final currentState = state as MediaReportPictureSelected;
         emit(MediaReportPictureSelected(image: currentState.image));
       } else {
+        // error in selecting image; with no previously selected image emit...
         emit(MediaNoReportPicturesSelectedState());
       }
     }

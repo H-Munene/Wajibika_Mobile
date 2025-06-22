@@ -53,6 +53,13 @@ class _ProfilePageState extends State<ProfilePage> {
       (email) => email,
     );
 
+    final wajibikaPoints =
+        context
+            .read<HomeFeedBloc>()
+            .state
+            .homeFeedModel
+            .current_user_wajibika_points;
+
     return Center(
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -215,10 +222,10 @@ class _ProfilePageState extends State<ProfilePage> {
               Padding(
                 padding: AppDimensions.profilePageWidgetsPadding,
 
-                child: const Row(
+                child: Row(
                   children: [
                     ProfileSummary(
-                      summaryCount: 162,
+                      summaryCount: wajibikaPoints ?? 0,
                       profileSummaryCategory:
                           ProfileSummaryCategory.wajibikaPoints,
                     ),

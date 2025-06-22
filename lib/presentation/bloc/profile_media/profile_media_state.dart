@@ -22,31 +22,31 @@ final class ProfileMediaState {
     );
   }
 
-  factory ProfileMediaState.fromJson(Map<String, dynamic> json) =>
-      _$ProfileMediaStateFromJson(json);
-  Map<String, dynamic> toJson() => _$ProfileMediaStateToJson(this);
+  // factory ProfileMediaState.fromJson(Map<String, dynamic> json) =>
+  //     _$ProfileMediaStateFromJson(json);
+  // Map<String, dynamic> toJson() => _$ProfileMediaStateToJson(this);
 }
 
-// used to retain state
-ProfileMediaState _$ProfileMediaStateFromJson(Map<String, dynamic> json) =>
-    ProfileMediaState(
-      profileMediaStatus:
-          $enumDecodeNullable(
-            _$ProfileMediaStatusEnumMap,
-            json['profileMediaStatus'],
-          ) ??
-          ProfileMediaStatus.noProfilePicture,
-      profilePicture: json['profilePicture'] as String? ?? '',
-    );
+// // used to retain state
+// ProfileMediaState _$ProfileMediaStateFromJson(Map<String, dynamic> json) =>
+//     ProfileMediaState(
+//       profileMediaStatus:
+//           $enumDecodeNullable(
+//             _$ProfileMediaStatusEnumMap,
+//             json['profileMediaStatus'],
+//           ) ??
+//           ProfileMediaStatus.noProfilePicture,
+//       profilePicture: json['profilePicture'] as String? ?? '',
+//     );
 
-Map<String, dynamic> _$ProfileMediaStateToJson(ProfileMediaState instance) =>
-    <String, dynamic>{
-      'profileMediaStatus':
-          _$ProfileMediaStatusEnumMap[instance.profileMediaStatus],
-      'profilePicture': instance.profilePicture,
-    };
+// Map<String, dynamic> _$ProfileMediaStateToJson(ProfileMediaState instance) =>
+//     <String, dynamic>{
+//       'profileMediaStatus':
+//           _$ProfileMediaStatusEnumMap[instance.profileMediaStatus],
+//       'profilePicture': instance.profilePicture,
+//     };
 
-const _$ProfileMediaStatusEnumMap = {
-  ProfileMediaStatus.noProfilePicture: 'noProfilePicture',
-  ProfileMediaStatus.profilePicturePresent: 'profilePicturePresent',
-};
+// const _$ProfileMediaStatusEnumMap = {
+//   ProfileMediaStatus.noProfilePicture: 'noProfilePicture',
+//   ProfileMediaStatus.profilePicturePresent: 'profilePicturePresent',
+// };

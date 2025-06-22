@@ -25,4 +25,6 @@ class AppDimensions {
 
   static const double iconSize = 22;
   static const double loadingIndicatorSize = 25;
+
+  static const double reportHomeFeedImageHeightWidth = 380;
 }
