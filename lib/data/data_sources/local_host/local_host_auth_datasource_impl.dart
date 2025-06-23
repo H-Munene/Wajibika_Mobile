@@ -185,11 +185,9 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
         url,
         headers: await _getHeaders(needsAuthorization: true),
       );
-      print('✅✅✅STATUS CODE: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
-        print('✅✅✅STATUS CODE: ${responseBody}');
         return ReportVolunteerHistoryModel.fromJson(responseBody);
       }
 
@@ -198,9 +196,74 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
     } catch (e) {
       if (e is ServerException) rethrow;
-      print('❌❌❌${e.toString()}');
       throw ServerException(
         message: 'Failed to retrieve history. Refresh page',
+      );
+    }
+  }
+
+  @override
+  Future<ReportVolunteerListSpecificDateModel> getReportHistorySpecificDate({
+    required String date,
+  }) async {
+    final Uri url = Uri.parse(
+      LocalhostEndpoints.userReportHistoryOnDateEndpoint(date: date),
+    );
+
+    try {
+      final request = await http.get(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+      );
+
+      if (request.statusCode == 200) {
+        final Map<String, dynamic> reportHistoryOnDate =
+            jsonDecode(request.body) as Map<String, dynamic>;
+
+        return ReportVolunteerListSpecificDateModel.fromJson(
+          reportHistoryOnDate,
+        );
+      }
+      throw ServerException(
+        message: 'Failed to get report history for this day',
+      );
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException(
+        message: 'Failed to get report history for this day',
+      );
+    }
+  }
+
+  @override
+  Future<ReportVolunteerListSpecificDateModel> getVolunteerHistorySpecificDate({
+    required String date,
+  }) async {
+    final Uri uri = Uri.parse(
+      LocalhostEndpoints.userVolunteerHistoryOnDateEndpoint(date: date),
+    );
+
+    try {
+      final response = await http.get(
+        uri,
+        headers: await _getHeaders(needsAuthorization: true),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> volunteerHistoryOnDate =
+            jsonDecode(response.body) as Map<String, dynamic>;
+
+        return ReportVolunteerListSpecificDateModel.fromJson(
+          volunteerHistoryOnDate,
+        );
+      }
+
+      throw ServerException(message: 'Failed to get volunteer history');
+    } catch (e) {
+      if (e is ServerException) rethrow;
+
+      throw ServerException(
+        message: 'Failed to get volunteer history for this day',
       );
     }
   }

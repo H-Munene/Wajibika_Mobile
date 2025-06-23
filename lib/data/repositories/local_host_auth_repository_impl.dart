@@ -110,4 +110,30 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  getReportHistorySpecificDate({required String date}) async {
+    try {
+      final response = await _localHostAuthDatasource
+          .getReportHistorySpecificDate(date: date);
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  getVolunteerHistorySpecificDate({required String date}) async {
+    try {
+      final response = await _localHostAuthDatasource
+          .getVolunteerHistorySpecificDate(date: date);
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

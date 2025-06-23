@@ -15,3 +15,5 @@ export 'models/report_history_model.dart';
 export 'models/report_volunteer_daily_count_model.dart';
 export 'models/report_volunteer_history_model.dart';
 export 'models/report_home_feed_related_events_model.dart';
+export 'models/report_volunteer_specific_date_model.dart';
+export 'models/report_volunteer_list_specific_date_model.dart';

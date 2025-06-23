@@ -28,4 +28,10 @@ abstract interface class LocalHostAuthRepository {
 
   Future<Either<Failure, ReportVolunteerHistoryModel>>
   getReportandVolunteerHistory();
+
+  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  getReportHistorySpecificDate({required String date});
+
+  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  getVolunteerHistorySpecificDate({required String date});
 }
