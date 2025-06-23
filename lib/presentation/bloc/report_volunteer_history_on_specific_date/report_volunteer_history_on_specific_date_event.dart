@@ -6,3 +6,17 @@ sealed class ReportVolunteerHistoryOnSpecificDateEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class VolunteerHistoryOnSpecificDateRequest
+    extends ReportVolunteerHistoryOnSpecificDateEvent {
+  const VolunteerHistoryOnSpecificDateRequest({required this.date});
+
+  final String date;
+}
+
+final class ReportHistoryOnSpecificDateRequest
+    extends ReportVolunteerHistoryOnSpecificDateEvent {
+  const ReportHistoryOnSpecificDateRequest({required this.date});
+
+  final String date;
+}
