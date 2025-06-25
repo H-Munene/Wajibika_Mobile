@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'report_volunteer_specific_date_model.g.dart';
+part 'report_specific_date_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ReportVolunteerSpecificDateModel extends Equatable {
-  const ReportVolunteerSpecificDateModel({
+class ReportSpecificDateModel extends Equatable {
+  const ReportSpecificDateModel({
     required this.report_id,
     required this.description,
     required this.report_date,
@@ -21,12 +21,10 @@ class ReportVolunteerSpecificDateModel extends Equatable {
   final bool is_resolved_by_volunteer;
   final bool is_resolved_by_council;
 
-  factory ReportVolunteerSpecificDateModel.fromJson(
-    Map<String, dynamic> json,
-  ) => _$ReportVolunteerSpecificDateModelFromJson(json);
+  factory ReportSpecificDateModel.fromJson(Map<String, dynamic> json) =>
+      _$ReportSpecificDateModelFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      _$ReportVolunteerSpecificDateModelToJson(this);
+  Map<String, dynamic> toJson() => _$ReportSpecificDateModelToJson(this);
 
   @override
   List<Object?> get props => [
@@ -38,3 +36,10 @@ class ReportVolunteerSpecificDateModel extends Equatable {
     is_resolved_by_council,
   ];
 }
+
+//             "report_id": 7,
+//             "description": "Moon above the Aberdare mountains",
+//             "report_date": "2025-06-21T14:58:12.000Z",
+//             "is_approved": true,
+//             "is_resolved_by_volunteer": false,
+//             "is_resolved_by_council": false

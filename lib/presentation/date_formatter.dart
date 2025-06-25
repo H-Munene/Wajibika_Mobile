@@ -9,7 +9,3 @@ String weekdayMonthDayFomat({required String date}) {
 
   return result;
 }
-
-//  DateFormat(
-//                         'E, MMM dd',
-//                       ).format(DateTime.parse(scheduleDate))

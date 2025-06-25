@@ -54,6 +54,16 @@ void _initAuth() {
       () =>
           GetReportVolunteerHistoryUseCase(localHostAuthRepository: locator()),
     )
+    ..registerFactory(
+      () => GetReportHistoryOnSpecifiDateUsecase(
+        localHostAuthRepository: locator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetVolunteerHistoryOnSpecifiDateUsecase(
+        localHostAuthRepository: locator(),
+      ),
+    )
     ..registerFactory(() => SignOutUseCase(localHostAuthRepository: locator()))
     ..registerFactory(() => AlreadySignedIn(localHostAuthRepository: locator()))
     ..registerLazySingleton(
@@ -69,6 +79,12 @@ void _initAuth() {
       () => ReportSubmissionBloc(submitReportUsecaseImpl: locator()),
     )
     ..registerFactory(() => HomeFeedBloc(getHomeFeedUseCase: locator()))
+    ..registerFactory(
+      () => ReportVolunteerHistoryOnSpecificDateBloc(
+        getVolunteerHistoryOnSpecificDateUsecase: locator(),
+        getReportHistoryOnSpecifiDateUsecase: locator(),
+      ),
+    )
     ..registerFactory(
       () => ReportVolunteerHistoryBloc(
         getReportVolunteerHistoryUseCase: locator(),

@@ -1,4 +1,4 @@
-part of 'report_volunteer_history_on_specific_date_bloc.dart';
+part of 'report_history_on_specific_date_bloc.dart';
 
 sealed class ReportVolunteerHistoryOnSpecificDateEvent extends Equatable {
   const ReportVolunteerHistoryOnSpecificDateEvent();
@@ -20,3 +20,6 @@ final class ReportHistoryOnSpecificDateRequest
 
   final String date;
 }
+
+final class ReportVolunteerHistoryClearState
+    extends ReportVolunteerHistoryOnSpecificDateEvent {}

@@ -172,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         AuthSignOut(),
                                       );
 
-                                      // clear volunteer events and bookmarks:
+                                      // clear volunteer events, bookmarks and the profile picture if set:
                                       // ideally supposed to have db save them so that they are
                                       // restored.We clear it for now just so that if another
                                       // user logs in they dont find saved volunteer events
@@ -180,9 +180,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       context.read<VolunteerBloc>().add(
                                         VolunteerEventClear(),
                                       );
-
                                       context.read<BookmarkBloc>().add(
                                         BookmarkEventClear(),
+                                      );
+                                      context.read<ProfileMediaBloc>().add(
+                                        ProfileMediaRemoveCurrentProfilePictureEvent(),
                                       );
                                     },
                                     context: context,
@@ -240,6 +242,65 @@ class _ProfilePageState extends State<ProfilePage> {
                       toggleCalendar: showReportHistory,
                       reportdatasets: reportHistoryDataset,
                       volunteerdatasets: volunteerHistoryDataset,
+                      onActiveReportDateClicked: (date) {
+                        final formattedDate = date.toString().substring(0, 10);
+
+                        // clear state
+                        context
+                            .read<ReportVolunteerHistoryOnSpecificDateBloc>()
+                            .add(ReportVolunteerHistoryClearState());
+
+                        // make request
+                        context
+                            .read<ReportVolunteerHistoryOnSpecificDateBloc>()
+                            .add(
+                              ReportHistoryOnSpecificDateRequest(
+                                date: formattedDate,
+                              ),
+                            );
+
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder:
+                                (context) => ReportVolunteerHistoryPage(
+                                  type: 'report',
+                                  // reportHistory:
+                                  //     context
+                                  //         .read<
+                                  //           ReportVolunteerHistoryOnSpecificDateBloc
+                                  //         >()
+                                  //         .state
+                                  //         .reportListSpecificDateModel,
+                                ),
+                          ),
+                        );
+                      },
+                      onActiveVolunteerDateClicked: (date) {
+                        final formattedDate = date.toString().substring(0, 10);
+
+                        // clear state
+                        context
+                            .read<ReportVolunteerHistoryOnSpecificDateBloc>()
+                            .add(ReportVolunteerHistoryClearState());
+
+                        // make request
+                        context
+                            .read<ReportVolunteerHistoryOnSpecificDateBloc>()
+                            .add(
+                              VolunteerHistoryOnSpecificDateRequest(
+                                date: formattedDate,
+                              ),
+                            );
+
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder:
+                                (context) => ReportVolunteerHistoryPage(
+                                  type: 'volunteer',
+                                ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),

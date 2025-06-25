@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'report_volunteer_specific_date_model.dart';
+part of 'report_specific_date_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReportVolunteerSpecificDateModel _$ReportVolunteerSpecificDateModelFromJson(
+ReportSpecificDateModel _$ReportSpecificDateModelFromJson(
   Map<String, dynamic> json,
-) => ReportVolunteerSpecificDateModel(
+) => ReportSpecificDateModel(
   report_id: (json['report_id'] as num).toInt(),
   description: json['description'] as String,
   report_date: json['report_date'] as String,
@@ -17,8 +17,8 @@ ReportVolunteerSpecificDateModel _$ReportVolunteerSpecificDateModelFromJson(
   is_resolved_by_council: json['is_resolved_by_council'] as bool,
 );
 
-Map<String, dynamic> _$ReportVolunteerSpecificDateModelToJson(
-  ReportVolunteerSpecificDateModel instance,
+Map<String, dynamic> _$ReportSpecificDateModelToJson(
+  ReportSpecificDateModel instance,
 ) => <String, dynamic>{
   'report_id': instance.report_id,
   'description': instance.description,

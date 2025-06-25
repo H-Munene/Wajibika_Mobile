@@ -112,7 +112,7 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
   }
 
   @override
-  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  Future<Either<Failure, ReportListSpecificDateModel>>
   getReportHistorySpecificDate({required String date}) async {
     try {
       final response = await _localHostAuthDatasource
@@ -125,7 +125,7 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
   }
 
   @override
-  Future<Either<Failure, ReportVolunteerListSpecificDateModel>>
+  Future<Either<Failure, VolunteerListSpecificDateModel>>
   getVolunteerHistorySpecificDate({required String date}) async {
     try {
       final response = await _localHostAuthDatasource

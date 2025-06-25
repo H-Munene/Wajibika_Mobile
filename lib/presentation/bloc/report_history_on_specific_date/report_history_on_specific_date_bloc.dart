@@ -5,8 +5,8 @@ import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:equatable/equatable.dart';
 
-part 'report_volunteer_history_on_specific_date_event.dart';
-part 'report_volunteer_history_on_specific_date_state.dart';
+part 'report_history_on_specific_date_event.dart';
+part 'report_history_on_specific_date_state.dart';
 
 class ReportVolunteerHistoryOnSpecificDateBloc
     extends
@@ -17,29 +17,32 @@ class ReportVolunteerHistoryOnSpecificDateBloc
   final GetReportHistoryOnSpecifiDateUsecase
   _getReportHistoryOnSpecifiDateUsecase;
   final GetVolunteerHistoryOnSpecifiDateUsecase
-  _getVolunteerHistoryOnSpecifiDateUsecase;
+  _getVolunteerHistoryOnSpecificDateUsecase;
 
   ReportVolunteerHistoryOnSpecificDateBloc({
     required GetVolunteerHistoryOnSpecifiDateUsecase
-    getVolunteerHistoryOnSpecifiDateUsecase,
+    getVolunteerHistoryOnSpecificDateUsecase,
     required GetReportHistoryOnSpecifiDateUsecase
     getReportHistoryOnSpecifiDateUsecase,
-  }) : _getVolunteerHistoryOnSpecifiDateUsecase =
-           getVolunteerHistoryOnSpecifiDateUsecase,
+  }) : _getVolunteerHistoryOnSpecificDateUsecase =
+           getVolunteerHistoryOnSpecificDateUsecase,
        _getReportHistoryOnSpecifiDateUsecase =
            getReportHistoryOnSpecifiDateUsecase,
        super(
          const ReportVolunteerHistoryOnSpecificDateState(
            isLoading: false,
-           reportVolunteerListSpecificDateModel:
-               ReportVolunteerListSpecificDateModel(
-                 reportVolunteerSpecificDateModel: [],
-               ),
+           reportListSpecificDateModel: ReportListSpecificDateModel(
+             reports: [],
+           ),
+           volunteerListSpecificDate: VolunteerListSpecificDateModel(
+             events: [],
+           ),
          ),
        ) {
     on<ReportHistoryOnSpecificDateRequest>(
       _onRequestReportHistoryOnSpecificDate,
     );
+    on<ReportVolunteerHistoryClearState>(_onClearState);
     on<VolunteerHistoryOnSpecificDateRequest>(
       _onRequestVolunteerHistoryOnSpecificDate,
     );
@@ -63,7 +66,7 @@ class ReportVolunteerHistoryOnSpecificDateBloc
         emit(
           state.copyWith(
             updatedIsLoading: false,
-            newReportVolunteerListSpecificDateModel: history,
+            newReportListSpecificDateModel: history,
           ),
         );
       },
@@ -76,7 +79,7 @@ class ReportVolunteerHistoryOnSpecificDateBloc
   ) async {
     emit(state.copyWith(updatedIsLoading: true));
 
-    final response = await _getVolunteerHistoryOnSpecifiDateUsecase.call(
+    final response = await _getVolunteerHistoryOnSpecificDateUsecase.call(
       GetVolunteerHistoryOnSpecificDate(date: event.date),
     );
 
@@ -88,10 +91,23 @@ class ReportVolunteerHistoryOnSpecificDateBloc
         emit(
           state.copyWith(
             updatedIsLoading: false,
-            newReportVolunteerListSpecificDateModel: history,
+            newVolunteereListSpecificDate: history,
           ),
         );
       },
+    );
+  }
+
+  Future<void> _onClearState(
+    ReportVolunteerHistoryClearState event,
+    Emitter<ReportVolunteerHistoryOnSpecificDateState> emit,
+  ) async {
+    emit(
+      const ReportVolunteerHistoryOnSpecificDateState(
+        isLoading: false,
+        reportListSpecificDateModel: ReportListSpecificDateModel(reports: []),
+        volunteerListSpecificDate: VolunteerListSpecificDateModel(events: []),
+      ),
     );
   }
 }

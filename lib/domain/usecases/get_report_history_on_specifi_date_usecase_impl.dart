@@ -5,10 +5,7 @@ import 'package:fpdart/fpdart.dart';
 
 class GetReportHistoryOnSpecifiDateUsecase
     implements
-        Usecase<
-          ReportVolunteerListSpecificDateModel,
-          GetReportHistoryOnSpecificDate
-        > {
+        Usecase<ReportListSpecificDateModel, GetReportHistoryOnSpecificDate> {
   GetReportHistoryOnSpecifiDateUsecase({
     required LocalHostAuthRepository localHostAuthRepository,
   }) : _localHostAuthRepository = localHostAuthRepository;
@@ -16,7 +13,7 @@ class GetReportHistoryOnSpecifiDateUsecase
   final LocalHostAuthRepository _localHostAuthRepository;
 
   @override
-  Future<Either<Failure, ReportVolunteerListSpecificDateModel>> call(
+  Future<Either<Failure, ReportListSpecificDateModel>> call(
     GetReportHistoryOnSpecificDate getReportHistoryOnSpecific,
   ) async {
     return await _localHostAuthRepository.getReportHistorySpecificDate(

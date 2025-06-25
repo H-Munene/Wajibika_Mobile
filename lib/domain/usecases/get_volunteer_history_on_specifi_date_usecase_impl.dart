@@ -6,7 +6,7 @@ import 'package:fpdart/fpdart.dart';
 class GetVolunteerHistoryOnSpecifiDateUsecase
     implements
         Usecase<
-          ReportVolunteerListSpecificDateModel,
+          VolunteerListSpecificDateModel,
           GetVolunteerHistoryOnSpecificDate
         > {
   GetVolunteerHistoryOnSpecifiDateUsecase({
@@ -16,7 +16,7 @@ class GetVolunteerHistoryOnSpecifiDateUsecase
   final LocalHostAuthRepository _localHostAuthRepository;
 
   @override
-  Future<Either<Failure, ReportVolunteerListSpecificDateModel>> call(
+  Future<Either<Failure, VolunteerListSpecificDateModel>> call(
     GetVolunteerHistoryOnSpecificDate getVolunteerHistoryOnSpecific,
   ) async {
     return await _localHostAuthRepository.getVolunteerHistorySpecificDate(

@@ -38,6 +38,9 @@ void main() async {
           BlocProvider(create: (_) => locator<HomeFeedBloc>()),
           BlocProvider(create: (_) => locator<ReportSubmissionBloc>()),
           BlocProvider(create: (_) => locator<ReportVolunteerHistoryBloc>()),
+          BlocProvider(
+            create: (_) => locator<ReportVolunteerHistoryOnSpecificDateBloc>(),
+          ),
         ],
 
         child: const MyApp(),

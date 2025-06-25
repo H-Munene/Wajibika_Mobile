@@ -203,7 +203,7 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
   }
 
   @override
-  Future<ReportVolunteerListSpecificDateModel> getReportHistorySpecificDate({
+  Future<ReportListSpecificDateModel> getReportHistorySpecificDate({
     required String date,
   }) async {
     final Uri url = Uri.parse(
@@ -220,23 +220,22 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
         final Map<String, dynamic> reportHistoryOnDate =
             jsonDecode(request.body) as Map<String, dynamic>;
 
-        return ReportVolunteerListSpecificDateModel.fromJson(
-          reportHistoryOnDate,
-        );
+        return ReportListSpecificDateModel.fromJson(reportHistoryOnDate);
       }
       throw ServerException(
-        message: 'Failed to get report history for this day',
+        message: 'Failed to get report history for this day!',
       );
     } catch (e) {
       if (e is ServerException) rethrow;
       throw ServerException(
-        message: 'Failed to get report history for this day',
+        // message: 'Failed to get report history for this day!!',
+        message: e.toString(),
       );
     }
   }
 
   @override
-  Future<ReportVolunteerListSpecificDateModel> getVolunteerHistorySpecificDate({
+  Future<VolunteerListSpecificDateModel> getVolunteerHistorySpecificDate({
     required String date,
   }) async {
     final Uri uri = Uri.parse(
@@ -253,15 +252,12 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
         final Map<String, dynamic> volunteerHistoryOnDate =
             jsonDecode(response.body) as Map<String, dynamic>;
 
-        return ReportVolunteerListSpecificDateModel.fromJson(
-          volunteerHistoryOnDate,
-        );
+        return VolunteerListSpecificDateModel.fromJson(volunteerHistoryOnDate);
       }
 
       throw ServerException(message: 'Failed to get volunteer history');
     } catch (e) {
       if (e is ServerException) rethrow;
-
       throw ServerException(
         message: 'Failed to get volunteer history for this day',
       );

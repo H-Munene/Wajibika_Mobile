@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class VolunteerEntity extends Equatable {
-  VolunteerEntity({
+  const VolunteerEntity({
     required this.imageUrl,
     required this.volunteerCount,
     required this.username,

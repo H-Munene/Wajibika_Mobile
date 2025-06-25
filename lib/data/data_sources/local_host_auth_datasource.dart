@@ -26,10 +26,10 @@ abstract interface class LocalHostAuthDataSource {
 
   Future<ReportVolunteerHistoryModel> getReportandVolunteerHistory();
 
-  Future<ReportVolunteerListSpecificDateModel> getReportHistorySpecificDate({
+  Future<ReportListSpecificDateModel> getReportHistorySpecificDate({
     required String date,
   });
-  Future<ReportVolunteerListSpecificDateModel> getVolunteerHistorySpecificDate({
+  Future<VolunteerListSpecificDateModel> getVolunteerHistorySpecificDate({
     required String date,
   });
 }

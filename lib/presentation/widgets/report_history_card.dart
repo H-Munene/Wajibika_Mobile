@@ -18,12 +18,14 @@ class ReportVolunteerHistoryCard extends StatelessWidget {
   final String type; // 'report','volunteer',
   final String description;
   final String date;
+  final bool isApproved;
 
   const ReportVolunteerHistoryCard({
     super.key,
     required this.type,
     required this.description,
     required this.date,
+    required this.isApproved,
   });
 
   @override
@@ -61,23 +63,24 @@ class ReportVolunteerHistoryCard extends StatelessWidget {
               ),
             ),
 
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  CupertinoIcons.add,
-                  size: 15,
-                  color: AppColors.primaryColor,
-                ),
-                Text(
-                  type == 'volunteer' ? '15wp' : '3wp',
-                  style: const TextStyle(
+            if (isApproved)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    CupertinoIcons.add,
+                    size: 15,
                     color: AppColors.primaryColor,
-                    fontSize: 18,
                   ),
-                ),
-              ],
-            ),
+                  Text(
+                    type == 'volunteer' ? '15wp' : '3wp',
+                    style: const TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
