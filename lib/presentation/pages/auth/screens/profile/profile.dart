@@ -41,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> onRefresh() async {
+    setState(() {});
     context.read<ReportVolunteerHistoryBloc>().add(
       ReportVolunteerHistoryEventRequest(),
     );
@@ -49,15 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final username = context.read<UserRepository>().getUserName().fold(
-      (_) => 'user',
-      (username) => username,
-    );
-
-    final email = context.read<UserRepository>().getUserEmail().fold(
-      (_) => 'email unavailable',
-      (email) => email,
-    );
 
     final wajibikaPoints =
         context
@@ -88,6 +80,15 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         },
         builder: (context, state) {
+          final username = context.read<UserRepository>().getUserName().fold(
+            (_) => 'user',
+            (username) => username,
+          );
+
+          final email = context.read<UserRepository>().getUserEmail().fold(
+            (_) => 'email unavailable',
+            (email) => email,
+          );
           return RefreshIndicator(
             onRefresh: onRefresh,
             child: ListView(
@@ -262,16 +263,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).push(
                           CupertinoPageRoute(
                             builder:
-                                (context) => ReportVolunteerHistoryPage(
-                                  type: 'report',
-                                  // reportHistory:
-                                  //     context
-                                  //         .read<
-                                  //           ReportVolunteerHistoryOnSpecificDateBloc
-                                  //         >()
-                                  //         .state
-                                  //         .reportListSpecificDateModel,
-                                ),
+                                (context) =>
+                                    ReportVolunteerHistoryPage(type: 'report'),
                           ),
                         );
                       },

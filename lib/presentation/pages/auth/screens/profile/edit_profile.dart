@@ -1,9 +1,8 @@
 import 'package:bloc_clean_arch/core/core.dart';
-import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
+import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfile extends StatefulWidget {
@@ -79,83 +78,124 @@ class _EditProfileState extends State<EditProfile> {
         title: const Text(Globals.editProfilePageTitle),
         actions: [
           if (hasChanged())
-            IconButton(
-              icon: const Icon(CupertinoIcons.checkmark_alt),
-              onPressed: () {
-                if (hasChanged()) {
-                  if (_formKey.currentState!.validate()) {
-                    oldusername != username
-                        ? print(
-                          'Username changed from $oldusername to $username',
-                        )
-                        : null;
-                    oldemail != email
-                        ? print('Email changed from $oldemail to $email')
-                        : null;
-                  }
-                }
+            BlocBuilder<ChangeDetailsBloc, ChangeDetailsState>(
+              builder: (context, state) {
+                return state.isLoading
+                    ? const CustomLoadingIndicator(color: Colors.white)
+                    : IconButton(
+                      icon: const Icon(CupertinoIcons.checkmark_alt),
+                      onPressed: () {
+                        if (hasChanged()) {
+                          if (_formKey.currentState!.validate()) {
+                            oldusername != username
+                                ? print(
+                                  'Username changed from $oldusername to $username',
+                                )
+                                : null;
+                            oldemail != email
+                                ? print(
+                                  'Email changed from $oldemail to $email',
+                                )
+                                : null;
+
+                            if (oldusername != username) {
+                              context.read<ChangeDetailsBloc>().add(
+                                ChangeUsernameEvent(username: username!),
+                              );
+                              // update locally saved username
+                              context.read<UserRepository>().updateUsername(
+                                newUsername: username!,
+                              );
+                            }
+
+                            if (oldusername != username && oldemail != email) {
+                              //TODO change username and email event
+                            }
+                          }
+                        }
+                      },
+                    );
               },
             ),
         ],
       ),
 
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            spacing: 7,
-            children: [
-              const SizedBox(height: 10),
-              BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
-                builder: (context, state) {
-                  // if the user has set a profile picture
-                  final isThereimageSelected =
-                      state.profileMediaStatus ==
-                      ProfileMediaStatus.profilePicturePresent;
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 7),
-                    child: CustomUserAvatar(
-                      //display the user image when tapped
-                      onCameraIconTapped:
-                          () => _selectProfilePicture(isThereimageSelected),
-                      userProfilePicture:
-                          isThereimageSelected ? state.profilePicture : '',
-                    ),
-                  );
-                },
-              ),
+      body: BlocConsumer<ChangeDetailsBloc, ChangeDetailsState>(
+        listener: (context, state) {
+          if (state.isSuccessful == false) {
+            SnackbarDefinition.errorSnackBar(
+              context: context,
+              message: 'Failed to update details.',
+            );
+          }
 
-              const SizedBox(height: 15),
+          if (state.isSuccessful == true) {
+            SnackbarDefinition.successSnackBar(
+              context: context,
+              message: 'Successfully updated your credentials.',
+            );
+          }
+        },
+        builder: (context, state) {
+          return Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                spacing: 7,
+                children: [
+                  const SizedBox(height: 10),
+                  BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+                    builder: (context, state) {
+                      // if the user has set a profile picture
+                      final isThereimageSelected =
+                          state.profileMediaStatus ==
+                          ProfileMediaStatus.profilePicturePresent;
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 7),
+                        child: CustomUserAvatar(
+                          //display the user image when tapped
+                          onCameraIconTapped:
+                              () => _selectProfilePicture(isThereimageSelected),
+                          userProfilePicture:
+                              isThereimageSelected ? state.profilePicture : '',
+                        ),
+                      );
+                    },
+                  ),
 
-              CustomTextFieldFormWidget(
-                label: Globals.usernameTextFieldLabel,
-                prefixIcon: Icons.person,
-                controller: _usernameTextEditingController,
-                validator:
-                    (value) => FormValidation.usernameValidator(
-                      value,
-                      _usernameTextEditingController,
-                    ),
-                onChanged: (value) {
-                  setState(() {
-                    username = value;
-                  });
-                },
+                  const SizedBox(height: 15),
+
+                  CustomTextFieldFormWidget(
+                    label: Globals.usernameTextFieldLabel,
+                    prefixIcon: Icons.person,
+                    controller: _usernameTextEditingController,
+                    validator:
+                        (value) => FormValidation.usernameValidator(
+                          value,
+                          _usernameTextEditingController,
+                        ),
+                    onChanged: (value) {
+                      setState(() {
+                        username = value;
+                      });
+                    },
+                  ),
+                  CustomTextFieldFormWidget(
+                    label: Globals.emailTextFieldLabel,
+                    prefixIcon: Icons.email,
+                    controller: _emailTextEditingController,
+                    validator: FormValidation.emailValidator,
+                    onChanged: (value) {
+                      setState(() {
+                        email = value;
+                      });
+                    },
+                  ),
+                ],
               ),
-              CustomTextFieldFormWidget(
-                label: Globals.emailTextFieldLabel,
-                prefixIcon: Icons.email,
-                controller: _emailTextEditingController,
-                validator: FormValidation.emailValidator,
-                onChanged: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -107,4 +107,26 @@ class UserRepositoryImpl implements UserRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateEmail({required String newEmail}) async {
+    try {
+      return right(await _localDbDataSource.saveUserEmail(email: newEmail));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateUsername({
+    required String newUsername,
+  }) async {
+    try {
+      return right(
+        await _localDbDataSource.saveUserName(username: newUsername),
+      );
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

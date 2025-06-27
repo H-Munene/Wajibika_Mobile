@@ -30,6 +30,7 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor,
       foregroundColor: Colors.white,
+      actionsPadding: EdgeInsets.only(right: 12),
     ),
     bottomAppBarTheme: const BottomAppBarTheme(
       shadowColor: Colors.black,

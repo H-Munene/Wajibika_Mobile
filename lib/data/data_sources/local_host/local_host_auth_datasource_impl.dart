@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_single_quotes
+
 import 'dart:convert';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/core/secrets/localhost_endpoints.dart';
@@ -260,6 +262,154 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       if (e is ServerException) rethrow;
       throw ServerException(
         message: 'Failed to get volunteer history for this day',
+      );
+    }
+  }
+
+  @override
+  Future<void> changeUsername({required String new_username}) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.updateProfileEndpoint);
+
+    try {
+      final request = await http.put(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+        body: jsonEncode({'new_username': new_username}),
+      );
+
+      if (request.statusCode == 200) {
+        print('✅✅Username change successful!');
+        return;
+      }
+
+      throw ServerException(
+        message: 'Username change failed. Please try again',
+      );
+    } catch (e) {
+      if (e is ServerException) rethrow;
+
+      throw ServerException(
+        message: 'Username change failed. Please try again!',
+      );
+    }
+  }
+
+  @override
+  Future<void> changeEmail({
+    required String new_email,
+    required String current_password,
+  }) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.updateProfileEndpoint);
+
+    try {
+      final request = await http.put(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+        body: jsonEncode({
+          'new_email': new_email,
+          'current_password': current_password,
+        }),
+      );
+
+      if (request.statusCode == 200) {
+        print('✅✅Successfully updated email✅✅');
+        return;
+      }
+      throw ServerException(
+        message: 'Failed to update email. Please try again!',
+      );
+    } catch (e) {
+      print('❌❌ERROR: ${e.toString()}');
+      if (e is ServerException) rethrow;
+      throw ServerException(
+        message: 'Failed to update email. Please try again!',
+      );
+    }
+  }
+
+  @override
+  Future<void> changeEmailUsername({
+    required String new_username,
+    required String new_email,
+    required String current_password,
+  }) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.updateProfileEndpoint);
+
+    try {
+      final request = await http.put(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+        body: jsonEncode({
+          'new_username': new_username,
+          'new_email': new_email,
+          'current_password': current_password,
+        }),
+      );
+
+      if (request.statusCode == 200) {
+        print('✅✅Successfully updated email and password✅✅');
+        return;
+      }
+      throw ServerException(
+        message: 'Failed to update your email and username. Please try again!',
+      );
+    } catch (e) {
+      print('❌❌ERROR: ${e.toString()}');
+      if (e is ServerException) rethrow;
+      throw ServerException(
+        message: 'Failed to update your email and username. Please try again!',
+      );
+    }
+  }
+
+  @override
+  Future<int> requestPasswordReset({required String current_email}) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.requestPasswordResetEndpoint);
+
+    final request = await http.post(
+      url,
+      headers: await _getHeaders(needsAuthorization: false),
+      body: jsonEncode({"email": current_email}),
+    );
+
+    if (request.statusCode == 200) {
+      return 200;
+    } else {
+      return 404;
+    }
+  }
+
+  @override
+  Future<void> changePassword({
+    required String current_email,
+    required String terminal_token,
+    required String new_password,
+  }) async {
+    final Uri url = Uri.parse(LocalhostEndpoints.updateProfileEndpoint);
+
+    try {
+      final request = await http.put(
+        url,
+        headers: await _getHeaders(needsAuthorization: true),
+        body: jsonEncode({
+          'email': current_email,
+          'token': terminal_token,
+          'new_password': new_password,
+        }),
+      );
+
+      if (request.statusCode == 200) {
+        print('✅✅Successfully updated password✅✅');
+        return;
+      }
+      throw ServerException(
+        message: 'Failed to update password. Please try again!',
+      );
+    } catch (e) {
+      print('❌❌ERROR: ${e.toString()}');
+      if (e is ServerException) rethrow;
+      throw ServerException(
+        message: 'Failed to update your password. Please try again!',
       );
     }
   }

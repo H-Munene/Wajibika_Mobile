@@ -7,3 +7,4 @@ export 'report_submission/report_submission_bloc.dart';
 export 'home_feed/home_feed_bloc.dart';
 export 'report_volunteer_history/report_volunteer_history_bloc.dart';
 export 'report_history_on_specific_date/report_history_on_specific_date_bloc.dart';
+export 'change_details/change_details_bloc.dart';

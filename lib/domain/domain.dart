@@ -11,6 +11,11 @@ export 'usecases/submit_report_usecase_impl.dart';
 export 'usecases/get_report_volunteer_history.dart';
 export 'usecases/get_report_history_on_specifi_date_usecase_impl.dart';
 export 'usecases/get_volunteer_history_on_specifi_date_usecase_impl.dart';
+export 'usecases/change_username_usecase_impl.dart';
+export 'usecases/change_email_username_usecase_impl.dart';
+export 'usecases/change_password_usecase_impl.dart';
+export 'usecases/request_password_reset_usecase_impl.dart';
+export 'usecases/change_email_usecase_impl.dart';
 
 export 'entities/user_entity.dart';
 export 'entities/report_entity.dart';

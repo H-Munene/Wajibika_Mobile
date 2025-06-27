@@ -89,5 +89,29 @@ void _initAuth() {
       () => ReportVolunteerHistoryBloc(
         getReportVolunteerHistoryUseCase: locator(),
       ),
+    )
+    ..registerFactory(
+      () => ChangeUsernameUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeEmailUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeEmailUsernameUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => RequestPasswordResetUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangePasswordUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeDetailsBloc(
+        changeUsernameUsecaseImpl: locator(),
+        changeEmailUsernameUsecaseImpl: locator(),
+        requestPasswordResetUsecaseImpl: locator(),
+        changePasswordUsecaseImpl: locator(),
+        changeEmailUsecaseImpl: locator(),
+      ),
     );
 }

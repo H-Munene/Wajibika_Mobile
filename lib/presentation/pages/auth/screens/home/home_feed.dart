@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/data/data.dart';
@@ -87,8 +88,16 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                           children: [
                             BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
-                                final username =
-                                    (state as AuthLoggedIn).userModel.username;
+                                // final username =
+                                //     (state as AuthLoggedIn).userModel.username;
+
+                                final username = context
+                                    .read<UserRepository>()
+                                    .getUserName()
+                                    .fold(
+                                      (_) => 'user',
+                                      (username) => username,
+                                    );
 
                                 return CustomRichText(
                                   highlightColor: Colors.black,
