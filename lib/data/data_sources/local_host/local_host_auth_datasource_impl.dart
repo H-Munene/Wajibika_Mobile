@@ -390,7 +390,7 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
     try {
       final request = await http.put(
         url,
-        headers: await _getHeaders(needsAuthorization: true),
+        headers: await _getHeaders(needsAuthorization: false),
         body: jsonEncode({
           'email': current_email,
           'token': terminal_token,

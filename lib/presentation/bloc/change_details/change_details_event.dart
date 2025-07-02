@@ -14,15 +14,15 @@ final class ChangeUsernameEvent extends ChangeDetailsEvent {
 }
 
 final class ChangeEmailEvent extends ChangeDetailsEvent {
-  const ChangeEmailEvent(this.current_password, {required this.email});
+  const ChangeEmailEvent({required this.current_password, required this.email});
 
   final String email;
   final String current_password;
 }
 
 final class ChangeEmailUsernameEvent extends ChangeDetailsEvent {
-  const ChangeEmailUsernameEvent(
-    this.currentPassword, {
+  const ChangeEmailUsernameEvent({
+    required this.currentPassword,
     required this.email,
     required this.username,
   });

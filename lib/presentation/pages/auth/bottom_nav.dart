@@ -62,7 +62,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     final wajibikaPoints =
         context
-            .read<HomeFeedBloc>()
+            .watch<HomeFeedBloc>()
             .state
             .homeFeedModel
             .current_user_wajibika_points;
