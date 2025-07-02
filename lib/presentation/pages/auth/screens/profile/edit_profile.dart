@@ -25,6 +25,8 @@ class _EditProfileState extends State<EditProfile> {
       TextEditingController();
   final TextEditingController _emailTextEditingController =
       TextEditingController();
+  final TextEditingController _currentPasswordTextEditingController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -84,36 +86,7 @@ class _EditProfileState extends State<EditProfile> {
                     ? const CustomLoadingIndicator(color: Colors.white)
                     : IconButton(
                       icon: const Icon(CupertinoIcons.checkmark_alt),
-                      onPressed: () {
-                        if (hasChanged()) {
-                          if (_formKey.currentState!.validate()) {
-                            oldusername != username
-                                ? print(
-                                  'Username changed from $oldusername to $username',
-                                )
-                                : null;
-                            oldemail != email
-                                ? print(
-                                  'Email changed from $oldemail to $email',
-                                )
-                                : null;
-
-                            if (oldusername != username) {
-                              context.read<ChangeDetailsBloc>().add(
-                                ChangeUsernameEvent(username: username!),
-                              );
-                              // update locally saved username
-                              context.read<UserRepository>().updateUsername(
-                                newUsername: username!,
-                              );
-                            }
-
-                            if (oldusername != username && oldemail != email) {
-                              //TODO change username and email event
-                            }
-                          }
-                        }
-                      },
+                      onPressed: submit,
                     );
               },
             ),
@@ -138,61 +111,78 @@ class _EditProfileState extends State<EditProfile> {
         },
         builder: (context, state) {
           return Center(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                spacing: 7,
-                children: [
-                  const SizedBox(height: 10),
-                  BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
-                    builder: (context, state) {
-                      // if the user has set a profile picture
-                      final isThereimageSelected =
-                          state.profileMediaStatus ==
-                          ProfileMediaStatus.profilePicturePresent;
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 7),
-                        child: CustomUserAvatar(
-                          //display the user image when tapped
-                          onCameraIconTapped:
-                              () => _selectProfilePicture(isThereimageSelected),
-                          userProfilePicture:
-                              isThereimageSelected ? state.profilePicture : '',
-                        ),
-                      );
-                    },
-                  ),
+            child: Column(
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    spacing: 7,
+                    children: [
+                      const SizedBox(height: 10),
+                      BlocBuilder<ProfileMediaBloc, ProfileMediaState>(
+                        builder: (context, state) {
+                          // if the user has set a profile picture
+                          final isThereimageSelected =
+                              state.profileMediaStatus ==
+                              ProfileMediaStatus.profilePicturePresent;
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 7),
+                            child: CustomUserAvatar(
+                              //display the user image when tapped
+                              onCameraIconTapped:
+                                  () => _selectProfilePicture(
+                                    isThereimageSelected,
+                                  ),
+                              userProfilePicture:
+                                  isThereimageSelected
+                                      ? state.profilePicture
+                                      : '',
+                            ),
+                          );
+                        },
+                      ),
 
-                  const SizedBox(height: 15),
+                      const SizedBox(height: 15),
 
-                  CustomTextFieldFormWidget(
-                    label: Globals.usernameTextFieldLabel,
-                    prefixIcon: Icons.person,
-                    controller: _usernameTextEditingController,
-                    validator:
-                        (value) => FormValidation.usernameValidator(
-                          value,
-                          _usernameTextEditingController,
-                        ),
-                    onChanged: (value) {
-                      setState(() {
-                        username = value;
-                      });
-                    },
+                      CustomTextFieldFormWidget(
+                        label: Globals.usernameTextFieldLabel,
+                        prefixIcon: Icons.person,
+                        controller: _usernameTextEditingController,
+                        validator:
+                            (value) => FormValidation.usernameValidator(
+                              value,
+                              _usernameTextEditingController,
+                            ),
+                        onChanged: (value) {
+                          setState(() {
+                            username = value;
+                          });
+                        },
+                      ),
+                      CustomTextFieldFormWidget(
+                        label: Globals.emailTextFieldLabel,
+                        prefixIcon: Icons.email,
+                        controller: _emailTextEditingController,
+                        validator: FormValidation.emailValidator,
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  CustomTextFieldFormWidget(
-                    label: Globals.emailTextFieldLabel,
-                    prefixIcon: Icons.email,
-                    controller: _emailTextEditingController,
-                    validator: FormValidation.emailValidator,
-                    onChanged: (value) {
-                      setState(() {
-                        email = value;
-                      });
-                    },
+                ),
+
+                Offstage(
+                  offstage: !(email != oldemail && email != null),
+                  child: CustomPasswordTextformfield(
+                    label: 'Current Password',
+                    controller: _currentPasswordTextEditingController,
+                    validator: FormValidation.passwordValidator,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -205,5 +195,41 @@ class _EditProfileState extends State<EditProfile> {
     final hasEmailChanged = email != oldemail && email != null;
 
     return hasUsernameChanged || hasEmailChanged;
+  }
+
+  void submit() {
+    if (hasChanged()) {
+      if (_formKey.currentState!.validate()) {
+        if (oldusername != _usernameTextEditingController.text &&
+            oldemail != _emailTextEditingController.text) {
+          context.read<ChangeDetailsBloc>().add(
+            ChangeEmailUsernameEvent(
+              currentPassword: _currentPasswordTextEditingController.text,
+              email: email!,
+              username: username!,
+            ),
+          );
+
+          // update locally saved username
+          context.read<UserRepository>().updateUsername(newUsername: username!);
+          // update locally saved username and email
+          context.read<UserRepository>().updateEmail(newEmail: email!);
+        } else if (oldusername != _usernameTextEditingController.text) {
+          context.read<ChangeDetailsBloc>().add(
+            ChangeUsernameEvent(username: username!),
+          );
+          // update locally saved username
+          context.read<UserRepository>().updateUsername(newUsername: username!);
+        } else if (oldemail != _emailTextEditingController.text) {
+          context.read<ChangeDetailsBloc>().add(
+            ChangeEmailEvent(
+              current_password:
+                  _currentPasswordTextEditingController.text.trim(),
+              email: email!,
+            ),
+          );
+        }
+      }
+    }
   }
 }
