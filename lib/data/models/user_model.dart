@@ -5,7 +5,7 @@ part 'user_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class UserModel extends UserEntity {
-  UserModel({
+  const UserModel({
     required super.user_id,
     required super.username,
     required super.email,
@@ -16,17 +16,4 @@ class UserModel extends UserEntity {
       _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
-
-  // UserModel copyWith({String? id, String? username, String? email}) {
-  //   return UserModel(
-  //     id: id ?? this.id,
-  //     username: username ?? this.username,
-  //     email: email ?? this.email,
-  //   );
-  // }
-
-  // @override
-  // String toString() {
-  //   return 'UserModel {id = $id, email = $email, usernmae = $username}';
-  // }
 }

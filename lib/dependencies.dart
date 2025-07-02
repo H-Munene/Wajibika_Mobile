@@ -1,7 +1,5 @@
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
-import 'package:bloc_clean_arch/presentation/bloc/home_feed/home_feed_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/report_submission/report_submission_bloc.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +36,7 @@ void _initAuth() {
     )
     ..registerFactory<LocalHostAuthDataSource>(
       //() => SupabaseDataSourceImpl(supabaseClient: locator<SupabaseClient>()),
-      () => LocahostDatasourceImpl(userRepository: locator()),
+      () => LocahostAuthDatasourceImpl(userRepository: locator()),
     )
     ..registerFactory(
       () => UserSignUpUseCase(localHostAuthRepository: locator()),
@@ -51,6 +49,20 @@ void _initAuth() {
     )
     ..registerFactory(
       () => GetHomeFeedUseCase(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () =>
+          GetReportVolunteerHistoryUseCase(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => GetReportHistoryOnSpecifiDateUsecase(
+        localHostAuthRepository: locator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetVolunteerHistoryOnSpecifiDateUsecase(
+        localHostAuthRepository: locator(),
+      ),
     )
     ..registerFactory(() => SignOutUseCase(localHostAuthRepository: locator()))
     ..registerFactory(() => AlreadySignedIn(localHostAuthRepository: locator()))
@@ -66,5 +78,40 @@ void _initAuth() {
     ..registerFactory(
       () => ReportSubmissionBloc(submitReportUsecaseImpl: locator()),
     )
-    ..registerFactory(() => HomeFeedBloc(getHomeFeedUseCase: locator()));
+    ..registerFactory(() => HomeFeedBloc(getHomeFeedUseCase: locator()))
+    ..registerFactory(
+      () => ReportVolunteerHistoryOnSpecificDateBloc(
+        getVolunteerHistoryOnSpecificDateUsecase: locator(),
+        getReportHistoryOnSpecifiDateUsecase: locator(),
+      ),
+    )
+    ..registerFactory(
+      () => ReportVolunteerHistoryBloc(
+        getReportVolunteerHistoryUseCase: locator(),
+      ),
+    )
+    ..registerFactory(
+      () => ChangeUsernameUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeEmailUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeEmailUsernameUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => RequestPasswordResetUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangePasswordUsecaseImpl(localHostAuthRepository: locator()),
+    )
+    ..registerFactory(
+      () => ChangeDetailsBloc(
+        changeUsernameUsecaseImpl: locator(),
+        changeEmailUsernameUsecaseImpl: locator(),
+        requestPasswordResetUsecaseImpl: locator(),
+        changePasswordUsecaseImpl: locator(),
+        changeEmailUsecaseImpl: locator(),
+      ),
+    );
 }

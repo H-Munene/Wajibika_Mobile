@@ -19,6 +19,6 @@ class HomeFeedModel extends HomeFeedEntity {
 
   @override
   String toString() {
-    return 'HomeFeed: cloggedDrain[${clogged_drain}] negligentDumping [${negligent_dumping}]';
+    return 'HomeFeed: cloggedDrain[$clogged_drain] negligentDumping [$negligent_dumping]';
   }
 }

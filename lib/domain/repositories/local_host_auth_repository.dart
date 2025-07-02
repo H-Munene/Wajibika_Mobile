@@ -25,4 +25,34 @@ abstract interface class LocalHostAuthRepository {
     required String category,
     required String description,
   });
+
+  Future<Either<Failure, ReportVolunteerHistoryModel>>
+  getReportandVolunteerHistory();
+
+  Future<Either<Failure, ReportListSpecificDateModel>>
+  getReportHistorySpecificDate({required String date});
+
+  Future<Either<Failure, VolunteerListSpecificDateModel>>
+  getVolunteerHistorySpecificDate({required String date});
+
+  Future<Either<Failure, void>> changeUsername({required String new_username});
+
+  Future<Either<Failure, void>> changeEmailUsername({
+    required String new_username,
+    required String new_email,
+    required String current_password,
+  });
+
+  Future<Either<Failure, void>> changeEmail({
+    required String new_email,
+    required String current_password,
+  });
+
+  Future<int> requestPasswordReset({required String current_email});
+
+  Future<Either<Failure, void>> changePassword({
+    required String current_email,
+    required String terminal_token,
+    required String new_password,
+  });
 }

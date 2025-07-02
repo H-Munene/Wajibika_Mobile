@@ -97,4 +97,122 @@ class LocalHostAuthRepositoryImpl implements LocalHostAuthRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, ReportVolunteerHistoryModel>>
+  getReportandVolunteerHistory() async {
+    try {
+      final response =
+          await _localHostAuthDatasource.getReportandVolunteerHistory();
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReportListSpecificDateModel>>
+  getReportHistorySpecificDate({required String date}) async {
+    try {
+      final response = await _localHostAuthDatasource
+          .getReportHistorySpecificDate(date: date);
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, VolunteerListSpecificDateModel>>
+  getVolunteerHistorySpecificDate({required String date}) async {
+    try {
+      final response = await _localHostAuthDatasource
+          .getVolunteerHistorySpecificDate(date: date);
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changeUsername({
+    required String new_username,
+  }) async {
+    try {
+      final response = await _localHostAuthDatasource.changeUsername(
+        new_username: new_username,
+      );
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changeEmailUsername({
+    required String new_username,
+    required String new_email,
+    required String current_password,
+  }) async {
+    try {
+      final response = await _localHostAuthDatasource.changeEmailUsername(
+        new_username: new_username,
+        new_email: new_email,
+        current_password: current_password,
+      );
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changePassword({
+    required String current_email,
+    required String terminal_token,
+    required String new_password,
+  }) async {
+    try {
+      final response = await _localHostAuthDatasource.changePassword(
+        current_email: current_email,
+        terminal_token: terminal_token,
+        new_password: new_password,
+      );
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<int> requestPasswordReset({required String current_email}) async {
+    final response = await _localHostAuthDatasource.requestPasswordReset(
+      current_email: current_email,
+    );
+
+    return response;
+  }
+
+  @override
+  Future<Either<Failure, void>> changeEmail({
+    required String new_email,
+    required String current_password,
+  }) async {
+    try {
+      final response = await _localHostAuthDatasource.changeEmail(
+        new_email: new_email,
+        current_password: current_password,
+      );
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

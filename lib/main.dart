@@ -1,5 +1,3 @@
-import 'package:bloc_clean_arch/presentation/bloc/home_feed/home_feed_bloc.dart';
-import 'package:bloc_clean_arch/presentation/bloc/report_submission/report_submission_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';
@@ -39,6 +37,11 @@ void main() async {
           BlocProvider(create: (_) => VolunteerBloc()),
           BlocProvider(create: (_) => locator<HomeFeedBloc>()),
           BlocProvider(create: (_) => locator<ReportSubmissionBloc>()),
+          BlocProvider(create: (_) => locator<ReportVolunteerHistoryBloc>()),
+          BlocProvider(
+            create: (_) => locator<ReportVolunteerHistoryOnSpecificDateBloc>(),
+          ),
+          BlocProvider(create: (_) => locator<ChangeDetailsBloc>()),
         ],
 
         child: const MyApp(),

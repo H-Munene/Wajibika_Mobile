@@ -12,6 +12,7 @@ class SnackbarDefinition {
       title: const Text(
         'Success',
         style: TextStyle(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
       description: Text(message),
       displayCloseButton: false,
@@ -24,7 +25,11 @@ class SnackbarDefinition {
   }) {
     CherryToast.error(
       animationType: AnimationType.fromTop,
-      title: const Text('Error', style: TextStyle(fontWeight: FontWeight.bold)),
+      title: const Text(
+        'Error',
+        style: TextStyle(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
       description: Text(message),
       displayCloseButton: false,
     ).show(context);
@@ -39,6 +44,7 @@ class SnackbarDefinition {
       title: const Text(
         'Warning',
         style: TextStyle(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
       description: Text(message),
       displayCloseButton: false,
