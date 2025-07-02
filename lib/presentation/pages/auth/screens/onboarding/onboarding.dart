@@ -72,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onDotClicked:
                     (index) => _pageController.animateToPage(
                       index,
-                      duration: const Duration(seconds: 1),
+                      duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     ),
 

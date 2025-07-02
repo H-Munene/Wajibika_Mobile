@@ -41,7 +41,7 @@ class _CustomTextFieldFormWidgetState extends State<CustomTextFieldFormWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: AppDimensions.textfieldVerticalSpacing,
-      width: 0.7 * MediaQuery.of(context).size.width,
+      width: 0.75 * MediaQuery.of(context).size.width,
       child: TextFormField(
         maxLength: widget.hasMaxLines ? 60 : null,
         maxLines: widget.hasMaxLines ? 3 : null,

@@ -28,8 +28,22 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
 
   @override
+  void dispose() {
+    _usernameTextEditingController.dispose();
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    _confirmPasswordTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        title: const Text('Wajibika', style: TextStyle(color: Colors.black)),
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -118,9 +132,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   regularText: 'Already Registered? ',
                   highlightedText: 'Login',
                   redirect:
-                      () => Navigator.of(
-                        context,
-                      ).pushReplacement(LoginPage.loginPage()),
+                      () => Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                        (_) => false,
+                      ),
                 ),
               ],
             );

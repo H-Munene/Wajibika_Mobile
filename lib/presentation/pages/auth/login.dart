@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/pages/auth/request_reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
@@ -24,8 +25,19 @@ class _LoginPageState extends State<LoginPage> {
       TextEditingController();
 
   @override
+  void dispose() {
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text('Wajibika', style: TextStyle(color: Colors.black)),
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -44,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context, state) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-
               children: [
                 Form(
                   key: _formKey,
@@ -80,13 +91,26 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                 ),
 
+                // redirect to sign up
                 CustomRichText(
                   regularText: "Don't have an account yet? ",
                   highlightedText: 'Sign Up',
                   redirect:
-                      () => Navigator.of(
-                        context,
-                      ).pushReplacement(SignUpPage.signUpPage()),
+                      () => Navigator.of(context).push(SignUpPage.signUpPage()),
+                ),
+
+                // password reset
+                const SizedBox(height: 10),
+                CustomRichText(
+                  regularText: '',
+                  highlightedText: 'Forgot Password?',
+                  redirect:
+                      () => Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder:
+                              (context) => const RequestResetPasswordPage(),
+                        ),
+                      ),
                 ),
               ],
             );

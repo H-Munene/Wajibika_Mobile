@@ -72,6 +72,14 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   @override
+  void dispose() {
+    _emailTextEditingController.dispose();
+    _currentPasswordTextEditingController.dispose();
+    _usernameTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,

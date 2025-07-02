@@ -263,8 +263,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).push(
                           CupertinoPageRoute(
                             builder:
-                                (context) =>
-                                    ReportVolunteerHistoryPage(type: 'report'),
+                                (context) => const ReportVolunteerHistoryPage(
+                                  type: 'report',
+                                ),
                           ),
                         );
                       },
@@ -288,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).push(
                           CupertinoPageRoute(
                             builder:
-                                (context) => ReportVolunteerHistoryPage(
+                                (context) => const ReportVolunteerHistoryPage(
                                   type: 'volunteer',
                                 ),
                           ),

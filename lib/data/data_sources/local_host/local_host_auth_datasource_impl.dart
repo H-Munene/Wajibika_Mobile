@@ -278,7 +278,6 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
 
       if (request.statusCode == 200) {
-        print('✅✅Username change successful!');
         return;
       }
 
@@ -312,14 +311,12 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
 
       if (request.statusCode == 200) {
-        print('✅✅Successfully updated email✅✅');
         return;
       }
       throw ServerException(
         message: 'Failed to update email. Please try again!',
       );
     } catch (e) {
-      print('❌❌ERROR: ${e.toString()}');
       if (e is ServerException) rethrow;
       throw ServerException(
         message: 'Failed to update email. Please try again!',
@@ -347,14 +344,12 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
 
       if (request.statusCode == 200) {
-        print('✅✅Successfully updated email and password✅✅');
         return;
       }
       throw ServerException(
         message: 'Failed to update your email and username. Please try again!',
       );
     } catch (e) {
-      print('❌❌ERROR: ${e.toString()}');
       if (e is ServerException) rethrow;
       throw ServerException(
         message: 'Failed to update your email and username. Please try again!',
@@ -399,14 +394,12 @@ class LocahostAuthDatasourceImpl implements LocalHostAuthDataSource {
       );
 
       if (request.statusCode == 200) {
-        print('✅✅Successfully updated password✅✅');
         return;
       }
       throw ServerException(
         message: 'Failed to update password. Please try again!',
       );
     } catch (e) {
-      print('❌❌ERROR: ${e.toString()}');
       if (e is ServerException) rethrow;
       throw ServerException(
         message: 'Failed to update your password. Please try again!',
