@@ -45,7 +45,6 @@ class MediaBloc extends Bloc<MediaEvent, MediaState> {
     final isThereReportedMedia = state is MediaReportPictureSelected;
     try {
       final pictureTaken = await ImagePicker().pickImage(source: source);
-
       if (isThereReportedMedia) {
         final currentState = state as MediaReportPictureSelected;
 

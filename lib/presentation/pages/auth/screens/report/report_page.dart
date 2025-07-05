@@ -53,6 +53,11 @@ class _ReportPageState extends State<ReportPage> {
       ),
     );
 
+    SnackbarDefinition.showSuccessSnackbar(
+      context: context,
+      message: 'Report sent successfully',
+    );
+
     // clear description field
     _descriptionTextEditingController.clear();
 
@@ -146,7 +151,7 @@ class _ReportPageState extends State<ReportPage> {
                   onPressed: () {
                     setState(() {});
                     if (!hasImagePresent) {
-                      SnackbarDefinition.warningSnackbar(
+                      SnackbarDefinition.showWarningSnackbar(
                         context: context,
                         message: 'Insert a relevant image to your report',
                       );

@@ -85,7 +85,6 @@ class LocalDbDatasourceImpl implements LocalDbDataSource {
   String? getToken() {
     try {
       final token = _sharedPreferences.getString(_LocalDbKeys.tokenKey);
-      debugPrint('🔐$token');
       return token;
     } catch (_) {
       throw ServerException(message: 'Token not found');

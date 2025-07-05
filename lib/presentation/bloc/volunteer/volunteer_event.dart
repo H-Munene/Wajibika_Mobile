@@ -16,6 +16,12 @@ final class VolunteerEventToggleVolunteerPresence extends VolunteerEvent {
 }
 
 final class VolunteerEventFetchInitialRegisteredVolunteerEvents
-    extends VolunteerEvent {}
+    extends VolunteerEvent {
+  const VolunteerEventFetchInitialRegisteredVolunteerEvents({
+    required this.homeFeedModel,
+  });
+
+  final HomeFeedModel homeFeedModel;
+}
 
 final class VolunteerEventClear extends VolunteerEvent {}

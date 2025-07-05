@@ -6,9 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
-  static Route signUpPage() =>
-      MaterialPageRoute(builder: (context) => const SignUpPage());
-
   const SignUpPage({super.key});
 
   @override
@@ -49,12 +46,12 @@ class _SignUpPageState extends State<SignUpPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              SnackbarDefinition.errorSnackBar(
+              SnackbarDefinition.showErrorSnackbar(
                 context: context,
                 message: state.message,
               );
             } else if (state is AuthSuccess) {
-              SnackbarDefinition.successSnackBar(
+              SnackbarDefinition.showSuccessSnackbar(
                 context: context,
                 message: 'Sign Up Successful',
               );

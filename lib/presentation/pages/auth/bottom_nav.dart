@@ -55,6 +55,14 @@ class _BottomNavState extends State<BottomNav> {
     context.read<ReportVolunteerHistoryBloc>().add(
       ReportVolunteerHistoryEventRequest(),
     );
+
+    final homeFeedModel = context.read<HomeFeedBloc>().state.homeFeedModel;
+    print('✅✅HOMEFEED MODEL: $homeFeedModel');
+    context.read<VolunteerBloc>().add(
+      VolunteerEventFetchInitialRegisteredVolunteerEvents(
+        homeFeedModel: homeFeedModel,
+      ),
+    );
     super.initState();
   }
 

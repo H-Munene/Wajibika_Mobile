@@ -22,7 +22,7 @@ class WeeklyHighlightCard extends StatelessWidget {
         color: AppColors.noImageBackgroundColor,
         borderRadius: AppDimensions.circleBorderRadius,
         image: DecorationImage(
-          image: Image.asset(image, fit: BoxFit.cover).image,
+          image: Image.network(image, fit: BoxFit.cover).image,
         ),
       ),
       child: Stack(

@@ -137,7 +137,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         setState(() {
           isLoading = !isLoading;
         });
-        SnackbarDefinition.successSnackBar(
+        SnackbarDefinition.showSuccessSnackbar(
           context: context,
           message: 'Password Reset Successful',
         );
@@ -153,7 +153,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         setState(() {
           isLoading = !isLoading;
         });
-        SnackbarDefinition.errorSnackBar(
+        SnackbarDefinition.showErrorSnackbar(
           context: context,
           message: 'Password Reset Failed',
         );

@@ -7,9 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
-  static Route loginPage() =>
-      MaterialPageRoute(builder: (context) => const LoginPage());
-
   const LoginPage({super.key});
 
   @override
@@ -43,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              SnackbarDefinition.errorSnackBar(
+              SnackbarDefinition.showErrorSnackbar(
                 context: context,
                 message: state.message,
               );
@@ -96,7 +93,11 @@ class _LoginPageState extends State<LoginPage> {
                   regularText: "Don't have an account yet? ",
                   highlightedText: 'Sign Up',
                   redirect:
-                      () => Navigator.of(context).push(SignUpPage.signUpPage()),
+                      () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpPage(),
+                        ),
+                      ),
                 ),
 
                 // password reset

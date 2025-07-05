@@ -34,13 +34,49 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: move from here
     final textTheme = Theme.of(context).textTheme;
 
     return BlocBuilder<HomeFeedBloc, HomeFeedState>(
       builder: (context, homeFeedState) {
-        final cloggedDrains = homeFeedState.homeFeedModel.clogged_drain;
-        final negligentDumping = homeFeedState.homeFeedModel.negligent_dumping;
+        // unresolved clogged reports
+        final cloggedDrains =
+            homeFeedState.homeFeedModel.clogged_drain
+                .where(
+                  (report) =>
+                      !report.is_resolved_by_council &&
+                      !report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // resolved clogged reports
+        final resolvedCloggedDrains =
+            homeFeedState.homeFeedModel.clogged_drain
+                .where(
+                  (report) =>
+                      report.is_resolved_by_council ||
+                      report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // unresolved negligent reports
+        final negligentDumping =
+            homeFeedState.homeFeedModel.negligent_dumping
+                .where(
+                  (report) =>
+                      !report.is_resolved_by_council &&
+                      !report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // resolved negligent reports
+        final resolvedNegligentDumping =
+            homeFeedState.homeFeedModel.negligent_dumping
+                .where(
+                  (report) =>
+                      report.is_resolved_by_council ||
+                      report.is_resolved_by_volunteer,
+                )
+                .toList();
 
         return homeFeedState.isLoading
             ? const Center(
@@ -71,8 +107,8 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 
                                 return CustomRichText(
                                   highlightColor: Colors.black,
-                                  regularText: 'Good Morning, ',
-                                  highlightedText: '$username☀️',
+                                  regularText: 'Hello, ',
+                                  highlightedText: username,
                                 );
                               },
                             ),
@@ -96,7 +132,11 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                                 fontSize: 20,
                               ),
                             ),
-                            const WeekHighlights(),
+                            WeekHighlights(
+                              resolvedCloggedDrains: resolvedCloggedDrains,
+                              resolvedNegligentDumping:
+                                  resolvedNegligentDumping,
+                            ),
 
                             const Divider(thickness: 2, color: Colors.black),
                           ],
@@ -361,7 +401,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           );
 
           if (request.statusCode == 200) {
-            SnackbarDefinition.successSnackBar(
+            SnackbarDefinition.showSuccessSnackbar(
               context: context,
               message: 'Unregistered as a volunteer for this report',
             );
@@ -371,7 +411,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
               ),
             );
           } else {
-            SnackbarDefinition.errorSnackBar(
+            SnackbarDefinition.showErrorSnackbar(
               context: context,
               message: 'Failed to unregister. Try again!',
             );
@@ -399,7 +439,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
           );
 
           if (request.statusCode == 200) {
-            SnackbarDefinition.successSnackBar(
+            SnackbarDefinition.showSuccessSnackbar(
               context: context,
               message: 'Registered as a volunteer for this report',
             );
@@ -409,7 +449,7 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
               ),
             );
           } else {
-            SnackbarDefinition.errorSnackBar(
+            SnackbarDefinition.showErrorSnackbar(
               context: context,
               message: 'Failed to register. Try again!',
             );

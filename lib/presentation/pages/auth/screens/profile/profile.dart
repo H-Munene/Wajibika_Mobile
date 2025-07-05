@@ -67,13 +67,13 @@ class _ProfilePageState extends State<ProfilePage> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthFailure) {
-            SnackbarDefinition.errorSnackBar(
+            SnackbarDefinition.showErrorSnackbar(
               context: context,
-              message: 'Failed to logout. Please try again!!',
+              message: 'Failed to logout. Please try again!',
             );
           }
           if (state is AuthLoggedOut) {
-            SnackbarDefinition.successSnackBar(
+            SnackbarDefinition.showSuccessSnackbar(
               context: context,
               message: 'Successfully Logged out',
             );
@@ -140,6 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 email,
                                 style: textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
+                                  fontSize: 12.5,
                                 ),
                               ),
                               CustomButtonWidget(

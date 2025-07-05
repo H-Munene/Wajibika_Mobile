@@ -7,6 +7,7 @@ class CustomButtonWidget extends StatelessWidget {
   final void Function() onPressed;
   final Color color;
   final bool makeButtonRounded;
+  final bool? enable;
 
   const CustomButtonWidget({
     super.key,
@@ -14,6 +15,7 @@ class CustomButtonWidget extends StatelessWidget {
     required this.onPressed,
     this.color = AppColors.buttonBackgroundColor,
     this.makeButtonRounded = false,
+    this.enable = true,
   });
 
   @override
@@ -22,7 +24,7 @@ class CustomButtonWidget extends StatelessWidget {
       padding: AppDimensions.textfieldVerticalSpacing,
       child: MaterialButton(
         elevation: 0,
-        onPressed: onPressed,
+        onPressed: enable == true ? onPressed : null,
         color: color,
         shape:
             makeButtonRounded
