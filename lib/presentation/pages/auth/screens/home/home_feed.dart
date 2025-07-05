@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:bloc_clean_arch/core/secrets/localhost_endpoints.dart';
 import 'package:bloc_clean_arch/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/core/core.dart';
 import 'package:bloc_clean_arch/data/data.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
 class HomeFeed extends StatefulWidget {
   const HomeFeed({super.key});
@@ -24,50 +28,55 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void confirmVolunteerForThisEvent({
-    required ReportHomeFeedModel reportHomeFeedModel,
-  }) {
-    final isVolunteer = context
-        .read<VolunteerBloc>()
-        .state
-        .registeredAsVolunteerForThisReport(
-          reportHomeFeedModel: reportHomeFeedModel,
-        );
-
-    CustomDialogBottomAppSheet.cupertinoAlertDialog(
-      context: context,
-      title:
-          isVolunteer
-              ? Globals.unregisterAsVolunteerFromThisEventAlertTitle
-              : Globals.volunterForThisEventAlertTitle,
-      content:
-          isVolunteer
-              ? Globals.unregisterAsVolunterFromThisEventAlertContent
-              : Globals.volunterForThisEventAlertContent,
-      onDestructiveActionPressed: () {
-        context.read<VolunteerBloc>().add(
-          VolunteerEventToggleVolunteerPresence(
-            reportHomeFeedModel: reportHomeFeedModel,
-          ),
-        );
-        Navigator.of(context).pop();
-      },
-    );
-  }
-
   Future<void> refreshFeed() async {
     context.read<HomeFeedBloc>().add(HomeFeedGetFeed());
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: move from here
     final textTheme = Theme.of(context).textTheme;
 
     return BlocBuilder<HomeFeedBloc, HomeFeedState>(
       builder: (context, homeFeedState) {
-        final cloggedDrains = homeFeedState.homeFeedModel.clogged_drain;
-        final negligentDumping = homeFeedState.homeFeedModel.negligent_dumping;
+        // unresolved clogged reports
+        final cloggedDrains =
+            homeFeedState.homeFeedModel.clogged_drain
+                .where(
+                  (report) =>
+                      !report.is_resolved_by_council &&
+                      !report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // resolved clogged reports
+        final resolvedCloggedDrains =
+            homeFeedState.homeFeedModel.clogged_drain
+                .where(
+                  (report) =>
+                      report.is_resolved_by_council ||
+                      report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // unresolved negligent reports
+        final negligentDumping =
+            homeFeedState.homeFeedModel.negligent_dumping
+                .where(
+                  (report) =>
+                      !report.is_resolved_by_council &&
+                      !report.is_resolved_by_volunteer,
+                )
+                .toList();
+
+        // resolved negligent reports
+        final resolvedNegligentDumping =
+            homeFeedState.homeFeedModel.negligent_dumping
+                .where(
+                  (report) =>
+                      report.is_resolved_by_council ||
+                      report.is_resolved_by_volunteer,
+                )
+                .toList();
 
         return homeFeedState.isLoading
             ? const Center(
@@ -88,9 +97,6 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                           children: [
                             BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
-                                // final username =
-                                //     (state as AuthLoggedIn).userModel.username;
-
                                 final username = context
                                     .read<UserRepository>()
                                     .getUserName()
@@ -101,8 +107,8 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
 
                                 return CustomRichText(
                                   highlightColor: Colors.black,
-                                  regularText: 'Good Morning, ',
-                                  highlightedText: '$username☀️',
+                                  regularText: 'Hello, ',
+                                  highlightedText: username,
                                 );
                               },
                             ),
@@ -126,7 +132,11 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                                 fontSize: 20,
                               ),
                             ),
-                            const WeekHighlights(),
+                            WeekHighlights(
+                              resolvedCloggedDrains: resolvedCloggedDrains,
+                              resolvedNegligentDumping:
+                                  resolvedNegligentDumping,
+                            ),
 
                             const Divider(thickness: 2, color: Colors.black),
                           ],
@@ -338,6 +348,115 @@ class _HomeFeedState extends State<HomeFeed> with TickerProviderStateMixin {
                 ),
               ),
             );
+      },
+    );
+  }
+
+  Future<void> confirmVolunteerForThisEvent({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) async {
+    // final isVolunteer = context
+    //     .read<VolunteerBloc>()
+    //     .state
+    //     .registeredAsVolunteerForThisReport(
+    //       reportHomeFeedModel: reportHomeFeedModel,
+    //     );
+    final isVolunteer = reportHomeFeedModel.is_volunteer;
+
+    CustomDialogBottomAppSheet.cupertinoAlertDialog(
+      context: context,
+      title:
+          isVolunteer
+              ? Globals.unregisterAsVolunteerFromThisEventAlertTitle
+              : Globals.volunterForThisEventAlertTitle,
+      content:
+          isVolunteer
+              ? Globals.unregisterAsVolunterFromThisEventAlertContent
+              : Globals.volunterForThisEventAlertContent,
+      onDestructiveActionPressed: () async {
+        final token = context.read<UserRepository>().getToken().fold(
+          (_) => '',
+          (token) => token,
+        );
+
+        // if is volunteer trigger unregister event
+        if (isVolunteer) {
+          final Uri url = Uri.parse(
+            LocalhostEndpoints.unregisterVolunteerEventBaseEndpoint(
+              reportID: reportHomeFeedModel.report_id,
+            ),
+          );
+
+          final request = await http.delete(
+            url,
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Headers':
+                  'Origin, Content-Type, X-Auth-Token, Authorization',
+            },
+          );
+
+          if (request.statusCode == 200) {
+            SnackbarDefinition.showSuccessSnackbar(
+              context: context,
+              message: 'Unregistered as a volunteer for this report',
+            );
+            context.read<VolunteerBloc>().add(
+              VolunteerEventToggleVolunteerPresence(
+                reportHomeFeedModel: reportHomeFeedModel,
+              ),
+            );
+          } else {
+            SnackbarDefinition.showErrorSnackbar(
+              context: context,
+              message: 'Failed to unregister. Try again!',
+            );
+          }
+        }
+        // if is not volunteer trigger register event
+        else {
+          final Uri url = Uri.parse(
+            LocalhostEndpoints.registerAsVolunteerEndpoint(
+              reportID: reportHomeFeedModel.report_id,
+            ),
+          );
+
+          final request = await http.post(
+            url,
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Headers':
+                  'Origin, Content-Type, X-Auth-Token, Authorization',
+            },
+          );
+
+          if (request.statusCode == 200) {
+            SnackbarDefinition.showSuccessSnackbar(
+              context: context,
+              message: 'Registered as a volunteer for this report',
+            );
+            context.read<VolunteerBloc>().add(
+              VolunteerEventToggleVolunteerPresence(
+                reportHomeFeedModel: reportHomeFeedModel,
+              ),
+            );
+          } else {
+            SnackbarDefinition.showErrorSnackbar(
+              context: context,
+              message: 'Failed to register. Try again!',
+            );
+          }
+        }
+
+        Navigator.of(context).pop();
       },
     );
   }

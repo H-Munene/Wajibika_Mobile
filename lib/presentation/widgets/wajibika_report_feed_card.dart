@@ -20,6 +20,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
   final bool isBookmarked;
   final bool isVolunteerForThisReport;
   final bool showMyAvatar;
+  final bool? showImage;
 
   const WajibikaReportFeedCard({
     super.key,
@@ -34,6 +35,7 @@ class WajibikaReportFeedCard extends StatelessWidget {
     this.isBookmarked = false,
     required this.imageUrl,
     required this.isVolunteerForThisReport,
+    this.showImage = true,
   });
 
   @override
@@ -53,20 +55,23 @@ class WajibikaReportFeedCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // report image
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
+          if (showImage == true)
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              child: Image.network(
+                fit: BoxFit.cover,
+                imageUrl,
+                height: AppDimensions.reportHomeFeedImageHeightWidth,
+                cacheHeight:
+                    AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
+                width: AppDimensions.reportHomeFeedImageHeightWidth,
+                cacheWidth:
+                    AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
+              ),
             ),
-            child: Image.network(
-              fit: BoxFit.cover,
-              imageUrl,
-              height: AppDimensions.reportHomeFeedImageHeightWidth,
-              cacheHeight: AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
-              width: AppDimensions.reportHomeFeedImageHeightWidth,
-              cacheWidth: AppDimensions.reportHomeFeedImageHeightWidth.toInt(),
-            ),
-          ),
           const SizedBox(height: 5),
 
           // user avatar with time report was made
@@ -236,7 +241,7 @@ class _UserAvatarandOtherUserAvatWithCount extends StatelessWidget {
             },
           ),
         // avatar to signify other volunteers
-        if (volunteerCount >= 1)
+        if (volunteerCount > 1)
           Row(
             spacing: 1,
             children: [

@@ -6,9 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
-  static Route signUpPage() =>
-      MaterialPageRoute(builder: (context) => const SignUpPage());
-
   const SignUpPage({super.key});
 
   @override
@@ -28,19 +25,33 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
 
   @override
+  void dispose() {
+    _usernameTextEditingController.dispose();
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    _confirmPasswordTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        title: const Text('Wajibika', style: TextStyle(color: Colors.black)),
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              SnackbarDefinition.errorSnackBar(
+              SnackbarDefinition.showErrorSnackbar(
                 context: context,
                 message: state.message,
               );
             } else if (state is AuthSuccess) {
-              SnackbarDefinition.successSnackBar(
+              SnackbarDefinition.showSuccessSnackbar(
                 context: context,
                 message: 'Sign Up Successful',
               );
@@ -118,9 +129,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   regularText: 'Already Registered? ',
                   highlightedText: 'Login',
                   redirect:
-                      () => Navigator.of(
-                        context,
-                      ).pushReplacement(LoginPage.loginPage()),
+                      () => Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                        (_) => false,
+                      ),
                 ),
               ],
             );

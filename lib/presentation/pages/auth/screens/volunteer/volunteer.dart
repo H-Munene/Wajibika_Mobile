@@ -1,9 +1,12 @@
 import 'package:bloc_clean_arch/core/core.dart';
+import 'package:bloc_clean_arch/core/secrets/localhost_endpoints.dart';
 import 'package:bloc_clean_arch/data/data.dart';
+import 'package:bloc_clean_arch/domain/repositories/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
 // contains the volunteer event(s) that user has registered
 class VolunteerPage extends StatefulWidget {
@@ -14,6 +17,8 @@ class VolunteerPage extends StatefulWidget {
 }
 
 class _VolunteerPageState extends State<VolunteerPage> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +86,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                       : ListView.separated(
                         itemBuilder:
                             (context, index) => WajibikaReportFeedCard(
+                              showImage: false,
                               isVolunteerForThisReport: volunteerState
                                   .registeredAsVolunteerForThisReport(
                                     reportHomeFeedModel:
@@ -112,11 +118,12 @@ class _VolunteerPageState extends State<VolunteerPage> {
                                       : registeredVolunteerEvents[index]
                                           .related_events[0]
                                           .scheduled_volunteer_date,
-                              onVolunteerButtonPressed:
-                                  () => confirmVolunteerForThisEvent(
-                                    reportHomeFeedModel:
-                                        registeredVolunteerEvents[index],
-                                  ),
+                              onVolunteerButtonPressed: () async {
+                                await unregisterAsVolunteerForThisEvent(
+                                  reportHomeFeedModel:
+                                      registeredVolunteerEvents[index],
+                                );
+                              },
                               isBookmarked: bookMarkState.isReportBookMarked(
                                 reportHomeFeedModel:
                                     registeredVolunteerEvents[index],
@@ -141,6 +148,60 @@ class _VolunteerPageState extends State<VolunteerPage> {
                       );
                 },
               ),
+    );
+  }
+
+  Future<void> unregisterAsVolunteerForThisEvent({
+    required ReportHomeFeedModel reportHomeFeedModel,
+  }) async {
+    final token = context.read<UserRepository>().getToken().fold(
+      (_) => '',
+      (token) => token,
+    );
+
+    CustomDialogBottomAppSheet.cupertinoAlertDialog(
+      context: context,
+      title: Globals.unregisterAsVolunteerFromThisEventAlertTitle,
+      content: Globals.unregisterAsVolunterFromThisEventAlertContent,
+      onDestructiveActionPressed: () async {
+        final Uri url = Uri.parse(
+          LocalhostEndpoints.unregisterVolunteerEventBaseEndpoint(
+            reportID: reportHomeFeedModel.report_id,
+          ),
+        );
+
+        final request = await http.delete(
+          url,
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers':
+                'Origin, Content-Type, X-Auth-Token, Authorization',
+          },
+        );
+
+        if (request.statusCode == 200) {
+          SnackbarDefinition.showSuccessSnackbar(
+            context: context,
+            message: 'Unregistered as a volunteer for this report',
+          );
+
+          context.read<VolunteerBloc>().add(
+            VolunteerEventToggleVolunteerPresence(
+              reportHomeFeedModel: reportHomeFeedModel,
+            ),
+          );
+        } else {
+          SnackbarDefinition.showErrorSnackbar(
+            context: context,
+            message: 'Failed to unregister. Try again!',
+          );
+        }
+        Navigator.of(context).pop();
+      },
     );
   }
 }

@@ -72,6 +72,14 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   @override
+  void dispose() {
+    _emailTextEditingController.dispose();
+    _currentPasswordTextEditingController.dispose();
+    _usernameTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -96,14 +104,14 @@ class _EditProfileState extends State<EditProfile> {
       body: BlocConsumer<ChangeDetailsBloc, ChangeDetailsState>(
         listener: (context, state) {
           if (state.isSuccessful == false) {
-            SnackbarDefinition.errorSnackBar(
+            SnackbarDefinition.showErrorSnackbar(
               context: context,
               message: 'Failed to update details.',
             );
           }
 
           if (state.isSuccessful == true) {
-            SnackbarDefinition.successSnackBar(
+            SnackbarDefinition.showSuccessSnackbar(
               context: context,
               message: 'Successfully updated your credentials.',
             );
@@ -128,6 +136,7 @@ class _EditProfileState extends State<EditProfile> {
                           return Padding(
                             padding: const EdgeInsets.only(top: 7),
                             child: CustomUserAvatar(
+                              lightenBackground: true,
                               //display the user image when tapped
                               onCameraIconTapped:
                                   () => _selectProfilePicture(
@@ -228,6 +237,9 @@ class _EditProfileState extends State<EditProfile> {
               email: email!,
             ),
           );
+
+          // update locally saved email
+          context.read<UserRepository>().updateEmail(newEmail: email!);
         }
       }
     }

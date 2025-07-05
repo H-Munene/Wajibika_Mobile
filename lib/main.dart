@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/presentation/pages/auth/screens/home/before_after_report_resolution.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_clean_arch/bloc_observer.dart';
 import 'package:bloc_clean_arch/core/core.dart';

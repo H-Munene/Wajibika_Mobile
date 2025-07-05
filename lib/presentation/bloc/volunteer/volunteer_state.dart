@@ -1,6 +1,8 @@
 part of 'volunteer_bloc.dart';
 
 class VolunteerState extends Equatable {
+  final List<ReportHomeFeedModel> registeredVolunteerEvents;
+
   const VolunteerState({required this.registeredVolunteerEvents});
 
   VolunteerState copyWith({
@@ -11,8 +13,6 @@ class VolunteerState extends Equatable {
           initialRegisteredVolunteerEvents ?? registeredVolunteerEvents,
     );
   }
-
-  final List<ReportHomeFeedModel> registeredVolunteerEvents;
 
   bool registeredAsVolunteerForThisReport({
     required ReportHomeFeedModel reportHomeFeedModel,

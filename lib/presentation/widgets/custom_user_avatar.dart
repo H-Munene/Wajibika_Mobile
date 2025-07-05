@@ -6,12 +6,14 @@ class CustomUserAvatar extends StatelessWidget {
   final void Function()? onCameraIconTapped;
   final String userProfilePicture;
   final bool showAddIcon;
+  final bool? lightenBackground;
 
   const CustomUserAvatar({
     super.key,
     this.onCameraIconTapped,
     this.userProfilePicture = '',
     this.showAddIcon = true,
+    this.lightenBackground = false,
   });
 
   @override
@@ -40,10 +42,13 @@ class CustomUserAvatar extends StatelessWidget {
                         right: showAddIcon ? 5 : -4,
                         child: GestureDetector(
                           onTap: onCameraIconTapped,
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                             radius: 16,
-                            backgroundColor: AppColors.primaryColor,
-                            child: CircleAvatar(
+                            backgroundColor:
+                                lightenBackground == true
+                                    ? Colors.white
+                                    : AppColors.primaryColor,
+                            child: const CircleAvatar(
                               radius: 12,
                               backgroundColor: AppColors.hightlightColor,
                               child: Icon(Icons.add, color: Colors.white),
